@@ -47,7 +47,7 @@
             </v-btn>
           </template>
 
-          <!-- <v-list v-if="IsSeller">
+          <v-list v-if="IsSeller">
             <v-list-item>
               <v-btn
                 text
@@ -58,7 +58,7 @@
                 Crear Producto
               </v-btn>
             </v-list-item>
-          </v-list> -->
+          </v-list>
         </v-menu>
       </v-toolbar>
       <!-- <div class="pa-3">
@@ -79,12 +79,8 @@ export default {
       role: '',
     }
   },
-  components: {},
   methods: {
     logout() {
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("email");
-      // localStorage.removeItem("role");
       localStorage.clear()
       this.$router.push('/')
     },
@@ -95,11 +91,15 @@ export default {
       this.$nuxt.$emit('searchItem', this.search)
     },
   },
-  // computed: {
-  //   IsSeller() {
-  //     return localStorage.getItem("role") === "seller";
-  //   },
-  // },
+  computed: {
+    IsSeller() {
+      if (!process.server) return localStorage.getItem("role") === "seller";
+      else return false
+    },
+  },
+  mounted () {
+    console.log(localStorage);
+  },
 }
 </script>
 

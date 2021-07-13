@@ -41,11 +41,11 @@ export default {
         );
       }
     },
-  // },
-  // methods: {
-  //   show() {
-  //     this.showSearch = !this.showSearch;
-  //   },
+  },
+  methods: {
+    show() {
+      this.showSearch = !this.showSearch;
+    },
   },
 }
 </script>

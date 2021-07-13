@@ -1,8 +1,5 @@
 <template>
-  <v-card
-    class=" ma-5"
-    width="320"
-  >
+  <v-card class="ma-5" width="320">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -11,18 +8,12 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      height="400"
-      :src="product.image[0]"
-    ></v-img>
+    <v-img height="400" :src="product.image[0]"></v-img>
 
-    <v-card-title>{{product.name}}</v-card-title>
+    <v-card-title>{{ product.name }}</v-card-title>
 
     <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
+      <v-row align="center" class="mx-0">
         <v-rating
           :value="product.rate"
           color="pink lighten-3"
@@ -38,26 +29,22 @@
         ></v-rating>
 
         <div class="grey--text ms-4 mt-0">
-          {{product.rate}}
+          {{ product.rate }}
         </div>
       </v-row>
-      <div class="mt-3">{{product.description}}</div>
+      <div class="mt-3">{{ descr }}</div>
 
       <div class="mt-2 text-subtitle-1">
-        €{{product.price}} • Tenerife, islas Canarias
+        €{{ product.price }} • Tenerife, islas Canarias
       </div>
 
       <v-divider class="mx-2"></v-divider>
     </v-card-text>
+
     <v-card-actions>
-      <v-btn
-        color="light-blue lighten-2"
-        text
-        :to="{ params: {
-        productId : product._id}, name: 'Product'}"
-      >
-        Ver producto
-      </v-btn>
+      <NuxtLink :to="{ path: `/marketplace/${product._id}` }" style="text-decoration: none;">
+        <v-btn color="light-blue lighten-2" text> Ver producto </v-btn>
+      </NuxtLink>
     </v-card-actions>
 
   </v-card>
@@ -65,9 +52,14 @@
 
 <script>
 export default {
-  name: "ProductCard",
+  name: 'ProductCard',
   props: {
-    product: Object
+    product: Object,
+  },
+  data() {
+    return {
+      descr: this.product.description.slice(0,35) + '...'
+    }
   },
 }
 </script>
