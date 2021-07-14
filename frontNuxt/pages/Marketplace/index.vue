@@ -15,21 +15,15 @@
 <script>
 export default {
   name: 'Marketplace',
+  async asyncData({ $axios }) {
+    const response = await $axios.$get('/products')
+    return { products: response }
+  },
   data() {
     return {
       showSearch: true,
       filter: '',
     }
-  },
-  async asyncData({ $axios }) {
-    const response = await $axios.$get('/products')
-    return { products: response }
-  },
-  mounted() {
-    this.$nuxt.$on("searchItem", (item) => {
-      console.log(item)
-     this.filter=item
-    });
   },
   computed: {
     filterItem() {
@@ -41,6 +35,13 @@ export default {
         );
       }
     },
+  },
+  mounted() {
+    // console.log(this.$auth)
+    this.$nuxt.$on("searchItem", (item) => {
+      console.log(item)
+     this.filter=item
+    });
   },
   methods: {
     show() {

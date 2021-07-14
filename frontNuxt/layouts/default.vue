@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <Nuxt />
+      <Nuxt />    
     </v-main>
     <Footer />
   </v-app>
