@@ -93,8 +93,12 @@ export default {
   },
   computed: {
     IsSeller() {
-      if (!process.server) return localStorage.getItem("role") === "seller";
-      else return false
+      if (!process.server) {
+        console.log('meh')
+        return localStorage.getItem("role") === "seller"
+      } else {
+        return false
+      }
     },
   },
   mounted () {
