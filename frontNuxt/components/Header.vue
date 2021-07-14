@@ -57,6 +57,14 @@
               >
                 Crear Producto
               </v-btn>
+              <v-btn
+                text
+                color="light-blue lighten-2"
+                :to="{ name: 'MarketplaceForm' }"
+                @click="showProductForm = !showProductForm"
+              >
+                Crear Marketplace
+              </v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
