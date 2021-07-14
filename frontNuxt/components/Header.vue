@@ -1,6 +1,6 @@
 <template>
     <div height="50">
-      <v-toolbar>
+      <v-app-bar fixed>
         <!-- <v-btn hidden icon @click="searchDrop">
           <v-icon color="light-blue lighten-2">mdi-text-search</v-icon>
         </v-btn> -->
@@ -17,6 +17,7 @@
 
         <v-spacer></v-spacer>
         <v-text-field
+          v-model="search"
           color="light-blue lighten-2"
           placeholder="Search"
           prepend-inner-icon="mdi-magnify"
@@ -28,7 +29,6 @@
           :class="{ closed: searchClosed }"
           @focus="searchClosed = false"
           @blur="searchClosed = true"
-          v-model="search"
           @keyup="searchItem"
         ></v-text-field>
 
@@ -41,7 +41,7 @@
         </v-btn>
 
         <v-menu left>
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
@@ -68,7 +68,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </v-toolbar>
+      </v-app-bar>
       <!-- <div class="pa-3">
       <Search v-show="showSearch" class="mt-3" />
       <v-divider v-show="showSearch"></v-divider>
@@ -87,6 +87,15 @@ export default {
       role: '',
     }
   },
+  computed: {
+    IsSeller() {
+      if (!process.server) {
+        return localStorage.getItem("role") === "seller"
+      } else {
+        return false
+      }
+    },
+  },
   methods: {
     logout() {
       localStorage.clear()
@@ -98,19 +107,6 @@ export default {
     searchItem() {
       this.$nuxt.$emit('searchItem', this.search)
     },
-  },
-  computed: {
-    IsSeller() {
-      if (!process.server) {
-        console.log('meh')
-        return localStorage.getItem("role") === "seller"
-      } else {
-        return false
-      }
-    },
-  },
-  mounted () {
-    console.log(localStorage);
   },
 }
 </script>

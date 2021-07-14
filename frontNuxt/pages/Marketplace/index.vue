@@ -1,5 +1,6 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="px-0">
+    <MarketplaceInfo />
     <div class="d-flex flex-wrap flex-row justify-center mx-5">
       <ProductCard
         elevation="2"

@@ -16,7 +16,7 @@
       </v-row>
 
       <v-row class="px-5">
-        <v-textarea solo label="Añade aquí una descripción de tu tienda" v-model="des" class="mt-8"></v-textarea>
+        <v-textarea solo :rules="rules.description" label="Añade aquí una descripción de tu tienda" v-model="des" class="mt-8"></v-textarea>
       </v-row>
 
       <v-row>
@@ -63,7 +63,10 @@ export default {
       cates: '',
       categories: [],
       shipping: false,
-      ubication: ''
+      ubication: '',
+      rules: {
+        description: [(v) => v.length <= 195 || 'Máximo de caracteres 195']
+        }
     }
   },
   methods: {
