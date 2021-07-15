@@ -101,11 +101,7 @@ export default {
       console.log(this.$auth.$storage.getUniversal('role'))
     },
     logout() {
-
       this.$auth.logout()
-
-      this.$auth.$storage.removeUniversal('role')
-      this.$auth.$storage.removeUniversal('email')
     },
     searchDrop() {
       this.showSearch = !this.showSearch

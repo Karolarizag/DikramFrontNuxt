@@ -53,8 +53,9 @@
         ></v-switch>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn 
-        block @click="signup" dark color="light-blue lighten-2">Registrarse</v-btn>
+        <v-btn block @click="signup" dark color="light-blue lighten-2"
+          >Registrarse</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-form>
@@ -62,14 +63,14 @@
 
 <script>
 export default {
-  name: "RegisterForm",
+  name: 'RegisterForm',
   data: () => ({
-    username: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-    isSeller: "",
-    birthdate: "",
+    username: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+    isSeller: '',
+    birthdate: '',
     formHasErrors: false,
     snackbar: false,
     // rules: {
@@ -91,27 +92,51 @@ export default {
   computed: {
     confPassRule() {
       return () =>
-        this.password === this.repeatPassword || "Las contraseñas no coinciden";
+        this.password === this.repeatPassword || 'Las contraseñas no coinciden'
     },
     form() {
       return {
         email: this.email,
         password: this.password,
-      };
+      }
     },
   },
   methods: {
     submit() {
-      this.formHasErrors = false;
+      this.formHasErrors = false
 
       Object.keys(this.form).forEach((field) => {
-        if (!this.form[field]) this.formHasErrors = true;
+        if (!this.form[field]) this.formHasErrors = true
 
-        this.$refs[field].validate(true);
-      });
+        this.$refs[field].validate(true)
+      })
 
-      if (!this.formHasErrors) this.signup();
+      if (!this.formHasErrors) this.signup()
     },
+    async signup() {
+      try {
+        const role = this.isSeller ? 'seller' : 'user'
+        await this.$axios.$post('/auth/signup', {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          birthdate: this.birthdate,
+          role,
+        })
+
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.email,
+            password: this.password,
+          },
+        })
+
+        this.$router.push('/MarketPlace')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     // signup() {
     //   const role = this.isSeller ? "seller" : "user";
     //   authService
@@ -125,5 +150,5 @@ export default {
     //     .catch((err) => console.log(err));
     // },
   },
-};
+}
 </script>
