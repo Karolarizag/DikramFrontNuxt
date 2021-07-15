@@ -1,7 +1,7 @@
 <template>
-  <div height="50">
-    <v-toolbar>
-      <!-- <v-btn hidden icon @click="searchDrop">
+    <div height="50">
+      <v-app-bar fixed>
+        <!-- <v-btn hidden icon @click="searchDrop">
           <v-icon color="light-blue lighten-2">mdi-text-search</v-icon>
         </v-btn> -->
       <v-toolbar-title>
@@ -15,22 +15,22 @@
         </NuxtLink>
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
-      <v-text-field
-        color="light-blue lighten-2"
-        v-model="search"
-        placeholder="Search"
-        prepend-inner-icon="mdi-magnify"
-        solo-inverted
-        flat
-        dense
-        dark
-        class="btn-search pt-5 mt-1"
-        :class="{ closed: searchClosed }"
-        @focus="searchClosed = false"
-        @blur="searchClosed = true"
-        @keyup="searchItem"
-      ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          color="light-blue lighten-2"
+          placeholder="Search"
+          prepend-inner-icon="mdi-magnify"
+          solo-inverted
+          flat
+          dense
+          dark
+          class="btn-search pt-5 mt-1"
+          :class="{ closed: searchClosed }"
+          @focus="searchClosed = false"
+          @blur="searchClosed = true"
+          @keyup="searchItem"
+        ></v-text-field>
 
       <v-btn icon>
         <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
@@ -40,28 +40,36 @@
         <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
       </v-btn>
 
-      <v-menu left>
-        <template #activator="{ on, attrs }">
-          <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list v-if="isSeller">
-          <v-list-item>
-            <v-btn
-              text
-              color="light-blue lighten-2"
-              :to="{ name: 'ProductForm' }"
-              @click="showProductForm = !showProductForm"
-            >
-              Crear Producto
+        <v-menu left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-toolbar>
-    <!-- <div class="pa-3">
+          </template>
+
+          <v-list v-if="IsSeller">
+            <v-list-item>
+              <v-btn
+                text
+                color="light-blue lighten-2"
+                :to="{ name: 'ProductForm' }"
+                @click="showProductForm = !showProductForm"
+              >
+                Crear Producto
+              </v-btn>
+              <v-btn
+                text
+                color="light-blue lighten-2"
+                :to="{ name: 'MarketplaceForm' }"
+                @click="showProductForm = !showProductForm"
+              >
+                Crear Marketplace
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-app-bar>
+      <!-- <div class="pa-3">
       <Search v-show="showSearch" class="mt-3" />
       <v-divider v-show="showSearch"></v-divider>
     </div> -->
