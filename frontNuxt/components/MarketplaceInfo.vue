@@ -13,6 +13,21 @@
     </v-card>
       
     </v-app-bar>
+    <v-app-bar height="35">
+      <v-row>
+        <v-col class="d-flex justify-end"><v-btn text color="black">Publicaciones</v-btn></v-col>
+        <v-col><v-btn text color="black">Productos</v-btn></v-col>
+      </v-row>
+    </v-app-bar>
+    <div class="d-flex flex-wrap flex-row justify-center mx-5">
+      <ProductCard
+        elevation="2"
+        outlined
+        :product="item"
+        v-for="(item, idx) in filterItem"
+        :key="idx"
+      />
+    </div>
   </v-card>
 </template>
 
