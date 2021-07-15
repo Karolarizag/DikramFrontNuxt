@@ -47,7 +47,7 @@
           </v-btn>
         </template>
 
-        <v-list v-if="isSeller === 'seller'">
+        <v-list v-if="isSeller">
           <v-list-item>
             <v-btn
               text
@@ -76,31 +76,16 @@ export default {
       showSearch: false,
       searchClosed: true,
       search: '',
-      isSeller: this.$auth.$storage.getUniversal('role'),
     }
   },
   computed: {
-    isSellerFail() {
-      if (!process.server) {
-        return this.$auth.$state.role=== 'seller'
-      } else {
-        // return this.$auth.$state.user.role === 'seller'
-        return this.$auth.$storage.getUniversal('role')
-      }
-    },
+    
+    isSeller() {
+      return this.$auth.user && this.$auth.user.role === 'seller'
+    }
   },
   mounted() {
-    console.log('storage', this.$auth.$storage.getUniversal('role'))
-    console.log('storage', this.$auth)
-
-    // setInterval(() => {
-    //   // eslint-disable-next-line no-console
-    //   console.log(this.isSeller)
-    // }, 1000)
-    // setInterval(() => {
-    // this.x = !this.x
-    // console.log(this.x)
-    // }, 2000)
+    console.log('storage', this.$auth.user)
   },
 
   methods: {
@@ -108,8 +93,7 @@ export default {
       console.log(this.$auth.$storage.getUniversal('role'))
     },
     logout() {
-      // localStorage.clear()
-      // this.$router.push('/')
+
       this.$auth.logout()
 
       this.$auth.$storage.removeUniversal('role')

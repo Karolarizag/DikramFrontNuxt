@@ -59,6 +59,7 @@ export default {
           global: true,
           // required: true,
           // type: 'Bearer'
+          type: false
         },
         user: {
           property: 'user',
