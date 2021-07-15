@@ -1,11 +1,8 @@
 <template>
-    <div height="50">
-      <v-app-bar fixed>
-        <!-- <v-btn hidden icon @click="searchDrop">
-          <v-icon color="light-blue lighten-2">mdi-text-search</v-icon>
-        </v-btn> -->
+  <div height="50">
+    <v-app-bar flat fixed>
       <v-toolbar-title>
-        <NuxtLink :to="{ name: 'Marketplace' }">
+        <NuxtLink :to="{ path: '/' }">
           <v-img
             src="logo.png"
             max-height="40"
@@ -15,64 +12,39 @@
         </NuxtLink>
       </v-toolbar-title>
 
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          color="light-blue lighten-2"
-          placeholder="Search"
-          prepend-inner-icon="mdi-magnify"
-          solo-inverted
-          flat
-          dense
-          dark
-          class="btn-search pt-5 mt-1"
-          :class="{ closed: searchClosed }"
-          @focus="searchClosed = false"
-          @blur="searchClosed = true"
-          @keyup="searchItem"
-        ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        color="light-blue lighten-2"
+        placeholder="Search"
+        prepend-inner-icon="mdi-magnify"
+        solo-inverted
+        flat
+        dense
+        dark
+        class="btn-search pt-5 mt-1"
+        :class="{ closed: searchClosed }"
+        @focus="searchClosed = false"
+        @blur="searchClosed = true"
+        @keyup="searchItem"
+      ></v-text-field>
 
-      <v-btn icon>
-        <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+      <v-btn icon @click="logout" :to="{ path: '/marketplace' }">
+        <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon>
       </v-btn>
-
-      <v-btn icon @click="logout">
-        <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
+      <v-btn text color="light-blue lighten-2" @click="login = !login">
+        Acceder
       </v-btn>
-
-        <v-menu left>
-          <template #activator="{ on, attrs }">
-            <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-
-          <v-list v-if="isSeller">
-            <v-list-item>
-              <v-btn
-                text
-                color="light-blue lighten-2"
-                :to="{ name: 'ProductForm' }"
-                @click="showProductForm = !showProductForm"
-              >
-                Crear Producto
-              </v-btn>
-              <v-btn
-                text
-                color="light-blue lighten-2"
-                :to="{ name: 'MarketplaceForm' }"
-                @click="showProductForm = !showProductForm"
-              >
-                Crear Marketplace
-              </v-btn>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-app-bar>
-      <!-- <div class="pa-3">
-      <Search v-show="showSearch" class="mt-3" />
-      <v-divider v-show="showSearch"></v-divider>
-    </div> -->
+      <v-btn text color="light-blue lighten-2" @click="signup = !signup">
+        Registrarse
+      </v-btn>
+    </v-app-bar>
+    <v-overlay :dark="false" :absolute="absolute" :value="login">
+      <LoginForm @changeView="login = !login" />
+    </v-overlay>
+    <v-overlay :dark="false" :absolute="absolute" :value="signup">
+      <RegisterForm @changeView="signup = !signup" />
+    </v-overlay>
   </div>
 </template>
 
@@ -84,13 +56,16 @@ export default {
       showSearch: false,
       searchClosed: true,
       search: '',
+      login: false,
+      signup: false,
+      email: '',
+      password: '',
     }
   },
   computed: {
-    
     isSeller() {
       return this.$auth.user && this.$auth.user.role === 'seller'
-    }
+    },
   },
   mounted() {
     console.log('storage', this.$auth.user)
@@ -108,6 +83,11 @@ export default {
     },
     searchItem() {
       this.$nuxt.$emit('searchItem', this.search)
+    },
+    async iniciar() {
+      await this.$auth.loginWith('local', {
+        data: { email: this.email, password: this.password },
+      })
     },
   },
 }

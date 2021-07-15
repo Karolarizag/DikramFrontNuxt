@@ -40,7 +40,7 @@
           @click="iniciar"
           color="light-blue lighten-2"
           dark
-          >Iniciar</v-btn
+          >Acceder</v-btn
         >
       </v-card-actions>
       <v-overlay v-if="errorLogin">
