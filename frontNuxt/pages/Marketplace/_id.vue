@@ -71,19 +71,13 @@
       <!-- OVERLAY TO MODIFY PRODUCT FORM -->
 
       <v-overlay :absolute="absolute" :value="modifyoverlay">
-        <NuxtLink :to="{ path: `/marketplace/${product._id}` }">
-        <!-- formulario -->
-          <v-btn @click="modifyProductPage" dark color="light-blue lighten-2">
-            Modificar producto
-          </v-btn>
-        </NuxtLink>
-        <v-btn
-          @click="modifyoverlay = !modifyoverlay"
-          dark
-          color="light-blue lighten-2"
-        >
-          Volver
-        </v-btn>
+        <v-container fluid>
+          <div class="pa-5">
+            <ProductModifyForm @backClick="actualize" @returnClick="modifyoverlay = false" :product="product" />
+          </div>
+        </v-container>
+       
+        
       </v-overlay>
     </div>
   </div>
@@ -102,6 +96,7 @@ export default {
       overlay: false,
       deleteoverlay: false,
       modifyoverlay: false,
+      productKey: 0
     }
   },
   methods: {
@@ -117,10 +112,11 @@ export default {
       this.$router.push({ name: 'Marketplace' })
       return response
     },
-    async modifyProductPage() {
-      await window.alert('asd')
-      console.log(this.product)
-    },
+    actualize(product) {
+      this.product = product
+      this.modifyoverlay = false
+      this.productKey++
+    }
   },
 }
 </script>

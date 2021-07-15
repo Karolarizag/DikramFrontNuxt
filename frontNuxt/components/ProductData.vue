@@ -28,8 +28,6 @@
           ></v-rating>
         </v-col>
       </v-row>
-
-      {{ props }}
     </v-card-text>
     <v-divider></v-divider>
     <v-card-text>

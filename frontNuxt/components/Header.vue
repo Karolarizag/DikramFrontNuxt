@@ -1,6 +1,6 @@
 <template>
     <div height="50">
-      <v-app-bar fixed>
+      <v-app-bar fixed app>
         <!-- <v-btn hidden icon @click="searchDrop">
           <v-icon color="light-blue lighten-2">mdi-text-search</v-icon>
         </v-btn> -->
