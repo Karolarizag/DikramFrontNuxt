@@ -47,7 +47,7 @@
             </v-btn>
           </template>
 
-          <v-list v-if="IsSeller">
+          <v-list v-if="isSeller">
             <v-list-item>
               <v-btn
                 text
