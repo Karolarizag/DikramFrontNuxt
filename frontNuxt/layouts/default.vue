@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <Nuxt />    
+      <Nuxt style="margin-top: 100px" />    
     </v-main>
     <Footer />
   </v-app>
