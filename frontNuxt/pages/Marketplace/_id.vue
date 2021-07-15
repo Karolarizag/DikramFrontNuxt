@@ -125,7 +125,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 .productpagebody {
   width: 80vw;
   margin: auto;

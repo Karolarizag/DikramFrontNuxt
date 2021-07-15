@@ -79,17 +79,11 @@ export default {
     }
   },
   methods: {
-   async iniciar() {
-    const res = await this.$axios.$post(
-      '/auth/login', 
-      { email: this.email, password: this.password }
-    ) 
-    localStorage.setItem('token', res.token)
-    localStorage.setItem('email', res.email)
-    localStorage.setItem('role', res.role)
-    this.errorLogin = false;
-    this.$router.push({ name: "Marketplace" });
-   }
-  }
+    async iniciar() {
+       await this.$auth.loginWith('local', {
+        data: { email: this.email, password: this.password },
+      })
+    },
+  },
 }
 </script>

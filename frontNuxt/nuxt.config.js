@@ -43,11 +43,42 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
+
   ],
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      home: '/Marketplace'
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+          type: false
+        },
+        user: {
+          property: 'user',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          logout: false,
+          // user: false
+          user: { url: '/auth/user', method: 'get' }
+        }
+      }
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: 'https://dikram.herokuapp.com/api'
+    // baseURL: 'http://localhost:3000/api'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

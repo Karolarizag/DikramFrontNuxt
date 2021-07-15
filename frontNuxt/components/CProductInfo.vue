@@ -3,7 +3,7 @@
     <v-card class="pb-10 pa-3 mt-5">
       <v-row>
         <v-col cols="4" class="d-flex justify-center align-center flex-column ml-7">  
-          <div>imageInput</div>
+          <!-- <VImageInput class="ml-7" />  -->
           <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark> Añadir imagen </v-btn>
         </v-col>
 
@@ -12,11 +12,10 @@
           <div class="d-flex flex-wrap mt-5 justify-center" >
 
             <div v-for="(item, idx) in imagenes" :key="idx">
-              <v-img max-height="150" class="ma-1" max-width="150" src="../assets/imagedefault.png">
-              </v-img>
+              <img class="ma-1" style="max-width: 150px; max-height: 150px;" src="~/assets/imagedefault.png"/>
             </div>
 
-            <v-textarea solo name="input-7-4" label="Añade aquí la descripción de tu producto" class="mt-3" v-model="description">
+            <v-textarea solo label="Añade aquí la descripción de tu producto" class="mt-3 px-3" v-model="description">
             </v-textarea>
 
           </div>
@@ -26,7 +25,7 @@
       <v-row class="px-15">
 
       <v-col>
-        <v-text-field type="text" width="500" class="mx-2" label="Nombre" outlined dense v-model="name"></v-text-field>
+        <v-text-field type="text" width="500" class="mx-2" label="Nombre" outlined dense v-model="title"></v-text-field>
       </v-col>
 
       <v-col >
@@ -140,16 +139,20 @@ export default {
       this.materials = [...this.materials]
     },
     sendTags() {
-     return  this.tags.push(this.etiquetas)
+      this.tags.push(this.etiquetas)
+      this.etiquetas = ''
     },
     sendSizes() {
-      return this.sizes.push(this.tallas)
+      this.sizes.push(this.tallas)
+      this.tallas = ''
     },
     sendColors() {
-      return this.colors.push(this.color)
+      this.colors.push(this.color)
+      this.color = ''
     },
     sendMaterials() {
-      return this.materials.push(this.material)
+      this.materials.push(this.material)
+      this.material = ''
     },
     async submitProduct() {
       const res = await this.$axios.$post('/products', {
@@ -169,7 +172,7 @@ export default {
         }
       })
       this.$router.push({ name: "Marketplace" });
-      console.log(res)
+      res.status(200).json(res)
     }
   },
 };
