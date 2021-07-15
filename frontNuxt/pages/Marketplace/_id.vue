@@ -3,14 +3,19 @@
     <div class="productpagebody">
       <v-banner class="pa-5 pt-0">
         <v-row>
-          <v-col
-            ><h2>{{ product.name.toUpperCase() }}</h2></v-col
-          >
-          <v-col
-            ><v-btn @click="deleteoverlay = !deleteoverlay"
+          <v-col>
+            <h2>{{ product.name.toUpperCase() }}</h2>
+          </v-col>
+          <v-col>
+            <v-btn @click="deleteoverlay = !deleteoverlay"
               >Borrar Producto</v-btn
-            ></v-col
-          >
+            >
+          </v-col>
+          <v-col>
+            <v-btn @click="modifyoverlay = !modifyoverlay"
+              >Modificar Producto</v-btn
+            >
+          </v-col>
         </v-row>
       </v-banner>
       <v-row class="pa-15 d-flex align-center">
@@ -52,12 +57,33 @@
             <v-btn @click="deleteProductPage" dark color="light-blue lighten-2">
               Borrar producto
             </v-btn>
-            <v-btn @click="deleteoverlay = !deleteoverlay" dark color="light-blue lighten-2">
+            <v-btn
+              @click="deleteoverlay = !deleteoverlay"
+              dark
+              color="light-blue lighten-2"
+            >
               Volver
             </v-btn>
-            
           </v-card-actions>
         </v-card>
+      </v-overlay>
+
+      <!-- OVERLAY TO MODIFY PRODUCT FORM -->
+
+      <v-overlay :absolute="absolute" :value="modifyoverlay">
+        <NuxtLink :to="{ path: `/marketplace/${product._id}` }">
+        <!-- formulario -->
+          <v-btn @click="modifyProductPage" dark color="light-blue lighten-2">
+            Modificar producto
+          </v-btn>
+        </NuxtLink>
+        <v-btn
+          @click="modifyoverlay = !modifyoverlay"
+          dark
+          color="light-blue lighten-2"
+        >
+          Volver
+        </v-btn>
       </v-overlay>
     </div>
   </div>
@@ -67,30 +93,34 @@
 export default {
   name: 'ProductPage',
   async asyncData({ $axios, params }) {
-    const response = await $axios.$get(
-      `/products/${params.id}`
-    )
+    const response = await $axios.$get(`/products/${params.id}`)
     return { product: response }
   },
   data() {
     return {
       absolute: true,
       overlay: false,
-      deleteoverlay: false
+      deleteoverlay: false,
+      modifyoverlay: false,
     }
   },
   methods: {
     async deleteProductPage() {
-      console.log('----------', this.product)
-      const response = await this.$axios.$delete(`/products/${this.product._id}`, 
-      {
-        headers: {
-        token: localStorage.token
+      const response = await this.$axios.$delete(
+        `/products/${this.product._id}`,
+        {
+          headers: {
+            token: localStorage.token,
+          },
         }
-      })
-     this.$router.push({ name: 'Marketplace' })
-     return response
-    }
+      )
+      this.$router.push({ name: 'Marketplace' })
+      return response
+    },
+    async modifyProductPage() {
+      await window.alert('asd')
+      console.log(this.product)
+    },
   },
 }
 </script>
