@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <CProductInfo />
-  </div>
+  <v-container class="mt-10" >
+    <CProductInfo class="mt-8"/>
+  </v-container>
 </template>
 
 <script>

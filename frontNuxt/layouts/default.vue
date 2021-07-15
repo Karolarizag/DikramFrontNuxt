@@ -3,7 +3,7 @@
     <HeaderLogged v-if="this.$auth.loggedIn" />
     <Header v-else />
     <v-main>
-      <Nuxt />
+      <Nuxt class="mt-10"/>
     </v-main>
     <Footer />
   </v-app>

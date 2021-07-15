@@ -77,8 +77,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-   // baseURL: 'https://dikram.herokuapp.com/api'
-     baseURL: 'http://localhost:3000/api'
+    baseURL: 'https://dikram.herokuapp.com/api'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

@@ -1,61 +1,63 @@
 <template>
-  <div v-if="product">
-    <div class="productpagebody">
-      <v-banner class="pa-5 pt-0">
-        <h2>{{ product.name.toUpperCase() }}</h2>
-      </v-banner>
-      <v-row class="pa-15 d-flex align-center">
-
-        <v-col cols="12" md="6" v-if="product">
-          <ProductImage :product="product" @click.native="overlay = !overlay" />
-        </v-col>
-        <v-col cols="12" md="6">
-          <ProductData :product="product" />
-        </v-col>
-      </v-row>
-      <!-- <v-row class="pa-15 pt-0">
-        <v-col cols="12">
-          <ProductPucharse :product="product" />
-        </v-col>
-      </v-row> -->
-      <v-divider></v-divider>
-      <v-overlay :absolute="absolute" :value="overlay">
-        <v-img
-          :src="product.image[0]"
-          max-height="800"
-          max-width="800"
-          @click="overlay = false"
+  <v-container fluid class="px-0">
+    <v-card>
+      <v-app-bar extended extension-height="250" :src="banner">
+        <v-card
+          class="ma-auto mt-7 pa-5"
+          width="1400"
+          height="250"
+          color="rgba(236, 236, 236, 0.411)"
         >
-        </v-img>
-      </v-overlay>
+          <v-card-title class="mt-5"
+            ><h1>{{ marketplace.name }}</h1></v-card-title
+          >
+          <div class="mr-5">
+            <h2>{{ marketplace.description }}</h2>
+          </div>
+          <div>
+            <h3>{{ marketplace.ubication }}</h3>
+          </div>
+        </v-card>
+      </v-app-bar>
+    </v-card>
+    <v-toolbar class="fixed-bar" height="40">
+      <v-row>
+        <v-col class="d-flex justify-end"
+          ><v-btn @click="showProducts" text color="light-blue lighten-2"
+            >Publicaciones</v-btn
+          ></v-col
+        >
+        <v-col
+          ><v-btn @click="showPosts" text color="light-blue lighten-2"
+            >Productos</v-btn
+          ></v-col
+        >
+      </v-row>
+    </v-toolbar>
+    <div
+      v-if="productSection"
+      class="d-flex flex-wrap flex-row justify-center mx-5"
+    >
+      <ProductCard
+        elevation="2"
+        outlined
+        :product="item"
+        v-for="(item, idx) in filterItem"
+        :key="idx"
+      />
     </div>
-  </div>
+    <div v-else class="d-flex flex-wrap flex-row justify-center mx-5">
+      <PostCardFail elevation="2" outlined />
+    </div>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'ProductPage',
+  name: 'MarketplaceView',
   async asyncData({ $axios, params }) {
-    const response = await $axios.$get(
-      `/products/${params.id}`
-    )
-    return { product: response }
+    const response = await $axios.$get(`/marketplace/${params.id}`)
+    return { marketplace: response }
   },
-  data() {
-    return {
-      absolute: true,
-      overlay: false,
-   
-    }
-  },
-
 }
 </script>
-
-<style>
-.productpagebody {
-  width: 80vw;
-  margin: auto;
-  padding-top: 20px;
-}
-</style>

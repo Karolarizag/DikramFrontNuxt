@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <di>
     <v-app-bar height="920" flat prominent src="../assets/background.png">
       <v-layout
         v-if="!showLogin && !showSignup"
@@ -65,7 +65,7 @@
           />
       </div>
     </v-container>
-  </div>
+  </di>
 </template>
 
 <script>

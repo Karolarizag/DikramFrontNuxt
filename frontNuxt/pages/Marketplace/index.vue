@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="px-0 mt-13">
+  <v-container fluid class="px-0">
     <v-card>
       <v-app-bar extended extension-height="250" :src="banner">
         <v-card
