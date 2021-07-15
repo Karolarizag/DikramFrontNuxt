@@ -23,12 +23,19 @@
     <v-toolbar class="fixed-bar" height="40">
       <v-row>
         <v-col class="d-flex justify-end"
-          ><v-btn text color="black">Publicaciones</v-btn></v-col
+          ><v-btn @click="showProducts" text color="light-blue lighten-2">Publicaciones</v-btn></v-col
         >
-        <v-col><v-btn text color="black">Productos</v-btn></v-col>
+        <v-col
+          ><v-btn @click="showPosts" text color="light-blue lighten-2"
+            >Productos</v-btn
+          ></v-col
+        >
       </v-row>
     </v-toolbar>
-    <div class="d-flex flex-wrap flex-row justify-center mx-5">
+    <div
+      v-if="productSection"
+      class="d-flex flex-wrap flex-row justify-center mx-5"
+    >
       <ProductCard
         elevation="2"
         outlined
@@ -37,13 +44,21 @@
         :key="idx"
       />
     </div>
+     <div
+      v-else
+      class="d-flex flex-wrap flex-row justify-center mx-5"
+    >
+      <PostCardFail
+        elevation="2"
+        outlined
+      />
+    </div>
   </v-container>
 </template>
 
 <script>
 export default {
   name: 'Marketplace',
-
   data() {
     return {
       showSearch: true,
@@ -53,6 +68,8 @@ export default {
       name: 'YUZYS',
       description: 'Bienvenidos a Yuzys,',
       ubication: 'Tenerife sur, Islas canarias',
+      productSection: true,
+      posts: false,
     }
   },
   // eslint-disable-next-line vue/order-in-components
@@ -82,11 +99,39 @@ export default {
     show() {
       this.showSearch = !this.showSearch
     },
+    showPosts() {
+      if (!this.productSection) {
+        this.productSection = true
+        this.posts = false
+      }
+    },
+    showProducts() {
+      if(!this.posts) {
+        this.posts = true
+        this.productSection = false
+      }
+    }
   },
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+
+h1 {
+  font-family: 'Staatliches', cursive;
+  font-size: 100px;
+  color: rgb(236, 236, 236);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.74);
+}
+h2,
+h3 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 30px;
+  color: rgb(233, 233, 233);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.74);
+}
 .ProductCard::after {
   content: '';
   flex: auto;

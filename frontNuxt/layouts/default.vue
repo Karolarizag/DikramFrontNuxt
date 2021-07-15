@@ -1,8 +1,9 @@
 <template>
   <v-app>
-    <Header />
+    <HeaderLogged v-if="this.$auth.loggedIn" />
+    <Header v-else />
     <v-main>
-      <Nuxt />    
+      <Nuxt />
     </v-main>
     <Footer />
   </v-app>
@@ -10,12 +11,12 @@
 
 <script>
 export default {
-  name: 'default'
+  name: 'default',
 }
 </script>
 
 <style scoped>
-#app{ 
+#app {
   background-image: url('../assets/basebg.png') !important;
 }
 </style>
