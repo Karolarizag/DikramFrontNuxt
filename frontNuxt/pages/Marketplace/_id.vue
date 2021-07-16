@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="px-0">
     <v-card>
-      <v-app-bar extended extension-height="250" :src="banner">
+      <v-app-bar extended extension-height="250" :src="marketplace.banner[0]">
         <v-card
           class="ma-auto mt-7 pa-5"
           width="1400"
@@ -58,6 +58,26 @@ export default {
   async asyncData({ $axios, params }) {
     const response = await $axios.$get(`/marketplace/${params.id}`)
     return { marketplace: response }
+  },
+  data() {
+    return {
+      productSection: true,
+      postsSection: false,
+    }
+  },
+  methods: {
+    showPosts() {
+      if (!this.productSection) {
+        this.productSection = true
+        this.postsSection = false
+      }
+    },
+    showProducts() {
+      if(!this.posts) {
+        this.postsSection = true
+        this.productSection = false
+      }
+    }
   },
 }
 </script>

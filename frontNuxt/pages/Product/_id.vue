@@ -134,7 +134,7 @@
 <style>
   .productpagebody {
     width: 80vw;
-      margin: auto;
+    margin: auto;
     padding-top: 20px;
   }
 </style>

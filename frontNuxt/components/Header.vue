@@ -1,6 +1,6 @@
 <template>
     <div height="50">
-      <v-app-bar flat fixed app>
+      <v-app-bar flat fixed>
       <v-toolbar-title>
         <NuxtLink :to="{ path: '/' }">
           <v-img
