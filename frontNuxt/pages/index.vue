@@ -1,6 +1,6 @@
 <template>
-  <di>
-    <v-app-bar height="920" flat prominent src="../assets/background.png">
+  <div>
+    <v-app-bar height="920" flat prominent src="https://static-cse.canva.com/blob/215565/beautiful-twitter-banners.jpg">
       <v-layout
         v-if="!showLogin && !showSignup"
         row
@@ -60,12 +60,12 @@
             elevation="2"
             outlined
             :product="item"
-            v-for="(item, idx) in products"
             :key="idx"
+            v-for="(item, idx) in products"
           />
       </div>
     </v-container>
-  </di>
+  </div>
 </template>
 
 <script>

@@ -246,7 +246,6 @@ export default {
       this.material = ''
     },
     async submitProduct() {
-      console.log(this.productdata)
       const res = await this.$axios.$put(
         `/products/${this.product._id}`, this.productdata,
         {

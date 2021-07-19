@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-5" width="320">
+  <v-card v-if="product" class="ma-5" width="320">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"

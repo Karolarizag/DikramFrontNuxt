@@ -42,7 +42,7 @@
         elevation="2"
         outlined
         :product="item"
-        v-for="(item, idx) in filterItem"
+        v-for="(item, idx) in products"
         :key="idx"
       />
     </div>
@@ -57,7 +57,8 @@ export default {
   name: 'MarketplaceView',
   async asyncData({ $axios, params }) {
     const response = await $axios.$get(`/marketplace/${params.id}`)
-    return { marketplace: response }
+    const res = await $axios.$get(`/marketplace/${response._id}/products`)
+    return { marketplace: response, products: res }
   },
   data() {
     return {

@@ -2,7 +2,7 @@
   <div height="50">
     <v-app-bar flat fixed>
       <v-toolbar-title>
-        <NuxtLink :to="{ name: 'Marketplace' }">
+        <NuxtLink :to="{ name: 'Explore' }">
           <v-img
             src="logo.png"
             max-height="40"
@@ -96,14 +96,7 @@ export default {
       return this.$auth.user && this.$auth.user.role === 'seller'
     },
   },
-  mounted() {
-    console.log('storage', this.$auth.user)
-  },
-
   methods: {
-    showRoles() {
-      console.log(this.$auth.$storage.getUniversal('role'))
-    },
     logout() {
       this.$auth.logout()
     },

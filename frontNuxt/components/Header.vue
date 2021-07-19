@@ -29,7 +29,7 @@
         @keyup="searchItem"
       ></v-text-field>
 
-      <v-btn icon @click="logout" :to="{ path: '/marketplace' }">
+      <v-btn icon @click="logout" :to="{ name: 'Explore' }">
         <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon>
       </v-btn>
       <v-btn text color="light-blue lighten-2" @click="login = !login">
@@ -39,10 +39,10 @@
         Registrarse
       </v-btn>
     </v-app-bar>
-    <v-overlay :dark="false" :absolute="absolute" :value="login">
+    <v-overlay :dark="false" :value="login">
       <LoginForm @changeView="login = !login" />
     </v-overlay>
-    <v-overlay :dark="false" :absolute="absolute" :value="signup">
+    <v-overlay :dark="false" :value="signup">
       <RegisterForm @changeView="signup = !signup" />
     </v-overlay>
   </div>
@@ -67,14 +67,7 @@ export default {
       return this.$auth.user && this.$auth.user.role === 'seller'
     },
   },
-  mounted() {
-    console.log('storage', this.$auth.user)
-  },
-
   methods: {
-    showRoles() {
-      console.log(this.$auth.$storage.getUniversal('role'))
-    },
     logout() {
       this.$auth.logout()
     },
