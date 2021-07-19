@@ -12,7 +12,12 @@
               src="../assets/imagedefault.png"
               style="margin-top: 20px; max-width: 350px; max-height: 350px"
             />
-            <v-btn class="mt-3 mx-10 mt-10" color="light-blue lighten-2" dark>
+            <v-btn
+              class="mt-3 mx-10 mt-10"
+              color="light-blue lighten-2"
+              dark
+              @click="onInput"
+            >
               Añadir imagen
             </v-btn>
           </v-col>
@@ -22,11 +27,11 @@
           <v-col cols="12">
             <div class="d-flex flex-wrap mt-5 justify-center">
               <v-textarea
+                v-model="description"
                 min-width="100%"
                 solo
                 label="Añade aquí la descripción de tu producto"
                 class="mt-3 px-3"
-                v-model="description"
               >
               </v-textarea>
             </div>
@@ -45,5 +50,13 @@ export default {
       description: '',
     }
   },
+  mounted: {
+   //  this.$bus.$on('cloudImage')
+  },
+  methods: {
+    onInput() {
+      document.getElementById('cloud').click()      
+    },
+  }
 }
 </script>

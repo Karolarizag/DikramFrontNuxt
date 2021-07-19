@@ -14,7 +14,7 @@
           ></v-img>
         </NuxtLink>
       </v-toolbar-title>
-
+ 
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
