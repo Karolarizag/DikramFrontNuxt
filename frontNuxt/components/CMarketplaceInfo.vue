@@ -21,13 +21,13 @@
       </v-row>
 
       <v-row class="px-5">
-        <v-textarea solo :rules="rules.description" label="Añade aquí una descripción de tu tienda" v-model="des" class="mt-8"></v-textarea>
+        <v-textarea solo :rules="rules.description" label="Añade aquí una descripción de tu tienda" v-model="marketplaceDescription" class="mt-8"></v-textarea>
       </v-row>
 
       <v-row>
 
         <v-col>
-          <v-text-field type="text" class="mx-2" label="Categorías" v-model="cates" @keydown.enter="sendCategories()" outlined dense>
+          <v-text-field type="text" class="mx-2" label="Categorías" v-model="category" @keydown.enter="sendCategories()" outlined dense>
         </v-text-field>
         <div class="d-flex flex-wrap px-2">
           <div v-for="(item, idx) in this.categories" :key="idx" class="ma-1">
@@ -63,8 +63,8 @@ export default {
    data() {
     return {
       title: '',
-      des: '',
-      cates: '',
+      marketplaceDescription: '',
+      category: '',
       categories: [],
       shipping: false,
       ubication: '',
@@ -75,8 +75,8 @@ export default {
   },
   methods: {
     sendCategories() {
-      this.categories.push(this.cates)
-      this.cates = ''
+      this.categories.push(this.category)
+      this.category = ''
     },
     removeCategory(item) {
       this.categories.splice(this.categories.indexOf(item), 1)
@@ -85,7 +85,7 @@ export default {
     async submitMarketplace() {
       const res = await this.$axios.$post('/marketplace', {
         name: this.title,
-        description: this.des,
+        description: this.marketplaceDescription,
         categories: this.categories,
         shipping: this.shipping,
         ubication: this.ubication
