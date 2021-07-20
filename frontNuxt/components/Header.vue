@@ -1,6 +1,6 @@
 <template>
     <div height="50">
-      <v-app-bar flat fixed>
+      <v-app-bar flat app>
       <v-toolbar-title>
         <NuxtLink :to="{ path: '/' }">
           <v-img
@@ -12,6 +12,7 @@
         </NuxtLink>
       </v-toolbar-title>
 
+
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -22,20 +23,22 @@
         flat
         dense
         dark
-        class="btn-search pt-5 mt-1"
+        class="btn-search pt-5 mt-1 mx-1"
         :class="{ closed: searchClosed }"
         @focus="searchClosed = false"
         @blur="searchClosed = true"
         @keyup="searchItem"
       ></v-text-field>
 
-      <v-btn icon @click="logout" :to="{ name: 'Explore' }">
-        <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon>
+      <v-btn text :to="{ name: 'explore' }" color="light-blue lighten-2" nuxt class="mx-1">
+        Explorar
+        <!-- <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon> -->
       </v-btn>
-      <v-btn text color="light-blue lighten-2" @click="login = !login">
+
+      <v-btn text color="light-blue lighten-2" class="mx-1" @click="login = !login">
         Acceder
       </v-btn>
-      <v-btn text color="light-blue lighten-2" @click="signup = !signup">
+      <v-btn text color="light-blue lighten-2" class="mx-1" @click="signup = !signup">
         Registrarse
       </v-btn>
     </v-app-bar>
@@ -68,9 +71,6 @@ export default {
     },
   },
   methods: {
-    logout() {
-      this.$auth.logout()
-    },
     searchDrop() {
       this.showSearch = !this.showSearch
     },

@@ -1,10 +1,13 @@
 <template>
   <v-form>
     <v-card shaped class="mx-auto my-12 pa-10" min-width="650" elevation="10">
+
       <v-btn absolute top right icon @click="$emit('changeView')">
         <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
       </v-btn>
+
       <v-card-text class="mt-5">
+
         <v-text-field
           v-model="username"
           :counter="16"
@@ -13,6 +16,7 @@
           prepend-icon="mdi-account"
           outlined
         ></v-text-field>
+
         <v-text-field
           v-model="email"
           label="E-mail"
@@ -20,6 +24,7 @@
           prepend-icon="mdi-email"
           outlined
         ></v-text-field>
+
         <v-text-field
           v-model="password"
           type="password"
@@ -28,6 +33,7 @@
           outlined
           prepend-icon="mdi-lock"
         ></v-text-field>
+
         <v-text-field
           v-model="repeatPassword"
           type="password"
@@ -36,6 +42,7 @@
           prepend-icon="mdi-lock-check"
           required
         ></v-text-field>
+
         <v-text-field
           v-model="birthdate"
           type="date"
@@ -51,11 +58,16 @@
           label="¿Quieres una cuenta como empresa?"
           class="mt-3"
         ></v-switch>
+
       </v-card-text>
+
       <v-card-actions class="justify-center">
-        <v-btn block @click="signup" dark color="light-blue lighten-2"
-          >Registrarse</v-btn
-        >
+
+        <v-btn dark color="light-blue lighten-2" block @click="signup"
+          >
+          Registrarse
+        </v-btn>
+
       </v-card-actions>
     </v-card>
   </v-form>
@@ -114,41 +126,22 @@ export default {
       if (!this.formHasErrors) this.signup()
     },
     async signup() {
-      try {
-        const role = this.isSeller ? 'seller' : 'user'
-        await this.$axios.$post('/auth/signup', {
-          username: this.username,
+      const role = this.isSeller ? 'seller' : 'user'
+      await this.$axios.$post('/auth/signup', {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        birthdate: this.birthdate,
+        role,
+      })
+
+      await this.$auth.loginWith('local', {
+        data: {
           email: this.email,
           password: this.password,
-          birthdate: this.birthdate,
-          role,
-        })
-
-        await this.$auth.loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password,
-          },
-        })
-
-        this.$router.push('/MarketPlace')
-      } catch (error) {
-        console.log(error)
-      }
+        },
+      })
     },
-
-    // signup() {
-    //   const role = this.isSeller ? "seller" : "user";
-    //   authService
-    //     .signup(this.username, this.email, this.password, this.birthdate, role)
-    //     .then((res) => {
-    //       localStorage.setItem("token", res.token);
-    //       localStorage.setItem("email", res.email);
-    //       localStorage.setItem("role", res.role);
-    //       this.$router.push({ name: "MarketPlace" });
-    //     })
-    //     .catch((err) => console.log(err));
-    // },
   },
 }
 </script>
