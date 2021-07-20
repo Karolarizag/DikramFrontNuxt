@@ -63,22 +63,15 @@ export default {
           uploadPreset: 'pordefecto',
         })
         this.src = instance.then((e) => {
+          // eslint-disable-next-line no-console
           console.log(e.secure_url)
           this.url = e.secure_url
         })
         this.$bus.$emit('cloudImage', this.url)
-        
+      
         // eslint-disable-next-line no-console
         console.log(this.scr)
-        // const formData = new FormData()
-        // formData.append('file', this.image)
-        // const results = await this.$cloudinary.upload(formData, {
-        //   public_id: 'vengaCoño',
-        //   folder: 'subidas',
-        //   upload_preset: 'pordefecto',
-        // })
-        // // eslint-disable-next-line no-console
-        // console.log(results)
+        
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error.message)
