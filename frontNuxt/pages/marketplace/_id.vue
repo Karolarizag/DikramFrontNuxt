@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="px-0">
     <v-card>
-      <v-app-bar extended extension-height="250" :src="marketplace.banner[0]">
+      <v-app-bar extended extension-height="250" :src="marketplace.bannerimage">
 
         <v-card
           class="ma-auto mt-7 pa-5"
