@@ -1,14 +1,11 @@
 <template>
   <div>
-    <CPost/>
-    <CloudinaryUpload/>
+    AQUI VAN POST
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'Post',
+name:'Post'
 }
 </script>
-

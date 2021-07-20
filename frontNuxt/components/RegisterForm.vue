@@ -130,8 +130,6 @@ export default {
             password: this.password,
           },
         })
-
-        this.$router.push('/MarketPlace')
       } catch (error) {
         console.log(error)
       }

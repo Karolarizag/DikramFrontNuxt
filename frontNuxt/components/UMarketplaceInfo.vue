@@ -70,7 +70,7 @@ export default {
       ubication: '',
       rules: {
         description: [(v) => v.length <= 195 || 'Máximo de caracteres 195']
-        }
+      }
     }
   },
   methods: {

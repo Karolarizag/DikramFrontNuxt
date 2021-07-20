@@ -1,62 +1,144 @@
 <template>
-  <div>
-    <v-container>
-      <v-card class="pb-10 pa-3 mt-5">
-        <v-row>
-          <v-col
-            cols="4"
-            class="d-flex justify-center align-center flex-column ml-7"
-          >
-            <!-- <VImageInput class="ml-7" /> -->
-            <img
-              src="../assets/imagedefault.png"
-              style="margin-top: 20px; max-width: 350px; max-height: 350px"
-            />
-            <v-btn
+  <v-card class="pb-10 pa-3 mt-5">
+    <v-row>
+      <v-col cols="12" class="d-flex justify-center align-center flex-column">
+        <img
+          v-if="url === ''"
+          src="../assets/imagedefault.png"
+          style="margin-top: 20px; width: 450px; height: auto"
+        />
+        <cld-image v-else width="450" crop="scale" :public-id="url" />
+        <!-- <v-btn
               class="mt-3 mx-10 mt-10"
               color="light-blue lighten-2"
               dark
               @click="onInput"
             >
               Añadir imagen
-            </v-btn>
-          </v-col>
-        </v-row>
+            </v-btn> -->
+        <CloudinaryUpload />
+      </v-col>
+    </v-row>
 
-        <v-row>
-          <v-col cols="12">
-            <div class="d-flex flex-wrap mt-5 justify-center">
-              <v-textarea
-                v-model="description"
-                min-width="100%"
-                solo
-                label="Añade aquí la descripción de tu producto"
-                class="mt-3 px-3"
-              >
-              </v-textarea>
-            </div>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-container>
-  </div>
+    <v-row>
+      <v-col cols="12">
+        <div class="d-flex flex-wrap mt-5 justify-center">
+          <v-textarea
+            v-model="description"
+            min-width="100%"
+            solo
+            label="Añade aquí la descripción de tu producto"
+            class="mt-3 px-3"
+          >
+          </v-textarea>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-text-field
+          v-model="tag"
+          type="text"
+          class="mx-2"
+          label="Etiquetas"
+          outlined
+          dense
+          @keydown.enter="sendTags()"
+        >
+        </v-text-field>
+        <div class="d-flex flex-wrap px-2">
+          <div v-for="(item, idx) in postTags" :key="idx" class="ma-1">
+            <v-chip color="cyan lighten-4" close @click:close="removeTag(item)">
+              <strong>{{ item }}</strong
+              >&nbsp;
+            </v-chip>
+          </div>
+        </div>
+      </v-col>
+      <v-col>
+        <v-combobox
+          v-model="postProducts"
+          :items="products"
+          item-text="name"
+          item-value="item"
+          outlined
+          dense
+          label="Productos Relacionados"
+          multiple
+          return-object
+        ></v-combobox>
+      </v-col>
+    </v-row>
+    <div class="d-flex flex-wrap mt-5 justify-center">
+      <v-btn color="light-blue lighten-2" dark @click="crearPost">
+        Crear
+      </v-btn>
+    </div>
+  </v-card>
 </template>
 
 <script>
 export default {
-  name: 'NewPost',
+  name: 'CPost',
+  props: {
+    products: [],
+  },
   data() {
     return {
+      url: '',
       description: '',
+      tag: '',
+      postTags: [],
+      postProducts: [],
+      productsId: [],
     }
   },
-  mounted: {
-   //  this.$bus.$on('cloudImage')
+  computed: {
+    sendProductId() {
+      return this.postProducts.map((product) => {
+        console.log(product._id)
+        return product._id
+      })
+    },
+  },
+  mounted() {
+    this.$root.$on('cloudImage', (url) => {
+      this.url = url
+    })
   },
   methods: {
     onInput() {
-      document.getElementById('cloud').click()      
+      document.getElementById('cloud').click()
     },
-  }
+    removeTag(item) {
+      this.postTags.splice(this.postTags.indexOf(item), 1)
+      this.postTags = [...this.postTags]
+    },
+    sendTags() {
+      this.postTags.push(this.tag)
+      this.tag = ''
+    },
+    async crearPost() {
+      const idPost = this.postProducts.map((product) => {
+        return product._id
+      })
+// eslint-disable-next-line no-console
+console.log(idPost)
+      try {
+        await this.$axios.$post('/post', {
+          image: this.url,
+          description: this.description,
+          tags: this.postTags,
+          products: idPost,
+        })
+        this.postProducts = []
+        this.$router.push({
+          path: `/marketplace/${this.$auth.user.marketplace}`,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
 }
 </script>

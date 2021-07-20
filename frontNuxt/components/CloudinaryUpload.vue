@@ -1,30 +1,14 @@
 <template>
   <div>
-    <!-- <v-text-field
-      v-model="nameImage"
-      label="nombre imagen"
-      outlined
-    ></v-text-field> -->
-    <!-- <v-file-input
-      label="Subir imagen"
-      outlined
-      accept="image/*"
-      @change="inputImage({ $event })"
-    ></v-file-input> -->
-
-    <!-- <v-btn rounded type="submit" color="primary" dark @click="onUpload"
-      >Subir</v-btn
-    > -->
     <v-btn
       @click="onInput"
       class="mt-3 mx-10 mt-10"
-      color="light-blue lighten-2"
+      color="deep-purple lighten-2"
       dark
     >
       Añadir imagen
     </v-btn>
-      <input  id="cloud" hidden type="file" accept="image/*" @change="onUpload" />
-    <cld-image :public-id="url" />
+    <input id="cloud" hidden type="file" accept="image/*" @change="onUpload" />
   </div>
 </template>
 
@@ -34,19 +18,16 @@ export default {
   data() {
     return {
       image: '',
-      image2: '',
-      nameImage: '',
       url: '',
       src: '',
     }
   },
   methods: {
-    onInput(){
-      document.getElementById("cloud").click()
+    onInput() {
+      document.getElementById('cloud').click()
     },
     async onUpload(event) {
       try {
-
         this.image = event.target.files[0]
         if (!this.image) return
 
@@ -61,17 +42,12 @@ export default {
         const instance = this.$cloudinary.upload(data, {
           folder: 'subidas',
           uploadPreset: 'pordefecto',
+          
         })
         this.src = instance.then((e) => {
-          // eslint-disable-next-line no-console
-          console.log(e.secure_url)
-          this.url = e.secure_url
+
+          this.$root.$emit('cloudImage', e.secure_url)
         })
-        this.$bus.$emit('cloudImage', this.url)
-      
-        // eslint-disable-next-line no-console
-        console.log(this.scr)
-        
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error.message)

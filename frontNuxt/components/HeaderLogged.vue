@@ -74,6 +74,17 @@
               Ir a tienda
             </v-btn>
           </v-list-item>
+          <v-list-item>
+            <v-btn
+              width="270"
+              text
+              color="light-blue lighten-2"
+              :to="{ name: `PostForm` }"
+            >
+              Crear Post
+            </v-btn>
+            
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>

@@ -47,7 +47,7 @@
       />
     </div>
     <div v-else class="d-flex flex-wrap flex-row justify-center mx-5">
-      <PostCardFail elevation="2" outlined />
+      Cartas de post
     </div>
   </v-container>
 </template>
@@ -55,9 +55,10 @@
 <script>
 export default {
   name: 'MarketplaceView',
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, params}) {
     const response = await $axios.$get(`/marketplace/${params.id}`)
     const res = await $axios.$get(`/marketplace/${response._id}/products`)
+    
     return { marketplace: response, products: res }
   },
   data() {
