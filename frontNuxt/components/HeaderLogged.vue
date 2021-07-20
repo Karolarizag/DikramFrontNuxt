@@ -1,8 +1,8 @@
 <template>
-    <div height="50">
-      <v-app-bar flat fixed>
+  <div height="50">
+    <v-app-bar flat fixed>
       <v-toolbar-title>
-        <NuxtLink :to="{ path: '/' }">
+        <NuxtLink :to="{ name: 'Explore' }">
           <v-img
             src="logo.png"
             max-height="40"
@@ -11,6 +11,7 @@
           ></v-img>
         </NuxtLink>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -28,22 +29,54 @@
         @keyup="searchItem"
       ></v-text-field>
 
-      <v-btn icon @click="logout" :to="{ name: 'Explore' }">
-        <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon>
+      <v-btn icon>
+        <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
       </v-btn>
-      <v-btn text color="light-blue lighten-2" @click="login = !login">
-        Acceder
+
+      <v-btn icon @click="logout">
+        <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
       </v-btn>
-      <v-btn text color="light-blue lighten-2" @click="signup = !signup">
-        Registrarse
-      </v-btn>
+
+      <v-menu left>
+        <template #activator="{ on, attrs }">
+          <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list v-if="isSeller" width="300" class="mt-12">
+          <v-list-item>
+            <v-btn
+              text
+              color="light-blue lighten-2"
+              :to="{ name: 'ProductForm' }"
+              width="270"
+            >
+              Crear Producto
+            </v-btn>
+          </v-list-item>
+          <v-list-item>
+            <v-btn
+              width="270"
+              text
+              color="light-blue lighten-2"
+              :to="{ name: 'MarketplaceForm' }"
+            >
+              Crear tienda
+            </v-btn></v-list-item>
+          <v-list-item>
+            <v-btn
+              width="270"
+              text
+              color="light-blue lighten-2"
+              :to="{ path: `/marketplace/${this.$auth.user.marketplace}` }"
+            >
+              Ir a tienda
+            </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
-    <v-overlay :dark="false" :value="login">
-      <LoginForm @changeView="login = !login" />
-    </v-overlay>
-    <v-overlay :dark="false" :value="signup">
-      <RegisterForm @changeView="signup = !signup" />
-    </v-overlay>
   </div>
 </template>
 
@@ -55,10 +88,7 @@ export default {
       showSearch: false,
       searchClosed: true,
       search: '',
-      login: false,
-      signup: false,
-      email: '',
-      password: '',
+      updateMarketplace: false,
     }
   },
   computed: {
@@ -75,11 +105,6 @@ export default {
     },
     searchItem() {
       this.$nuxt.$emit('searchItem', this.search)
-    },
-    async iniciar() {
-      await this.$auth.loginWith('local', {
-        data: { email: this.email, password: this.password },
-      })
     },
   },
 }

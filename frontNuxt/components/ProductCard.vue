@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-5" width="320">
+  <v-card v-if="product" class="ma-5" width="320">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -42,7 +42,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <NuxtLink :to="{ path: `/marketplace/${product._id}` }" style="text-decoration: none;">
+      <NuxtLink :to="{ path: `/product/${product._id}` }" style="text-decoration: none;">
         <v-btn color="light-blue lighten-2" text> Ver producto </v-btn>
       </NuxtLink>
     </v-card-actions>

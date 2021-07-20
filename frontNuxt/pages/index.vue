@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar height="920" flat prominent src="../assets/background.png">
+    <v-app-bar height="920" flat prominent src="https://static-cse.canva.com/blob/215565/beautiful-twitter-banners.jpg">
       <v-layout
         v-if="!showLogin && !showSignup"
         row
@@ -16,7 +16,7 @@
           dark
           @click="showLogin = true"
         >
-          Iniciar
+          Acceder
         </v-btn>
         <v-btn
           class="mx-10"
@@ -39,7 +39,7 @@
         <LoginForm v-if="showLogin" @changeView="showLogin = false" />
         <RegisterForm v-if="showSignup" @changeView="showSignup = false" />
       </v-layout>
-      <div
+      <!-- <div
         v-if="!showLogin && !showSignup"
         row
         wrap
@@ -52,18 +52,35 @@
             <v-icon>mdi-arrow-right-thick</v-icon>
           </v-btn>
         </NuxtLink>
-      </div>
+      </div> -->
     </v-app-bar>
+    <v-container fluid>
+        <div class="d-flex flex-wrap flex-row justify-center mx-5" >
+          <ProductCard
+            elevation="2"
+            outlined
+            :product="item"
+            :key="idx"
+            v-for="(item, idx) in products"
+          />
+      </div>
+    </v-container>
   </div>
 </template>
 
 <script>
 export default {
   name: "Home",
+  async asyncData({ $axios }) {
+    const response = await $axios.$get('/products')
+    return { products: response }
+  },
   data() {
     return {
       showLogin: false,
       showSignup: false,
+      showSearch: true,
+      filter: '',
     };
   },
 };
