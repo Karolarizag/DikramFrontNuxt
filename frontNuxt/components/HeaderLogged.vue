@@ -74,6 +74,15 @@
               Ir a tienda
             </v-btn>
           </v-list-item>
+             <v-list-item>
+            <v-btn
+              text
+              color="light-blue lighten-2"
+              :to="{ name: 'Post' }"
+            >
+              Crear Post
+            </v-btn>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
