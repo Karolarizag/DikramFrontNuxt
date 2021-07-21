@@ -4,11 +4,11 @@
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
       <ProductCard
+        v-for="(item, idx) in filterItem"
+        :key="idx"
         elevation="2"
         outlined
         :product="item"
-        v-for="(item, idx) in filterItem"
-        :key="idx"
       />
     </div>
      <div
@@ -30,8 +30,8 @@ export default {
   },
   // eslint-disable-next-line vue/order-in-components
   async asyncData({ $axios }) {
-    const response = await $axios.$get('/products')
-    return { products: response }
+    const products = await $axios.$get('/products')
+    return { products }
   },
   mounted() {
     this.$nuxt.$on('searchItem', (item) => {

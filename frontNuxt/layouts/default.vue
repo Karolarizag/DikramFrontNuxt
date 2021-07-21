@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <HeaderLogged v-if="this.$auth.loggedIn" />
+    <HeaderLogged v-if="$auth.loggedIn" />
     <Header v-else />
     <v-main>
-      <Nuxt style="margin-top: 100px" />    
+      <Nuxt/>
     </v-main>
     <Footer />
   </v-app>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'default',
+  name: 'Default',
 }
 </script>
 

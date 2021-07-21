@@ -8,7 +8,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img height="400" :src="marketplace.banner[0]"></v-img>
+    <v-img height="400" :src="marketplace.bannerimage"></v-img>
 
     <v-card-title>{{ marketplace.name }}</v-card-title>
 
@@ -31,7 +31,11 @@
 export default {
   name: 'MarketplaceCard',
   props: {
-    marketplace: Object
-  },
+    marketplace: {
+      type: Object,
+      default: null
+      }
+      
+  }
 }
 </script>

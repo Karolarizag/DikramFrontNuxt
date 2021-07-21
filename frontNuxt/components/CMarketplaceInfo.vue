@@ -8,7 +8,7 @@
       </v-row>
 
       <v-row>
-        <v-text-field type="text" class="mx-5 mt-5" label="Nombre de tienda" v-model="title" outlined dense></v-text-field>
+        <v-text-field v-model="title" dense outlined type="text" class="mx-5 mt-5" label="Nombre de tienda"></v-text-field>
       </v-row>
 
       <v-row>
@@ -21,16 +21,16 @@
       </v-row>
 
       <v-row class="px-5">
-        <v-textarea solo :rules="rules.description" label="Añade aquí una descripción de tu tienda" v-model="marketplaceDescription" class="mt-8"></v-textarea>
+        <v-textarea v-model="marketplaceDescription" solo :rules="rules.description" label="Añade aquí una descripción de tu tienda" class="mt-8"></v-textarea>
       </v-row>
 
       <v-row>
 
         <v-col>
-          <v-text-field type="text" class="mx-2" label="Categorías" v-model="category" @keydown.enter="sendCategories()" outlined dense>
+          <v-text-field v-model="category" type="text" class="mx-2" label="Categorías" outlined dense @keydown.enter="sendCategories()">
         </v-text-field>
         <div class="d-flex flex-wrap px-2">
-          <div v-for="(item, idx) in this.categories" :key="idx" class="ma-1">
+          <div v-for="(item, idx) in categories" :key="idx" class="ma-1">
             <v-chip color="cyan lighten-4" close @click:close="removeCategory(item)">
               <strong>{{ item }}</strong>&nbsp;
             </v-chip>
@@ -39,14 +39,14 @@
         </v-col>
 
         <v-col>
-           <v-text-field type="text" class="mr-2" label="Ubicación de tu tienda" v-model="ubication" outlined dense></v-text-field>
+           <v-text-field v-model="ubication" type="text" class="mr-2" outlined dense label="Ubicación de tu tienda"></v-text-field>
         </v-col>
 
       </v-row>
 
       <v-row>
         <v-col>
-          <v-switch class="ml-3" label="¿Tienes servicio de envíos?" color="light-blue lighten-2" v-model="shipping" >
+          <v-switch v-model="shipping" class="ml-3" label="¿Tienes servicio de envíos?" color="light-blue lighten-2">
           </v-switch>
         </v-col>
         <v-col class="d-flex justify-center align-end flex-column mr-2">
@@ -95,7 +95,7 @@ export default {
           token: localStorage.token
         }
       })
-      this.$router.push({ name: 'Marketplace' })
+      this.$router.push({ name: 'marketplace' })
       res.status(200).json(res)
     }
   },

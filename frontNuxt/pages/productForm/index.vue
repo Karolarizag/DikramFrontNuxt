@@ -6,59 +6,63 @@
           cols="4"
           class="d-flex justify-center align-center flex-column ml-7"
         >
-          <cld-image quality="auto" width="350" crop="scale" :public-id="url" />
-          <CloudinaryUpload />
-          <!-- <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark> Añadir imagen </v-btn> -->
+          <!-- <VImageInput class="ml-7" />  -->
+          <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark>
+            Añadir imagen
+          </v-btn>
         </v-col>
 
         <v-col cols="7">
-          <v-row>
-            <div class="d-flex flex-wrap mt-5 justify-center">
-              <div v-for="(item, idx) in images" :key="idx">
-                <cld-image width="150" crop="crop" :public-id="item" />
-                <!-- <img class="ma-1" style="max-width: 150px; max-height: 150px;" src="~/assets/imagedefault.png"/> -->
-              </div>
+          <div class="d-flex flex-wrap mt-5 justify-center">
+            <div v-for="(item, idx) in images" :key="idx">
+              <img
+                class="ma-1"
+                style="max-width: 150px; max-height: 150px"
+                src="~/assets/imagedefault.png"
+              />
             </div>
-          </v-row>
-          <v-row>
-            
-              <v-textarea
-                solo
-                label="Añade aquí la descripción de tu producto"
-                class="mt-3 px-3"
-                v-model="description"
-              >
-              </v-textarea>
-          
-          </v-row>
+
+            <v-textarea
+              v-model="description"
+              solo
+              label="Añade aquí la descripción de tu producto"
+              class="mt-3 px-3"
+            >
+            </v-textarea>
+          </div>
         </v-col>
       </v-row>
       <v-row class="px-15">
         <v-col>
           <v-text-field
+            v-model="productTitle"
             type="text"
             width="500"
             class="mx-2"
             label="Nombre"
             outlined
             dense
-            v-model="title"
-          ></v-text-field>
+          >
+          </v-text-field>
         </v-col>
-
         <v-col>
           <v-text-field
+            v-model="tag"
             type="text"
             class="mx-2"
             label="Etiquetas"
-            v-model="etiquetas"
-            @keydown.enter="sendTags()"
             outlined
             dense
+            @keydown.enter="sendTags()"
           >
           </v-text-field>
+
           <div class="d-flex flex-wrap px-2">
-            <div v-for="(item, idx) in this.tags" :key="idx" class="ma-1">
+            <div
+              v-for="(item, idx) in productTags"
+              :key="idx"
+              class="ma-1"
+            >
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -74,9 +78,9 @@
       <v-row class="px-15">
         <v-col>
           <v-text-field
-            type="text"
-            class="mx-2"
             v-model="price"
+            type="number"
+            class="mx-2"
             label="Precio"
             outlined
             dense
@@ -85,43 +89,36 @@
         </v-col>
 
         <v-col>
-          <v-text-field
-            type="text"
-            class="mx-2"
-            label="Tallas"
-            v-model="tallas"
-            @keydown.enter="sendSizes()"
+          <v-autocomplete
+            v-model="productSizes"
+            :items="size"
             outlined
             dense
+            chips
+            small-chips
+            label="Tallas"
+            multiple
           >
-          </v-text-field>
-          <div class="d-flex flex-wrap px-2">
-            <div v-for="(item, idx) in this.sizes" :key="idx" class="ma-1">
-              <v-chip
-                color="cyan lighten-4"
-                close
-                @click:close="removeSize(item)"
-              >
-                <strong>{{ item }}</strong
-                >&nbsp;
-              </v-chip>
-            </div>
-          </div>
+          </v-autocomplete>
         </v-col>
-
         <v-col>
           <v-text-field
+            v-model="color"
             type="text"
             class="mx-2"
             label="Color"
-            v-model="color"
-            @keydown.enter="sendColors()"
             outlined
             dense
+            @keydown.enter="sendColors()"
           >
           </v-text-field>
+
           <div class="d-flex flex-wrap px-2">
-            <div v-for="(item, idx) in this.colors" :key="idx" class="ma-1">
+            <div
+              v-for="(item, idx) in productColors"
+              :key="idx"
+              class="ma-1"
+            >
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -133,20 +130,24 @@
             </div>
           </div>
         </v-col>
-
         <v-col>
           <v-text-field
+            v-model="material"
             type="text"
             class="mx-2"
             label="Material"
-            v-model="material"
-            @keydown.enter="sendMaterials()"
             outlined
             dense
+            @keydown.enter="sendMaterials()"
           >
           </v-text-field>
+
           <div class="d-flex flex-wrap px-2">
-            <div v-for="(item, idx) in this.materials" :key="idx" class="ma-1">
+            <div
+              v-for="(item, idx) in productMaterial"
+              :key="idx"
+              class="ma-1"
+            >
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -161,10 +162,10 @@
       </v-row>
       <v-row class="d-flex justify-center">
         <v-switch
+          v-model="customizable"
           class="mb-2"
           label="Producto customizable"
           color="light-blue lighten-2"
-          v-model="customizable"
         >
         </v-switch>
 
@@ -183,95 +184,99 @@
 
 <script>
 export default {
-  name: 'CProductImage',
+  name: 'NewProduct',
   data() {
     return {
       imageInput: ['urlimage'],
-      title: '',
+      productTitle: '',
       description: '',
-      etiquetas: '',
-      tags: [],
+      tag: '',
+      productTags: [],
       price: null,
-      tallas: '',
-      sizes: [],
+      size: [
+        'Única',
+        'XS',
+        'S',
+        'M',
+        'L',
+        'XL',
+        'XXL',
+        '35',
+        '36',
+        '37',
+        '38',
+        '39',
+        '40',
+        '41',
+        '42',
+        '43',
+        '44',
+      ],
+      productSizes: [],
       color: '',
-      colors: [],
+      productColors: [],
       material: '',
-      materials: [],
+      productMaterial: [],
       customizable: false,
-      images: [],
-      url: '',
+      images: [1, 2, 3, 4, 5, 6, 7, 8],
     }
-  },
-  mounted() {
-    this.$root.$on('cloudImage', (url) => {
-      this.url = url
-      this.images.push(url)
-    })
   },
   methods: {
     removeTag(item) {
-      this.tags.splice(this.tags.indexOf(item), 1)
-      this.tags = [...this.tags]
+      this.productTags.splice(this.productTags.indexOf(item), 1)
+      this.productTags = [...this.productTags]
     },
     removeSize(item) {
-      this.sizes.splice(this.sizes.indexOf(item), 1)
-      this.sizes = [...this.sizes]
+      this.productSizes.splice(this.productSizes.indexOf(item), 1)
+      this.productSizes = [...this.productSizes]
     },
     removeColor(item) {
-      this.colors.splice(this.colors.indexOf(item), 1)
-      this.colors = [...this.colors]
+      this.productColors.splice(this.productColors.indexOf(item), 1)
+      this.productColors = [...this.productColors]
     },
     removeMat(item) {
-      this.materials.splice(this.materials.indexOf(item), 1)
-      this.materials = [...this.materials]
+      this.productMaterial.splice(this.productMaterial.indexOf(item), 1)
+      this.productMaterial = [...this.productMaterial]
     },
     sendTags() {
-      this.tags.push(this.etiquetas)
-      this.etiquetas = ''
+      this.productTags.push(this.tag)
+      this.tag = ''
     },
     sendSizes() {
-      this.sizes.push(this.tallas)
-      this.tallas = ''
+      this.productSizes.push(this.size)
+      this.size = ''
     },
     sendColors() {
-      this.colors.push(this.color)
+      this.productColors.push(this.color)
       this.color = ''
     },
     sendMaterials() {
-      this.materials.push(this.material)
+      this.productMaterial.push(this.material)
       this.material = ''
     },
     async submitProduct() {
       const res = await this.$axios.$post(
         '/products',
         {
-          name: this.title,
+          name: this.productTitle,
           description: this.description,
-          image: this.images,
-          sizes: this.sizes,
-          colors: this.colors,
-          materials: this.materials,
+          image: this.image,
+          sizes: this.productSizes,
+          colors: this.productColors,
+          materials: this.productMaterial,
           customizable: this.customizable,
-          tags: this.tags,
+          tags: this.productTags,
           price: this.price,
-        },
-        {
-          headers: {
-            token: localStorage.token,
-          },
         }
+        // {
+        //   headers: {
+        //     token: localStorage.token,
+        //   },
+        // }
       )
-      this.$router.push({ name: 'Marketplace' })
+      this.$router.push({ name: 'explore' })
       res.status(200).json(res)
     },
   },
 }
 </script>
-<style scoped>
-.images {
-  background-size: cover;
-  width: 150px;
-  height: 150px;
-}
-</style>

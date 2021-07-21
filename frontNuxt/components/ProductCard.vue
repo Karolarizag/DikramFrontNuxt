@@ -1,12 +1,5 @@
 <template>
   <v-card v-if="product" class="ma-5" width="320">
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
 
     <v-img height="400" :src="product.image[0]"></v-img>
 
@@ -54,12 +47,22 @@
 export default {
   name: 'ProductCard',
   props: {
-    product: Object,
+    product: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {
-      descr: this.product.description.slice(0,35) + '...'
+      descr: ''
     }
   },
+  mounted () {
+    if (this.product.description.length <= 35) {
+      this.descr = this.product.description
+    } else {
+      this.descr = this.product.description.slice(0,35) + '...'
+    }
+  }
 }
 </script>
