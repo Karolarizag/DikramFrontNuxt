@@ -53,7 +53,7 @@
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
         <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
+          <v-icon>mdi-home</v-icon>
         </v-btn>
       </template>
 
@@ -68,17 +68,7 @@
             Mi tienda
           </v-btn>
         </v-list-item>
-        <v-list-item>
-          <v-btn
-            text
-            color="light-blue lighten-2"
-            :to="{ path: '/productForm' }"
-            width="270"
-          >
-            Crear Producto
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="ownMarketplace">
           <v-btn
             width="270"
             text
@@ -88,17 +78,6 @@
             Crear tienda
           </v-btn></v-list-item
         >
-
-        <v-list-item>
-          <v-btn
-            width="270"
-            text
-            color="light-blue lighten-2"
-            :to="{ name: `PostForm` }"
-          >
-            Crear Post
-          </v-btn>
-        </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>
@@ -122,6 +101,9 @@ export default {
   computed: {
     isSeller() {
       return this.$auth.user && this.$auth.user.role === 'seller'
+    },
+    ownMarketplace() {
+      return this.$auth.user.marketplace === undefined
     },
   },
   methods: {

@@ -54,7 +54,7 @@
 
         <v-switch
           v-model="isSeller"
-          color="indigo lighten-1"
+          color="light-blue lighten-2"
           label="¿Quieres una cuenta como empresa?"
           class="mt-3"
         ></v-switch>

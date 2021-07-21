@@ -14,7 +14,8 @@
               :public-id="url"
             />
           </div>
-            <CloudinaryUpload type="product"/>
+          <CloudinaryUpload type="product" />
+          <span class="mt-2">Recomendamos que sea tamaño 500x500</span>
         </v-col>
 
         <v-col cols="7">
@@ -258,7 +259,7 @@ export default {
       const res = await this.$axios.$post('/products', {
         name: this.productTitle,
         description: this.description,
-        image: this.image,
+        image: this.images,
         sizes: this.productSizes,
         colors: this.productColors,
         materials: this.productMaterial,
