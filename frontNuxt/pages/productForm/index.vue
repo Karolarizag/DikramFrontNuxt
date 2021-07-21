@@ -1,23 +1,20 @@
 <template>
   <v-container>
     <v-card class="pb-10 pa-3 mt-5">
-
       <v-row>
-
         <v-col
           cols="4"
-          class="d-flex justify-center align-center flex-column ml-7">
-
-          <!-- <VImageInput class="ml-7" /> -->
+          class="d-flex justify-center align-center flex-column ml-7"
+        >
+          <!-- <VImageInput class="ml-7" />  -->
           <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark>
             Añadir imagen
           </v-btn>
-
         </v-col>
-        <v-col cols="7">
 
+        <v-col cols="7">
           <div class="d-flex flex-wrap mt-5 justify-center">
-            <div v-for="(item, idx) in productdata.image" :key="idx">
+            <div v-for="(item, idx) in images" :key="idx">
               <img
                 class="ma-1"
                 style="max-width: 150px; max-height: 150px"
@@ -26,46 +23,43 @@
             </div>
 
             <v-textarea
+              v-model="description"
               solo
               label="Añade aquí la descripción de tu producto"
               class="mt-3 px-3"
-              v-model="productdata.description"
             >
             </v-textarea>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="px-15">
-
         <v-col>
           <v-text-field
+            v-model="productTitle"
             type="text"
             width="500"
             class="mx-2"
             label="Nombre"
             outlined
             dense
-            v-model="productdata.name"
-          ></v-text-field>
+          >
+          </v-text-field>
         </v-col>
-
         <v-col>
           <v-text-field
+            v-model="tag"
             type="text"
             class="mx-2"
             label="Etiquetas"
-            v-model="tag"
-            @keydown.enter="sendTags()"
             outlined
             dense
+            @keydown.enter="sendTags()"
           >
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
             <div
-              v-for="(item, idx) in productdata.tags"
+              v-for="(item, idx) in productTags"
               :key="idx"
               class="ma-1"
             >
@@ -79,54 +73,49 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="px-15">
-
         <v-col>
           <v-text-field
-            type="text"
+            v-model="price"
+            type="number"
             class="mx-2"
-            v-model="productdata.price"
             label="Precio"
             outlined
             dense
           >
           </v-text-field>
-
         </v-col>
-        <v-col>
 
+        <v-col>
           <v-autocomplete
-            v-model="productdata.sizes"
+            v-model="productSizes"
             :items="size"
             outlined
             dense
             chips
             small-chips
             label="Tallas"
-            multiple>
+            multiple
+          >
           </v-autocomplete>
-
         </v-col>
         <v-col>
-
           <v-text-field
+            v-model="color"
             type="text"
             class="mx-2"
             label="Color"
-            v-model="color"
-            @keydown.enter="sendColors()"
             outlined
             dense
+            @keydown.enter="sendColors()"
           >
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
             <div
-              v-for="(item, idx) in this.productdata.colors"
+              v-for="(item, idx) in productColors"
               :key="idx"
               class="ma-1"
             >
@@ -140,24 +129,22 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
         <v-col>
-
           <v-text-field
+            v-model="material"
             type="text"
             class="mx-2"
             label="Material"
-            v-model="material"
-            @keydown.enter="sendMaterials()"
             outlined
             dense
+            @keydown.enter="sendMaterials()"
           >
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
             <div
-              v-for="(item, idx) in this.productdata.materials"
+              v-for="(item, idx) in productMaterial"
               :key="idx"
               class="ma-1"
             >
@@ -171,17 +158,14 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="d-flex justify-center">
-
         <v-switch
+          v-model="customizable"
           class="mb-2"
           label="Producto customizable"
           color="light-blue lighten-2"
-          v-model="productdata.customizable"
         >
         </v-switch>
 
@@ -191,18 +175,8 @@
           dark
           @click="submitProduct"
         >
-          Actualizar
+          Enviar
         </v-btn>
-
-        <!-- <v-btn
-          @click="$emit('returnClick')"
-          dark
-          class="mt-3 mx-10"
-          color="light-blue lighten-2"
-        >
-          Volver
-        </v-btn> -->
-
       </v-row>
     </v-card>
   </v-container>
@@ -210,12 +184,14 @@
 
 <script>
 export default {
-  name: 'CProductImage',
+  name: 'NewProduct',
   data() {
     return {
+      imageInput: ['urlimage'],
       productTitle: '',
       description: '',
       tag: '',
+      productTags: [],
       price: null,
       size: [
         'Única',
@@ -236,65 +212,71 @@ export default {
         '43',
         '44',
       ],
+      productSizes: [],
       color: '',
+      productColors: [],
       material: '',
+      productMaterial: [],
       customizable: false,
       images: [1, 2, 3, 4, 5, 6, 7, 8],
-      productdata: this.product,
     }
-  },
-  props: {
-    product: Object,
   },
   methods: {
     removeTag(item) {
-      this.productdata.tags.splice(this.productdata.tags.indexOf(item), 1)
-      this.productdata.tags = [...this.productdata.tags]
+      this.productTags.splice(this.productTags.indexOf(item), 1)
+      this.productTags = [...this.productTags]
     },
     removeSize(item) {
-      this.productdata.sizes.splice(this.productdata.sizes.indexOf(item), 1)
-      this.productdata.sizes = [...this.productdata.sizes]
+      this.productSizes.splice(this.productSizes.indexOf(item), 1)
+      this.productSizes = [...this.productSizes]
     },
     removeColor(item) {
-      this.productdata.colors.splice(this.productdata.colors.indexOf(item), 1)
-      this.productdata.colors = [...this.productdata.colors]
+      this.productColors.splice(this.productColors.indexOf(item), 1)
+      this.productColors = [...this.productColors]
     },
     removeMat(item) {
-      this.productdata.materials.splice(
-        this.productdata.materials.indexOf(item),
-        1
-      )
-      this.productdata.materials = [...this.productdata.materials]
+      this.productMaterial.splice(this.productMaterial.indexOf(item), 1)
+      this.productMaterial = [...this.productMaterial]
     },
     sendTags() {
-      this.productdata.tags.push(this.tag)
+      this.productTags.push(this.tag)
       this.tag = ''
     },
     sendSizes() {
-      this.productdata.sizes.push(this.size)
+      this.productSizes.push(this.size)
       this.size = ''
     },
     sendColors() {
-      this.productdata.colors.push(this.color)
+      this.productColors.push(this.color)
       this.color = ''
     },
     sendMaterials() {
-      this.productdata.materials.push(this.material)
+      this.productMaterial.push(this.material)
       this.material = ''
     },
     async submitProduct() {
-      const res = await this.$axios.$put(
-        `/products/${this.product._id}`,
-        this.productdata,
+      const res = await this.$axios.$post(
+        '/products',
         {
-          headers: {
-            token: localStorage.token,
-          },
+          name: this.productTitle,
+          description: this.description,
+          image: this.image,
+          sizes: this.productSizes,
+          colors: this.productColors,
+          materials: this.productMaterial,
+          customizable: this.customizable,
+          tags: this.productTags,
+          price: this.price,
         }
+        // {
+        //   headers: {
+        //     token: localStorage.token,
+        //   },
+        // }
       )
-      this.$emit('backClick', res.product)
+      this.$router.push({ name: 'explore' })
+      res.status(200).json(res)
     },
   },
 }
 </script>
-

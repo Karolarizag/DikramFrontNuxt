@@ -82,7 +82,7 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      home: '/Marketplace'
+      home: '/explore'
     },
     strategies: {
       local: {
