@@ -47,7 +47,7 @@
             :public-id="profileimage"
           />
         </div>
-        Apadir imagen para perfil
+        Añadir imagen para perfil
         <CloudinaryUpload type="profile" />
       </v-col>
     </v-row>

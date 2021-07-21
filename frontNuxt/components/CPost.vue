@@ -85,13 +85,6 @@ export default {
       productsId: [],
     }
   },
-  computed: {
-    sendProductId() {
-      return this.postProducts.map((product) => {
-        return product._id
-      })
-    },
-  },
   mounted() {
     this.$root.$on('cloudImage', (url) => {
       this.url = url

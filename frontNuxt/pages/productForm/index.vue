@@ -258,7 +258,7 @@ export default {
       const res = await this.$axios.$post('/products', {
         name: this.productTitle,
         description: this.description,
-        image: this.image,
+        image: this.images,
         sizes: this.productSizes,
         colors: this.productColors,
         materials: this.productMaterial,
