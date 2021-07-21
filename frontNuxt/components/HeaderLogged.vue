@@ -22,8 +22,7 @@
       class="ml-3"
       active-class="no-active"
       >{{ item.name }}
-    </v-btn
->
+    </v-btn>
 
     <v-spacer></v-spacer>
 
@@ -61,6 +60,16 @@
       <v-list v-if="isSeller" width="300">
         <v-list-item>
           <v-btn
+            width="270"
+            text
+            color="light-blue lighten-2"
+            :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
+          >
+            Mi tienda
+          </v-btn>
+        </v-list-item>
+        <v-list-item>
+          <v-btn
             text
             color="light-blue lighten-2"
             :to="{ path: '/productForm' }"
@@ -79,14 +88,15 @@
             Crear tienda
           </v-btn></v-list-item
         >
+
         <v-list-item>
           <v-btn
             width="270"
             text
             color="light-blue lighten-2"
-            :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
+            :to="{ name: `PostForm` }"
           >
-            Ir a tienda
+            Crear Post
           </v-btn>
         </v-list-item>
       </v-list>

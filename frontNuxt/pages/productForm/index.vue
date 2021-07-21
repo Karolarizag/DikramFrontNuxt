@@ -6,22 +6,27 @@
           cols="4"
           class="d-flex justify-center align-center flex-column ml-7"
         >
-          <!-- <VImageInput class="ml-7" />  -->
-          <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark>
-            Añadir imagen
-          </v-btn>
+          <div class="ma-3 mr-n4" max-width="300">
+            <cld-image
+              quality="auto"
+              width="300"
+              crop="scale"
+              :public-id="url"
+            />
+          </div>
+            <CloudinaryUpload type="product"/>
         </v-col>
 
         <v-col cols="7">
-          <div class="d-flex flex-wrap mt-5 justify-center">
-            <div v-for="(item, idx) in images" :key="idx">
-              <img
-                class="ma-1"
-                style="max-width: 150px; max-height: 150px"
-                src="~/assets/imagedefault.png"
-              />
+          <v-row>
+            <div class="d-flex flex-wrap mt-5 justify-center px-2">
+              <div v-for="(item, idx) in images" :key="idx" class="mx-1">
+                <cld-image width="150" crop="crop" :public-id="item" />
+                <!-- <img class="ma-1" style="max-width: 150px; max-height: 150px;" src="~/assets/imagedefault.png"/> -->
+              </div>
             </div>
-
+          </v-row>
+          <v-row>
             <v-textarea
               v-model="description"
               solo
@@ -29,7 +34,7 @@
               class="mt-3 px-3"
             >
             </v-textarea>
-          </div>
+          </v-row>
         </v-col>
       </v-row>
       <v-row class="px-15">
@@ -58,11 +63,7 @@
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
-            <div
-              v-for="(item, idx) in productTags"
-              :key="idx"
-              class="ma-1"
-            >
+            <div v-for="(item, idx) in productTags" :key="idx" class="ma-1">
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -114,11 +115,7 @@
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
-            <div
-              v-for="(item, idx) in productColors"
-              :key="idx"
-              class="ma-1"
-            >
+            <div v-for="(item, idx) in productColors" :key="idx" class="ma-1">
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -143,11 +140,7 @@
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
-            <div
-              v-for="(item, idx) in productMaterial"
-              :key="idx"
-              class="ma-1"
-            >
+            <div v-for="(item, idx) in productMaterial" :key="idx" class="ma-1">
               <v-chip
                 color="cyan lighten-4"
                 close
@@ -218,8 +211,15 @@ export default {
       material: '',
       productMaterial: [],
       customizable: false,
-      images: [1, 2, 3, 4, 5, 6, 7, 8],
+      images: [],
+      url: '',
     }
+  },
+  mounted() {
+    this.$root.$on('cloudImage', (url) => {
+      this.url = url
+      this.images.push(url)
+    })
   },
   methods: {
     removeTag(item) {
@@ -255,25 +255,17 @@ export default {
       this.material = ''
     },
     async submitProduct() {
-      const res = await this.$axios.$post(
-        '/products',
-        {
-          name: this.productTitle,
-          description: this.description,
-          image: this.image,
-          sizes: this.productSizes,
-          colors: this.productColors,
-          materials: this.productMaterial,
-          customizable: this.customizable,
-          tags: this.productTags,
-          price: this.price,
-        }
-        // {
-        //   headers: {
-        //     token: localStorage.token,
-        //   },
-        // }
-      )
+      const res = await this.$axios.$post('/products', {
+        name: this.productTitle,
+        description: this.description,
+        image: this.image,
+        sizes: this.productSizes,
+        colors: this.productColors,
+        materials: this.productMaterial,
+        customizable: this.customizable,
+        tags: this.productTags,
+        price: this.price,
+      })
       this.$router.push({ name: 'explore' })
       res.status(200).json(res)
     },

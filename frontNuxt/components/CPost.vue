@@ -8,15 +8,7 @@
           style="margin-top: 20px; width: 450px; height: auto"
         />
         <cld-image v-else width="450" crop="scale" :public-id="url" />
-        <!-- <v-btn
-              class="mt-3 mx-10 mt-10"
-              color="light-blue lighten-2"
-              dark
-              @click="onInput"
-            >
-              Añadir imagen
-            </v-btn> -->
-        <CloudinaryUpload />
+        <CloudinaryUpload type="post"/>
       </v-col>
     </v-row>
 

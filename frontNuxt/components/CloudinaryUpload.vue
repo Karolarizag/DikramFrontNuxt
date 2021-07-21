@@ -8,13 +8,20 @@
     >
       Añadir imagen
     </v-btn>
-    <input id="cloud" hidden type="file" accept="image/*" @change="onUpload" />
+    <input :id="type" hidden type="file" accept="image/*" @change="onUpload" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'CloudinaryUpload',
+  props: {
+    type: {
+      type: String,
+      required: true,
+      default: ''
+    },
+  },
   data() {
     return {
       image: '',
@@ -24,7 +31,7 @@ export default {
   },
   methods: {
     onInput() {
-      document.getElementById('cloud').click()
+      document.getElementById(this.type).click()
     },
     async onUpload(event) {
       try {
@@ -42,11 +49,9 @@ export default {
         const instance = this.$cloudinary.upload(data, {
           folder: 'subidas',
           uploadPreset: 'pordefecto',
-          
         })
         this.src = instance.then((e) => {
-
-          this.$root.$emit('cloudImage', e.secure_url)
+          this.$root.$emit('cloudImage', e.secure_url, this.type)
         })
       } catch (error) {
         // eslint-disable-next-line no-console
