@@ -32,7 +32,7 @@
 
         <v-col>
           <v-row>
-            <v-col cols="11">
+            <v-col cols="11" md="10" sm="9" xs="1">
               <v-btn class="mt-1" text color="light-blue lighten-2" @click="showPosts">
                 Productos
               </v-btn>

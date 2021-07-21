@@ -32,14 +32,12 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-simple-table>
-        <template v-slot:default>
           <tbody>
-            <tr v-for="item in characteristics" :key="item.title">
-              <td>{{ item.title }}</td>
-              <td>{{ item.value }}</td>
-            </tr>
+            <v-row v-for="item in characteristics" :key="item.title">
+              <v-col cols="6" md="6" sm="12 d-flex justify-center"><h4>{{ item.title }}</h4></v-col>
+              <v-col cols="6" md="6" sm="12 d-flex justify-center" ><p>{{ item.value }}</p></v-col>
+            </v-row>
           </tbody>
-        </template>
       </v-simple-table>
     </v-card-text>
 
@@ -95,7 +93,7 @@ export default {
         },
         {
           title: 'Customizable',
-          value: 'No',
+          value: this.product.customizable ? 'Si' : 'No',
         },
       ],
     }

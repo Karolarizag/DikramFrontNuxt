@@ -53,7 +53,7 @@
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
         <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-          <v-icon>mdi-home</v-icon>
+          <v-icon>mdi-account</v-icon>
         </v-btn>
       </template>
 
