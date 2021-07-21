@@ -1,11 +1,8 @@
 <template>
-  <div v-if="product">
+  <container v-if="product" fluid app>
     <div class="productpagebody">
-
       <v-banner class="pa-5 pt-0">
-
         <v-row>
-
           <v-col>
             <h2>{{ product.name.toUpperCase() }}</h2>
           </v-col>
@@ -29,13 +26,10 @@
               >Modificar Producto</v-btn
             >
           </v-col>
-
         </v-row>
-
       </v-banner>
 
       <v-row class="pa-15 d-flex align-center">
-
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
@@ -43,7 +37,6 @@
         <v-col cols="12" md="6">
           <ProductData :product="product" />
         </v-col>
-
       </v-row>
 
       <v-divider></v-divider>
@@ -61,9 +54,7 @@
 
       <!-- OVERLAY TO DELETE PRODUCTS -->
       <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
-        
         <v-card height="300" width="500" shaped class="px-8">
-
           <v-card-title class="d-flex justify-center mt-15">
             <p class="mt-10">¡Atención!</p>
           </v-card-title>
@@ -77,7 +68,6 @@
 
           <v-card-actions>
             <v-row>
-
               <v-col class="d-flex justify-end"
                 ><v-btn
                   dark
@@ -99,10 +89,8 @@
                   Volver
                 </v-btn>
               </v-col>
-
             </v-row>
           </v-card-actions>
-
         </v-card>
       </v-overlay>
 
@@ -121,7 +109,11 @@
         </v-container>
       </v-overlay>
     </div>
-  </div>
+
+    <!-- PAYMENT CHECKOUT -->
+        <Payment />
+        
+  </container>
 </template>
 
 <script>

@@ -45,7 +45,11 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/cloudinary',
+    'nuxt-stripe-module',
   ],
+  stripe: {
+    publishableKey: 'pk_test_51JFfnHJ36Z0ScWohD0DyqidwRSS4dkTphWT0vDMkPPdG63xKqpKRJnvi7xbizCBaasfR19fe2KDtl35bPwljZ9eZ00pzOj4UPp',
+  },
   cloudinary: {
     cloudName: process.env.CLOUDNAME,
     apiKey: process.env.API_KEY, 
