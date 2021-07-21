@@ -96,7 +96,6 @@ export default {
   computed: {
     sendProductId() {
       return this.postProducts.map((product) => {
-        console.log(product._id)
         return product._id
       })
     },
@@ -122,8 +121,6 @@ export default {
       const idPost = this.postProducts.map((product) => {
         return product._id
       })
-// eslint-disable-next-line no-console
-console.log(idPost)
       try {
         await this.$axios.$post('/post', {
           image: this.url,
@@ -136,6 +133,7 @@ console.log(idPost)
           path: `/marketplace/${this.$auth.user.marketplace}`,
         })
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error)
       }
     },
