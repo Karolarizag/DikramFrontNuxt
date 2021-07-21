@@ -12,7 +12,7 @@
 
           <v-col>
             <v-btn
-              v-if="isSeller"
+              v-if="isTheOwner"
               dark
               color="light-blue lighten-2"
               @click="deleteOverlay = !deleteOverlay"
@@ -22,7 +22,7 @@
 
           <v-col>
             <v-btn
-              v-if="isSeller"
+              v-if="isTheOwner"
               dark
               color="light-blue lighten-2"
               @click="modifyOverlay = !modifyOverlay"
@@ -141,8 +141,8 @@ export default {
     }
   },
   computed: {
-    isSeller() {
-      return this.$auth.user && this.$auth.user.role === 'seller'
+    isTheOwner() {
+      return this.$auth.user.marketplace === this.product.marketplace
     },
   },
   methods: {
@@ -155,7 +155,7 @@ export default {
           },
         }
       )
-      this.$router.push({ name: 'Marketplace' })
+      this.$router.push({ path: '/explore' })
       return response
     },
     actualize(product) {

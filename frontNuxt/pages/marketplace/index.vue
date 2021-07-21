@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'Marketplaces',
+  name: 'Marketplace',
   async asyncData ({ $axios }) {
     const marketplaces = await $axios.$get('/marketplace')
     return { marketplaces }

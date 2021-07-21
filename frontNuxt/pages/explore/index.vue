@@ -14,10 +14,7 @@
      <div
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
-      <PostCardFail
-        elevation="2"
-        outlined
-      />
+
     </div>
   </v-container>
 </template>

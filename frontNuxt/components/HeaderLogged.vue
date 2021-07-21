@@ -22,8 +22,7 @@
       class="ml-3"
       active-class="no-active"
       >{{ item.name }}
-    </v-btn
->
+    </v-btn>
 
     <v-spacer></v-spacer>
 
@@ -54,22 +53,22 @@
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
         <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
+          <v-icon>mdi-home</v-icon>
         </v-btn>
       </template>
 
       <v-list v-if="isSeller" width="300">
         <v-list-item>
           <v-btn
+            width="270"
             text
             color="light-blue lighten-2"
-            :to="{ path: '/productForm' }"
-            width="270"
+            :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
           >
-            Crear Producto
+            Mi tienda
           </v-btn>
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="ownMarketplace">
           <v-btn
             width="270"
             text
@@ -79,16 +78,6 @@
             Crear tienda
           </v-btn></v-list-item
         >
-        <v-list-item>
-          <v-btn
-            width="270"
-            text
-            color="light-blue lighten-2"
-            :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
-          >
-            Ir a tienda
-          </v-btn>
-        </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>
@@ -112,6 +101,9 @@ export default {
   computed: {
     isSeller() {
       return this.$auth.user && this.$auth.user.role === 'seller'
+    },
+    ownMarketplace() {
+      return this.$auth.user.marketplace === undefined
     },
   },
   methods: {

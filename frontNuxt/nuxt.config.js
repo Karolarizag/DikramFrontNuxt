@@ -44,8 +44,40 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
-
+    '@nuxtjs/cloudinary',
   ],
+  cloudinary: {
+    cloudName: process.env.CLOUDNAME,
+    apiKey: process.env.API_KEY, 
+    apiSecret: process.env.API_SECRET,
+    useComponent: true
+  },
+  hooks: {
+    'content:file:beforeInsert': async (document) => {
+      if (document.extension !== '.md' || !document.image) return
+
+      const { $cloudinary } = require('@nuxtjs/cloudinary')
+      const publicId = `${document.slug}-cover`
+
+      /* Get existing image from Cloudinary based on publicId */
+      let asset = await $cloudinary.explicit(publicId, {
+          type: 'upload'
+        })
+
+      /* There is no image uploaded yet, so upload and save it */
+      if (!asset) {
+        asset = await $cloudinary.upload(
+          path.join(__dirname, `content/posts/${document.image}`),
+          {
+            public_id: publicId,
+          }
+        )
+      }
+
+      /* Replace image with the return object */
+      document.image = asset || {}
+    },
+  },
   auth: {
     redirect: {
       login: '/',
@@ -68,8 +100,7 @@ export default {
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
           logout: false,
-          user: { url: '/auth/user', method: 'get' },
-          singup: { url: '/auth/singup', method: 'post' }
+          user: { url: '/auth/user', method: 'get' }
         }
       }
     }
@@ -77,8 +108,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://dikram.herokuapp.com/api'
-    // baseURL: 'http://localhost:8000/api'
+     baseURL: 'https://dikram.herokuapp.com/api'
+    // baseURL: 'http://localhost:3000/api'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
