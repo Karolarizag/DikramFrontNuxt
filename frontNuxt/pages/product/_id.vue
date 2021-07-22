@@ -71,7 +71,7 @@
 
           <v-card-actions>
             <v-row>
-              <v-col class="d-flex justify-end"
+              <v-col class="d-flex justify-center"
                 ><v-btn
                   dark
                   color="light-blue lighten-2"
@@ -82,16 +82,18 @@
                 </v-btn>
               </v-col>
 
-              <v-col class="d-flex justify-center">
                 <v-btn
-                  dark
-                  color="light-blue lighten-2"
-                  class="ml-2"
+                  absolute
+                  top
+                  right
+                  icon
                   @click="deleteOverlay = !deleteOverlay"
                 >
-                  Volver
+                  <v-icon color="light-blue lighten-2"
+                    >mdi-arrow-left-circle</v-icon
+                  >
                 </v-btn>
-              </v-col>
+              
             </v-row>
           </v-card-actions>
         </v-card>

@@ -1,21 +1,17 @@
 <template>
   <v-container>
     <v-card class="pb-10 pa-3 mt-5">
-
       <v-row>
-
         <v-col
           cols="4"
-          class="d-flex justify-center align-center flex-column ml-7">
-
+          class="d-flex justify-center align-center flex-column ml-7"
+        >
           <!-- <VImageInput class="ml-7" /> -->
           <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark>
             Añadir imagen
           </v-btn>
-
         </v-col>
         <v-col cols="7">
-
           <div class="d-flex flex-wrap mt-5 justify-center">
             <div v-for="(item, idx) in productdata.image" :key="idx">
               <img
@@ -33,12 +29,9 @@
             >
             </v-textarea>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="px-15">
-
         <v-col>
           <v-text-field
             type="text"
@@ -79,12 +72,9 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="px-15">
-
         <v-col>
           <v-text-field
             type="text"
@@ -95,10 +85,8 @@
             dense
           >
           </v-text-field>
-
         </v-col>
         <v-col>
-
           <v-autocomplete
             v-model="productdata.sizes"
             :items="size"
@@ -107,12 +95,11 @@
             chips
             small-chips
             label="Tallas"
-            multiple>
+            multiple
+          >
           </v-autocomplete>
-
         </v-col>
         <v-col>
-
           <v-text-field
             type="text"
             class="mx-2"
@@ -140,10 +127,8 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
         <v-col>
-
           <v-text-field
             type="text"
             class="mx-2"
@@ -171,12 +156,9 @@
               </v-chip>
             </div>
           </div>
-
         </v-col>
-
       </v-row>
       <v-row class="d-flex justify-center">
-
         <v-switch
           class="mb-2"
           label="Producto customizable"
@@ -193,7 +175,11 @@
         >
           Actualizar
         </v-btn>
-
+        <v-btn absolute top right icon 
+        :to="{path: `/marketplace/${$auth.user.marketplace}`}"
+        >
+          <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        </v-btn>
         <!-- <v-btn
           @click="$emit('returnClick')"
           dark
@@ -202,7 +188,6 @@
         >
           Volver
         </v-btn> -->
-
       </v-row>
     </v-card>
   </v-container>
