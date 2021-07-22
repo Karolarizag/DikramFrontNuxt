@@ -2,25 +2,28 @@
   <v-container>
     <v-card class="pb-10 pa-3 mt-5">
       <v-row>
-        <v-col
-          cols="4"
-          class="d-flex justify-center align-center flex-column ml-7"
-        >
-          <!-- <VImageInput class="ml-7" /> -->
-          <v-btn class="mt-3 mx-10" color="light-blue lighten-2" dark>
-            Añadir imagen
-          </v-btn>
+        <v-col cols="6" class="d-flex justify-center align-center flex-column">
+          <img
+            v-if="url === ''"
+            src="~/assets/imagedefault.png"
+            style="margin-top: 20px; width: 350px; height: auto"
+          />
+          <cld-image v-else width="450" crop="scale" :public-id="url" />
+          <CloudinaryUpload type="product" />
         </v-col>
-        <v-col cols="7">
-          <div class="d-flex flex-wrap mt-5 justify-center">
-            <div v-for="(item, idx) in productdata.image" :key="idx">
-              <img
-                class="ma-1"
-                style="max-width: 150px; max-height: 150px"
-                src="~/assets/imagedefault.png"
-              />
-            </div>
-
+        <v-col cols="6">
+          <v-row>
+            <v-col cols="12" v class="d-flex flex-wrap mt-5 justify-center">
+              <div v-for="(item, idx) in productdata.image" :key="idx">
+                <img
+                  class="ma-1"
+                  style="max-width: 150px; max-height: 150px"
+                  :src="item"
+                />
+              </div>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-textarea
               solo
               label="Añade aquí la descripción de tu producto"
@@ -28,7 +31,7 @@
               v-model="productdata.description"
             >
             </v-textarea>
-          </div>
+          </v-row>
         </v-col>
       </v-row>
       <v-row class="px-15">
@@ -175,8 +178,12 @@
         >
           Actualizar
         </v-btn>
-        <v-btn absolute top right icon 
-        :to="{path: `/marketplace/${$auth.user.marketplace}`}"
+        <v-btn
+          absolute
+          top
+          right
+          icon
+          :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
         >
           <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
         </v-btn>
@@ -198,6 +205,7 @@ export default {
   name: 'CProductImage',
   data() {
     return {
+      url: '',
       productTitle: '',
       description: '',
       tag: '',
@@ -230,6 +238,15 @@ export default {
   },
   props: {
     product: Object,
+  },
+  mounted() {
+    this.$root.$on('cloudImage', (url) => {
+      // eslint-disable-next-line no-console
+      console.log(url)
+      this.url = url
+      this.productdata.image.push(this.url)
+      this.url = ''
+    })
   },
   methods: {
     removeTag(item) {

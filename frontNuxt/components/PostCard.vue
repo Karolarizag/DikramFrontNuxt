@@ -37,9 +37,6 @@
         <div v-if="data">
           <v-row justify="space-around">
             <v-col>
-              <v-btn absolute top right icon>
-                <v-icon color="light-blue lighten-2">mdi-remove-circle</v-icon>
-              </v-btn>
               <v-menu left offset-y>
                 <template #activator="{ on, attrs }">
                   <v-btn
@@ -83,16 +80,27 @@
             </v-col>
           </v-row>
         </div>
-        <v-btn
-          v-if="isTheOwner"
-          absolute
-          top
-          right
-          icon
-          @click="deleteOverlay = !deleteOverlay"
-        >
-          <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
-        </v-btn>
+        <v-row>
+          <v-col>
+            <v-btn v-if="isTheOwner" absolute top right icon>
+              <v-icon color="light-blue" @click="updateOverlay = !updateOverlay"
+                >mdi-update</v-icon
+              >
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn
+              v-if="isTheOwner"
+              absolute
+              top
+              left
+              icon
+              @click="deleteOverlay = !deleteOverlay"
+            >
+              <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-card-actions>
     </v-card>
 
@@ -122,23 +130,31 @@
                 Borrar Post
               </v-btn>
             </v-col>
-
-           
-              <v-btn
-                absolute
-                top
-                right
-                icon
-                @click="deleteOverlay = !deleteOverlay"
+            <v-btn
+              absolute
+              top
+              right
+              icon
+              @click="deleteOverlay = !deleteOverlay"
+            >
+              <v-icon color="light-blue lighten-2"
+                >mdi-arrow-left-circle</v-icon
               >
-                <v-icon color="light-blue lighten-2"
-                  >mdi-arrow-left-circle</v-icon
-                >
-              </v-btn>
-         
+            </v-btn>
           </v-row>
         </v-card-actions>
       </v-card>
+    </v-overlay>
+
+    <v-overlay :dark="false"  :value="updateOverlay">
+      <v-container>
+        <div class="pa-5 overlay">
+          <v-card>
+          form update post
+
+          </v-card>
+        </div>
+      </v-container>
     </v-overlay>
   </div>
 </template>
@@ -156,6 +172,7 @@ export default {
       like: '',
       absolute: true,
       deleteOverlay: false,
+      updateOverlay: false,
     }
   },
   computed: {
@@ -167,7 +184,6 @@ export default {
     isTheOwner() {
       return this.$auth.user.marketplace === this.post.marketplace
     },
-
   },
   mounted() {
     if (this.post.products.length === 0) this.data = false
