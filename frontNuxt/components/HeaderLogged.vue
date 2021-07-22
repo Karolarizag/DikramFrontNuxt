@@ -61,7 +61,7 @@
         >
           {{item._id}} 
           <v-spacer></v-spacer>
-          <v-btn icon color="light-blue lighten-2" @click="deleteFromCart"> <v-icon>mdi-alpha-x-circle</v-icon> </v-btn>
+          <v-btn icon color="light-blue lighten-2" @click="deleteFromCart(item._id)"> <v-icon>mdi-trash-can-outline</v-icon> </v-btn>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -127,6 +127,11 @@ export default {
     },
   },
   methods: {
+    async deleteFromCart(item){
+      const res = await this.$axios.$delete(`/users/${this.$auth.user._id}/cart/${item}`)
+      location.reload()
+      return res
+    },
     logout() {
       this.$auth.logout()
     },
