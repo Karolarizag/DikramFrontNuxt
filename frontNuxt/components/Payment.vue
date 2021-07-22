@@ -1,20 +1,131 @@
 <template>
-  <container>
-    <v-card id="card-element">
-
+  <div class="d-flex justify-center my-12">
+    <v-card max-height="800" max-width="800">
+      <v-card-text class="pa-12">
+        <v-row>
+          <v-col><v-text-field label="Nombre" required outlined /></v-col>
+          <v-col><v-text-field label="Apellidos" required outlined /></v-col>
+          <v-col><v-text-field label="Teléfono" required outlined /></v-col>
+        </v-row>
+        <v-row>
+          <v-col><v-text-field label="País" required outlined /></v-col>
+          <v-col><v-text-field label="Ciudad" required outlined /></v-col>
+        </v-row>
+        <v-row>
+          <v-col><v-text-field label="Dirección" required outlined /></v-col>
+        </v-row>
+        <v-card class="ma-5 pa-4">
+          <v-card-text>
+            <v-row>
+              <v-col>
+                <label>Tarjeta: </label>
+                <div id="card-number"></div>
+              </v-col>
+            </v-row>
+            <v-row max-height="400" max-width="800">
+              <v-col>
+                <label>CVC: </label>
+                <div id="card-cvc"></div>
+              </v-col>
+              <v-col>
+                <label>Expira: </label>
+                <div id="card-expiry"></div>
+              </v-col>
+              <v-col>
+                <label>Código postal: </label>
+                <div id="card-postalcode"></div>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="d-flex justify-center mt-5">
+                <v-btn color="light-blue lighten-2" dark id="custom-button" @click="createToken">Pagar 25,03€</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="d-flex justify-center">
+                <div id="card-error"></div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-card-text>
     </v-card>
-  </container>
+  </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    if (this.$stripe) {
-      const elements = this.$stripe.elements()
-      const card = elements.create('card', {})
-      // Add an instance of the card Element into the `card-element` <div>
-      card.mount('#card-element')
+  data() {
+    return {
+      token: null,
+      cardNumber: null,
+      cardExpiry: null,
+      cardCvc: null,
+      postalCode: null,
     }
+  },
+  computed: {
+    stripeElements() {
+      return this.$stripe.elements()
+    },
+  },
+  mounted() {
+    // Style Object documentation here: https://stripe.com/docs/js/appendix/style
+    const style = {
+      base: {
+        color: 'black',
+        fontSmoothing: 'antialiased',
+        fontSize: '18px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    }
+    this.cardNumber = this.stripeElements.create('cardNumber', { style })
+    this.cardNumber.mount('#card-number')
+    this.cardExpiry = this.stripeElements.create('cardExpiry', { style })
+    this.cardExpiry.mount('#card-expiry')
+    this.cardCvc = this.stripeElements.create('cardCvc', { style })
+    this.cardCvc.mount('#card-cvc')
+    this.postalCode = this.stripeElements.create('postalCode', { style })
+    this.postalCode.mount('#card-postalcode')
+  },
+  beforeDestroy() {
+    this.cardNumber.destroy()
+    this.cardExpiry.destroy()
+    this.cardCvc.destroy()
+    this.postalCode.destroy()
+  },
+  methods: {
+    async createToken() {
+      const { token, error } = await this.$stripe.createToken(this.cardNumber)
+      if (error) {
+        // handle error here
+        document.getElementById('card-error').innerHTML = error.message
+        return
+      }
+      console.log(token)
+      // handle the token
+      // send it to your server
+    },
   },
 }
 </script>
+
+<style scoped>
+#custom-button {
+  height: 30px;
+  background-color: rgb(55, 130, 160);
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+#card-error {
+  color: red;
+}
+</style>
