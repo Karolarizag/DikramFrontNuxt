@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="pa-5 pb-10">
     <v-card-title>
       {{ product.name }}
     </v-card-title>
@@ -32,39 +32,57 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-simple-table>
-          <tbody>
-            <v-row v-for="item in characteristics" :key="item.title">
-              <v-col cols="6" md="6" sm="12 d-flex justify-center"><h4>{{ item.title }}</h4></v-col>
-              <v-col cols="6" md="6" sm="12 d-flex justify-center" ><p>{{ item.value }}</p></v-col>
-            </v-row>
-          </tbody>
+        <v-row v-for="item in characteristics" :key="item.title">
+          <v-col cols="6" md="6" sm="12 d-flex justify-center"
+            ><h4>{{ item.title }}</h4></v-col
+          >
+          <v-col cols="6" md="6" sm="12 d-flex justify-center"
+            ><p>{{ item.value }}</p></v-col
+          >
+        </v-row>
       </v-simple-table>
     </v-card-text>
 
     <v-divider></v-divider>
 
+    <v-row class="d-flex justify-end px-3 mt-3">
+      <v-col class="d-flex" cols="6">
+        <v-select
+          v-model="size"
+          :items="product.sizes"
+          label="Talla"
+          solo
+        ></v-select>
+      </v-col>
+
+      <v-col class="d-flex" cols="6">
+        <v-select
+          v-model="color"
+          :items="product.colors"
+          label="Color"
+          solo
+        ></v-select>
+      </v-col>
+    </v-row>
     <v-card-actions>
-      <v-row class="d-flex justify-end mb-6">
-        <v-col class="d-flex" cols="6">
-          <v-select
-            :items="product.sizes"
-            filled
-            label="Talla"
-            dense
-          ></v-select>
+      <v-row>
+        <v-col class="ml-3">
+          <div style="background-color: #cff9ff; width: 90px">
+            <v-btn icon color="light-blue lighten-2" @click="substractProduct"> — </v-btn>
+            {{ quantity }}
+            <v-btn icon color="light-blue lighten-2" @click="addProduct">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </div>
         </v-col>
 
-        <v-col class="d-flex" cols="6">
-          <v-select
-            :items="product.colors"
-            filled
-            label="Color"
-            dense
-          ></v-select>
-        </v-col>
-
-        <v-col cols="12" class="d-flex justify-center">
-          <v-btn elevation="1" color="light-blue lighten-2" dark>
+        <v-col class="d-flex justify-end">
+          <v-btn
+            elevation="1"
+            color="light-blue lighten-2"
+            dark
+            @click="addToCart"
+          >
             Añadir al carrito
           </v-btn>
         </v-col>
@@ -76,8 +94,14 @@
 <script>
 export default {
   name: 'ProductData',
+  props: {
+    product: Object,
+  },
   data() {
     return {
+      size: '',
+      color: '',
+      quantity: 0,
       characteristics: [
         {
           title: 'Colores',
@@ -98,8 +122,29 @@ export default {
       ],
     }
   },
-  props: {
-    product: Object,
+  methods: {
+    addProduct() {
+      this.quantity++
+    },
+    substractProduct() {
+      if (this.quantity > 0) this.quantity--
+    },
+    async addToCart({ $axios }) {
+      try {
+        const cart = await this.$axios.$put(`/users/${this.$auth.user._id}/cart`, {
+          product: this.product.id,
+          marketplace: this.product.marketplace,
+          size: this.size,
+          color: this.color,
+          quantity: this.quantity,
+          price: this.product.price * this.quantity,
+        })
+        return cart
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error.message)
+      }
+    },
   },
 }
 </script>

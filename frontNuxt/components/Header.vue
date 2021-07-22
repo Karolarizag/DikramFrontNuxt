@@ -1,6 +1,6 @@
 <template>
-    <div height="50">
-      <v-app-bar flat app>
+  <div height="50">
+    <v-app-bar flat app>
       <v-toolbar-title>
         <NuxtLink :to="{ path: '/' }">
           <v-img
@@ -11,7 +11,6 @@
           ></v-img>
         </NuxtLink>
       </v-toolbar-title>
-
 
       <v-spacer></v-spacer>
       <v-text-field
@@ -30,18 +29,35 @@
         @keyup="searchItem"
       ></v-text-field>
 
-      <v-btn text :to="{ name: 'explore' }" color="light-blue lighten-2" nuxt class="mx-1">
+      <v-btn
+        text
+        :to="{ name: 'explore' }"
+        color="light-blue lighten-2"
+        nuxt
+        class="mx-1"
+      >
         Explorar
         <!-- <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon> -->
       </v-btn>
 
-      <v-btn text color="light-blue lighten-2" class="mx-1" @click="login = !login">
+      <v-btn
+        text
+        color="light-blue lighten-2"
+        class="mx-1"
+        @click="login = !login"
+      >
         Acceder
       </v-btn>
-      <v-btn text color="light-blue lighten-2" class="mx-1" @click="signup = !signup">
+      <v-btn
+        text
+        color="light-blue lighten-2"
+        class="mx-1"
+        @click="signup = !signup"
+      >
         Registrarse
       </v-btn>
     </v-app-bar>
+
     <v-overlay :dark="false" :value="login">
       <LoginForm @changeView="login = !login" />
     </v-overlay>

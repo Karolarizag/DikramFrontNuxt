@@ -42,9 +42,26 @@
       @keyup="searchItem"
     ></v-text-field>
 
-    <v-btn icon>
-      <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
-    </v-btn>
+    <v-menu left offset-y>
+      <template #activator="{ on, attrs }">
+        <v-btn 
+          icon 
+          v-bind="attrs" 
+          v-on="on"
+        >
+          <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+        </v-btn>
+      </template>
+
+      <v-list width="300">
+        <v-list-item 
+          v-for="(item, idx) in $auth.user.cart"
+          :key="idx"
+        >
+          {{item._id}}
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <v-btn icon @click="logout">
       <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
