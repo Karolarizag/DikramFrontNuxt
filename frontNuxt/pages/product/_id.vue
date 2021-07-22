@@ -1,41 +1,38 @@
 <template>
   <div v-if="product">
     <div class="productpagebody">
-
       <v-banner class="pa-5 pt-0">
-
         <v-row>
-
-          <v-col>
+          <v-col cols="6" sm="6" xs="12">
             <h2>{{ product.name.toUpperCase() }}</h2>
           </v-col>
 
-          <v-col>
-            <v-btn
-              v-if="isSeller"
-              dark
-              color="light-blue lighten-2"
-              @click="deleteOverlay = !deleteOverlay"
-              >Borrar Producto</v-btn
-            >
+          <v-col cols="6" sm="6" xs="12">
+            <v-row>
+              <v-col>
+                <v-btn
+                  v-if="isTheOwner"
+                  dark
+                  color="light-blue lighten-2"
+                  @click="deleteOverlay = !deleteOverlay"
+                  >Borrar Producto</v-btn
+                ></v-col
+              >
+              <v-col>
+                <v-btn
+                  v-if="isTheOwner"
+                  dark
+                  color="light-blue lighten-2"
+                  @click="modifyOverlay = !modifyOverlay"
+                  >Modificar Producto</v-btn
+                ></v-col
+              >
+            </v-row>
           </v-col>
-
-          <v-col>
-            <v-btn
-              v-if="isSeller"
-              dark
-              color="light-blue lighten-2"
-              @click="modifyOverlay = !modifyOverlay"
-              >Modificar Producto</v-btn
-            >
-          </v-col>
-
         </v-row>
-
       </v-banner>
 
-      <v-row class="pa-15 d-flex align-center">
-
+      <v-row class="pa-15 d-flex align-center mt-n15">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
@@ -43,7 +40,6 @@
         <v-col cols="12" md="6">
           <ProductData :product="product" />
         </v-col>
-
       </v-row>
 
       <v-divider></v-divider>
@@ -61,9 +57,7 @@
 
       <!-- OVERLAY TO DELETE PRODUCTS -->
       <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
-        
         <v-card height="300" width="500" shaped class="px-8">
-
           <v-card-title class="d-flex justify-center mt-15">
             <p class="mt-10">¡Atención!</p>
           </v-card-title>
@@ -77,7 +71,6 @@
 
           <v-card-actions>
             <v-row>
-
               <v-col class="d-flex justify-end"
                 ><v-btn
                   dark
@@ -99,10 +92,8 @@
                   Volver
                 </v-btn>
               </v-col>
-
             </v-row>
           </v-card-actions>
-
         </v-card>
       </v-overlay>
 
@@ -141,8 +132,8 @@ export default {
     }
   },
   computed: {
-    isSeller() {
-      return this.$auth.user && this.$auth.user.role === 'seller'
+    isTheOwner() {
+      return this.$auth.user.marketplace === this.product.marketplace
     },
   },
   methods: {
@@ -155,7 +146,7 @@ export default {
           },
         }
       )
-      this.$router.push({ name: 'Marketplace' })
+      this.$router.push({ path: '/explore' })
       return response
     },
     actualize(product) {

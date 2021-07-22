@@ -14,7 +14,8 @@
               :public-id="url"
             />
           </div>
-            <CloudinaryUpload type="product"/>
+          <CloudinaryUpload type="product" />
+          <span class="mt-2">Recomendamos que sea tamaño 500x500</span>
         </v-col>
 
         <v-col cols="7">
