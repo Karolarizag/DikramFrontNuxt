@@ -108,7 +108,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-     baseURL: 'https://dikram.herokuapp.com/api'
+     baseURL: 'https://dikramback.herokuapp.com/api'
     // baseURL: 'http://localhost:3000/api'
   },
 
