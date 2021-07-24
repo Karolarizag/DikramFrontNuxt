@@ -95,7 +95,13 @@
     </div>
 
     <div v-else class="d-flex flex-wrap flex-row justify-center mx-5">
-      Cartas de post
+      <PostCard
+        v-for="(item, idx) in posts"
+        :key="idx"
+        elevation="2"
+        outlined
+        :post="item"
+      />
     </div>
   </v-container>
 </template>
@@ -108,7 +114,8 @@ export default {
     const products = await $axios.$get(
       `/marketplace/${marketplace._id}/products`
     )
-    return { marketplace, products }
+    const posts = await $axios.$get(`/marketplace/${marketplace._id}/posts`)
+    return { marketplace, products, posts }
   },
   data() {
     return {
@@ -129,7 +136,7 @@ export default {
       }
     },
     showProducts() {
-      if (!this.posts) {
+      if (!this.postsSection) {
         this.postsSection = true
         this.productSection = false
       }

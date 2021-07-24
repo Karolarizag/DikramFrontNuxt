@@ -172,6 +172,9 @@
           Enviar
         </v-btn>
       </v-row>
+        <v-btn absolute top right icon :to="{ path: `/marketplace/${$auth.user.marketplace}` }">
+          <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        </v-btn>
     </v-card>
   </v-container>
 </template>
@@ -267,7 +270,7 @@ export default {
         tags: this.productTags,
         price: this.price,
       })
-      this.$router.push({ name: 'explore' })
+      this.$router.push( {path: `/marketplace/${this.$auth.user.marketplace}`} )
       res.status(200).json(res)
     },
   },
