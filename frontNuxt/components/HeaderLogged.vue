@@ -42,9 +42,29 @@
       @keyup="searchItem"
     ></v-text-field>
 
-    <v-btn icon>
-      <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
-    </v-btn>
+    <v-menu left offset-y>
+      <template #activator="{ on, attrs }">
+        <v-btn 
+          icon 
+          v-bind="attrs" 
+          v-on="on"
+        >
+          <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+        </v-btn>
+      </template>
+
+      <v-list width="300">
+        <v-list-item 
+          v-for="(item, idx) in $auth.user.cart"
+          :key="idx"
+         
+        >
+          {{item._id}} 
+          <v-spacer></v-spacer>
+          <v-btn icon color="light-blue lighten-2" @click="deleteFromCart(item._id)"> <v-icon>mdi-trash-can-outline</v-icon> </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <v-btn icon @click="logout">
       <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
@@ -107,6 +127,11 @@ export default {
     },
   },
   methods: {
+    async deleteFromCart(item){
+      const res = await this.$axios.$delete(`/users/${this.$auth.user._id}/cart/${item}`)
+      location.reload()
+      return res
+    },
     logout() {
       this.$auth.logout()
     },
