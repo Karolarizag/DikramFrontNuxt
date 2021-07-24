@@ -271,7 +271,7 @@ export default {
         price: this.price,
       })
       this.$router.push( {path: `/marketplace/${this.$auth.user.marketplace}`} )
-      res.status(200).json(res)
+      return res
     },
   },
 }

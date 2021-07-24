@@ -7,38 +7,21 @@
             <h2>{{ product.name.toUpperCase() }}</h2>
           </v-col>
 
-          <v-col cols="6" sm="6" xs="12" >
-           
+          <v-col cols="6" sm="6" xs="12">
             <v-row>
-               <v-spacer></v-spacer>
-              <v-col cols="1">
-                
-                <v-btn
-                  v-if="isTheOwner"
-                  dark
-                  color="light-blue lighten-2"
-                  @click="deleteOverlay = !deleteOverlay"
-                  icon
-                >
-                  <v-icon color="light-blue lighten-2"
-                    >mdi-delete-forever</v-icon
-                  >
-                </v-btn></v-col
+              <v-spacer></v-spacer>
+              <v-btn
+                absolute
+                top
+                right
+                icon
+                :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
+                class="mr-10"
               >
-              <v-col cols="1">
-                <v-btn
-                  v-if="isTheOwner"
-                  dark
-                  color="light-blue lighten-2"
-                  @click="modifyOverlay = !modifyOverlay"
-                  icon
+                <v-icon color="light-blue lighten-2"
+                  >mdi-arrow-left-circle</v-icon
                 >
-                  <v-icon
-                    color="light-blue"
-                    >mdi-update</v-icon
-                  >
-                </v-btn></v-col
-              >
+              </v-btn>
             </v-row>
           </v-col>
         </v-row>
@@ -67,64 +50,6 @@
         </v-img>
       </v-overlay>
 
-      <!-- OVERLAY TO DELETE PRODUCTS -->
-      <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
-        <v-card height="300" width="500" shaped class="px-8">
-          <v-card-title class="d-flex justify-center mt-15">
-            <p class="mt-10">¡Atención!</p>
-          </v-card-title>
-
-          <v-card-text>
-            <span class="d-flex justify-center"
-              >¿Estás seguro de querer borrar este producto? Se borrarán todos
-              sus datos y no podrás recuperarlos.</span
-            >
-          </v-card-text>
-
-          <v-card-actions>
-            <v-row>
-              <v-col class="d-flex justify-center"
-                ><v-btn
-                  :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
-                  dark
-                  color="light-blue lighten-2"
-                  class="mr-2"
-                  @click="deleteProductPage"
-                >
-                  Borrar producto
-                </v-btn>
-              </v-col>
-
-              <v-btn
-                absolute
-                top
-                right
-                icon
-                @click="deleteOverlay = !deleteOverlay"
-              >
-                <v-icon color="light-blue lighten-2"
-                  >mdi-arrow-left-circle</v-icon
-                >
-              </v-btn>
-            </v-row>
-          </v-card-actions>
-        </v-card>
-      </v-overlay>
-
-      <!-- OVERLAY TO MODIFY PRODUCT FORM -->
-
-      <v-overlay :dark="false" :absolute="absolute" :value="modifyOverlay">
-        <v-container fluid>
-          <div class="pa-5 overlay">
-            <ProductModifyForm
-              shaped
-              :product="product"
-              @returnClick="modifyOverlay = false"
-              @backClick="actualize"
-            />
-          </div>
-        </v-container>
-      </v-overlay>
     </div>
   </div>
 </template>
@@ -140,9 +65,6 @@ export default {
     return {
       absolute: true,
       overlay: false,
-      deleteOverlay: false,
-      modifyOverlay: false,
-      productKey: 0,
     }
   },
   computed: {
@@ -151,17 +73,6 @@ export default {
     },
   },
   methods: {
-    async deleteProductPage() {
-      const response = await this.$axios.$delete(
-        `/products/${this.product._id}`,
-        {
-          headers: {
-            token: localStorage.token,
-          },
-        }
-      )
-      return response
-    },
     actualize(product) {
       this.product = product
       this.modifyOverlay = false
