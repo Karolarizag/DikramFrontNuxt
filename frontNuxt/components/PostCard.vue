@@ -124,7 +124,6 @@
                 dark
                 color="light-blue lighten-2"
                 class="mt-5"
-                :to="{ path: `/explore` }"
                 @click="deletePost"
               >
                 Borrar Post
@@ -192,6 +191,7 @@ export default {
   methods: {
     async deletePost() {
       const response = await this.$axios.$delete(`/post/${this.post._id}`)
+      location.reload()
       return response
     },
     async updatePost() {
@@ -199,6 +199,7 @@ export default {
         `/post/${this.post._id}`,
         this.like
       )
+      location.reload()
       return response
     },
   },

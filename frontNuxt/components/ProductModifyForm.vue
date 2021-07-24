@@ -183,7 +183,7 @@
           top
           right
           icon
-          :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
+          @click="$emit('returnClick')"
         >
           <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
         </v-btn>
@@ -245,7 +245,6 @@ export default {
       console.log(url)
       this.url = url
       this.productdata.image.push(this.url)
-      this.url = ''
     })
   },
   methods: {
@@ -299,4 +298,3 @@ export default {
   },
 }
 </script>
-

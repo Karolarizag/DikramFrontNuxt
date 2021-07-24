@@ -32,12 +32,16 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-simple-table>
-          <tbody>
-            <v-row v-for="item in characteristics" :key="item.title">
-              <v-col cols="6" md="6" sm="12 d-flex justify-center"><h4>{{ item.title }}</h4></v-col>
-              <v-col cols="6" md="6" sm="12 d-flex justify-center" ><p>{{ item.value }}</p></v-col>
-            </v-row>
-          </tbody>
+        <tbody>
+          <v-row v-for="item in characteristics" :key="item.title">
+            <v-col cols="6" md="6" sm="12 d-flex justify-center"
+              ><h4>{{ item.title }}</h4></v-col
+            >
+            <v-col cols="6" md="6" sm="12 d-flex justify-center"
+              ><p>{{ item.value }}</p></v-col
+            >
+          </v-row>
+        </tbody>
       </v-simple-table>
     </v-card-text>
 
@@ -68,6 +72,10 @@
             Añadir al carrito
           </v-btn>
         </v-col>
+        <v-btn absolute top right icon :to="{ path: `/marketplace/${$auth.user.marketplace}` }">
+          <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        </v-btn>
+        
       </v-row>
     </v-card-actions>
   </v-card>

@@ -7,25 +7,37 @@
             <h2>{{ product.name.toUpperCase() }}</h2>
           </v-col>
 
-          <v-col cols="6" sm="6" xs="12">
+          <v-col cols="6" sm="6" xs="12" >
+           
             <v-row>
-              <v-col>
+               <v-spacer></v-spacer>
+              <v-col cols="1">
+                
                 <v-btn
                   v-if="isTheOwner"
                   dark
                   color="light-blue lighten-2"
                   @click="deleteOverlay = !deleteOverlay"
-                  >Borrar Producto</v-btn
-                ></v-col
+                  icon
+                >
+                  <v-icon color="light-blue lighten-2"
+                    >mdi-delete-forever</v-icon
+                  >
+                </v-btn></v-col
               >
-              <v-col>
+              <v-col cols="1">
                 <v-btn
                   v-if="isTheOwner"
                   dark
                   color="light-blue lighten-2"
                   @click="modifyOverlay = !modifyOverlay"
-                  >Modificar Producto</v-btn
-                ></v-col
+                  icon
+                >
+                  <v-icon
+                    color="light-blue"
+                    >mdi-update</v-icon
+                  >
+                </v-btn></v-col
               >
             </v-row>
           </v-col>
@@ -73,6 +85,7 @@
             <v-row>
               <v-col class="d-flex justify-center"
                 ><v-btn
+                  :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
                   dark
                   color="light-blue lighten-2"
                   class="mr-2"
@@ -82,18 +95,17 @@
                 </v-btn>
               </v-col>
 
-                <v-btn
-                  absolute
-                  top
-                  right
-                  icon
-                  @click="deleteOverlay = !deleteOverlay"
+              <v-btn
+                absolute
+                top
+                right
+                icon
+                @click="deleteOverlay = !deleteOverlay"
+              >
+                <v-icon color="light-blue lighten-2"
+                  >mdi-arrow-left-circle</v-icon
                 >
-                  <v-icon color="light-blue lighten-2"
-                    >mdi-arrow-left-circle</v-icon
-                  >
-                </v-btn>
-              
+              </v-btn>
             </v-row>
           </v-card-actions>
         </v-card>
@@ -148,13 +160,13 @@ export default {
           },
         }
       )
-      this.$router.push({ path: '/explore' })
       return response
     },
     actualize(product) {
       this.product = product
       this.modifyOverlay = false
       this.productKey++
+      location.reload()
     },
   },
 }
