@@ -270,7 +270,7 @@ export default {
         tags: this.productTags,
         price: this.price,
       })
-      this.$router.push({path: `/marketplace/${this.$auth.user.marketplace}`})
+      this.$router.push( {path: `/marketplace/${this.$auth.user.marketplace}`} )
       res.status(200).json(res)
     },
   },
