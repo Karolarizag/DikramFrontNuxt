@@ -12,7 +12,6 @@ const createStore = () => {
       async getUser (state, { axios, user }) {
         const userData = await axios.$get(`/users/${user._id}`)
         state.auth.user = userData
-        // payload.$axios.$get
       }
     }
   })

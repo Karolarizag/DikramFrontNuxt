@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="product" fluid app>
+  <container v-if="product" fluid app>
     <div class="productpagebody">
       <v-banner class="pa-5 pt-0">
         <v-row>
@@ -15,7 +15,7 @@
                 top
                 right
                 icon
-                :to="{ path: `/marketplace/${product.marketplace}` }"
+                :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
                 class="mr-10"
               >
                 <v-icon color="light-blue lighten-2"
@@ -51,7 +51,7 @@
       </v-overlay>
 
     </div>    
-  </v-container>
+  </container>
 </template>
 
 <script>
