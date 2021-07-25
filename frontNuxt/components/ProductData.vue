@@ -167,6 +167,9 @@
 <script>
 export default {
   name: 'ProductData',
+  props: {
+    product: Object,
+  },
   data() {
     return {
       absolute: true,
@@ -193,8 +196,29 @@ export default {
       ],
     }
   },
-  props: {
-    product: Object,
+  methods: {
+    addProduct() {
+      this.quantity++
+    },
+    substractProduct() {
+      if (this.quantity > 0) this.quantity--
+    },
+    async addToCart({ $axios }) {
+      try {
+        const cart = await this.$axios.$put(`/users/${this.$auth.user._id}/cart`, {
+          product: this.product._id,
+          marketplace: this.product.marketplace,
+          size: this.size,
+          color: this.color,
+          quantity: this.quantity,
+          price: this.product.price * this.quantity,
+        })
+        return cart
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error.message)
+      }
+    },
   },
   computed: {
     isTheOwner() {

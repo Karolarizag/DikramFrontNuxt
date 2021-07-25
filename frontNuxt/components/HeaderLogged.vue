@@ -42,9 +42,9 @@
       @keyup="searchItem"
     ></v-text-field>
 
-    <v-btn icon>
-      <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
-    </v-btn>
+        <v-btn icon :to="{ path: '/cart'}">
+          <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+        </v-btn>
 
     <v-btn icon @click="logout">
       <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
