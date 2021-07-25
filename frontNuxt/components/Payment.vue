@@ -3,16 +3,16 @@
     <v-card max-height="800" max-width="800">
       <v-card-text class="pa-12">
         <v-row>
-          <v-col><v-text-field label="Nombre" required outlined /></v-col>
-          <v-col><v-text-field label="Apellidos" required outlined /></v-col>
-          <v-col><v-text-field label="Teléfono" required outlined /></v-col>
+          <v-col><v-text-field v-model="name" label="Nombre" required outlined /></v-col>
+          <v-col><v-text-field v-model="surname" label="Apellidos" required outlined /></v-col>
+          <v-col><v-text-field v-model="phone" label="Teléfono" required outlined /></v-col>
         </v-row>
         <v-row>
-          <v-col><v-text-field label="País" required outlined /></v-col>
-          <v-col><v-text-field label="Ciudad" required outlined /></v-col>
+          <v-col><v-text-field v-model="country" label="País" required outlined /></v-col>
+          <v-col><v-text-field v-model="city" label="Ciudad" required outlined /></v-col>
         </v-row>
         <v-row>
-          <v-col><v-text-field label="Dirección" required outlined /></v-col>
+          <v-col><v-text-field v-model="address" label="Dirección" required outlined /></v-col>
         </v-row>
         <v-card class="ma-5 pa-4">
           <v-card-text>
@@ -38,7 +38,7 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="d-flex justify-center mt-5">
-                <v-btn color="light-blue lighten-2" dark id="custom-button" @click="createToken">Pagar 25,03€</v-btn>
+                <v-btn id="custom-button" color="light-blue lighten-2" dark  @click="createToken">Pagar -- €</v-btn>
               </v-col>
             </v-row>
             <v-row>
@@ -62,6 +62,12 @@ export default {
       cardExpiry: null,
       cardCvc: null,
       postalCode: null,
+      name: '',
+      surname: '',
+      phone: '',
+      country: '',
+      city: '',
+      address: ''
     }
   },
   computed: {
@@ -101,6 +107,11 @@ export default {
     this.postalCode.destroy()
   },
   methods: {
+    doPayment() {
+      // eslint-disable-next-line no-console
+      console.log('a pagar')
+    },
+
     async createToken() {
       const { token, error } = await this.$stripe.createToken(this.cardNumber)
       if (error) {
@@ -108,6 +119,7 @@ export default {
         document.getElementById('card-error').innerHTML = error.message
         return
       }
+      // eslint-disable-next-line no-console
       console.log(token)
       // handle the token
       // send it to your server

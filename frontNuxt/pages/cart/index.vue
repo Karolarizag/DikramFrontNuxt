@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="products && characteristics">
+  <v-container>
     <v-card class="px-5 my-5">
       <v-row>
         <v-col class="d-flex justify-center">Imagen</v-col>
@@ -18,14 +18,14 @@
         <v-col cols="6" class="d-flex justify-center align-center">
           {{ item.name }}
         </v-col>
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].size }}
         </v-col>
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].quantity }}
         </v-col>
 
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].price }} €
         </v-col>
         <v-col class="d-flex justify-end align-center">
@@ -48,18 +48,13 @@ export default {
   async asyncData({ $axios, $auth }) {
     try {
       const products = await $axios.$get(`/users/${$auth.user._id}/cart`)
-      return { products }
+      const characteristics =  $auth.user.cart
+
+      return { products, characteristics }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err)
     }
-  },
-  data() {
-    return {
-      characteristics: null,
-    }
-  },
-  mounted() {
-    this.characteristics = this.$auth.user.cart
   },
   methods: {
     async deleteFromCart(i) {
