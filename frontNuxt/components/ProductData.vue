@@ -132,7 +132,7 @@ export default {
     async addToCart({ $axios }) {
       try {
         const cart = await this.$axios.$put(`/users/${this.$auth.user._id}/cart`, {
-          product: this.product.id,
+          product: this.product._id,
           marketplace: this.product.marketplace,
           size: this.size,
           color: this.color,
