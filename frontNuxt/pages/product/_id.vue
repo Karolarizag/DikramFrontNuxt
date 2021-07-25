@@ -1,5 +1,5 @@
 <template>
-  <div v-if="product">
+  <container v-if="product" fluid app>
     <div class="productpagebody">
       <v-banner class="pa-5 pt-0">
         <v-row>
@@ -50,8 +50,8 @@
         </v-img>
       </v-overlay>
 
-    </div>
-  </div>
+    </div>    
+  </container>
 </template>
 
 <script>
