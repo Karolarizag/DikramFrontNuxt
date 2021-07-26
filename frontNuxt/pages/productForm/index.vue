@@ -96,10 +96,9 @@
             :items="size"
             outlined
             dense
-            chips
-            small-chips
             label="Tallas"
             multiple
+            clearable
           >
           </v-autocomplete>
         </v-col>
@@ -168,20 +167,81 @@
           color="light-blue lighten-2"
           dark
           @click="submitProduct"
+          v-if="!customizable"
         >
           Enviar
         </v-btn>
       </v-row>
-        <v-btn absolute top right icon :to="{ path: `/marketplace/${$auth.user.marketplace}` }">
-          <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
-        </v-btn>
+      <v-btn
+        absolute
+        top
+        right
+        icon
+        :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
+      >
+        <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+      </v-btn>
     </v-card>
+    <v-expansion-panels v-if="customizable">
+      <v-expansion-panel>
+        <v-text-field
+          v-model="basecolor"
+          outlined
+          dense
+          label="Colores base disponibles"
+          @keyup.enter="colorsCustom"
+        >
+        </v-text-field>
+
+        <v-autocomplete
+          v-model="texture"
+          :items="textures"
+          item-text="name"
+          item-value="_id"
+          outlined
+          return-object
+          dense
+          label="Texturas disponibles para este producto"
+          multiple
+          auto-select-first
+        >
+        </v-autocomplete>
+
+        <v-autocomplete
+          v-model="pattern"
+          :items="patterns"
+          item-text="name"
+          item-value="_id"
+          outlined
+          return-object
+          dense
+          label="Patrones de estilado"
+          multiple
+          auto-select-first
+        >
+        </v-autocomplete>
+        <v-btn
+          class="mt-3 mx-10"
+          color="light-blue lighten-2"
+          dark
+          @click="submitProduct"
+          v-if="customizable"
+        >
+          Enviar
+        </v-btn>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
 <script>
 export default {
   name: 'NewProduct',
+  async asyncData({ $axios }) {
+    const textures = await $axios.$get('/custom/texture')
+    const patterns = await $axios.$get('/custom/pattern')
+    return { textures, patterns }
+  },
   data() {
     return {
       imageInput: ['urlimage'],
@@ -217,6 +277,10 @@ export default {
       customizable: false,
       images: [],
       url: '',
+      texture: null,
+      pattern: null,
+      basecolor: '',
+      baseColors: [],
     }
   },
   mounted() {
@@ -226,6 +290,10 @@ export default {
     })
   },
   methods: {
+    colorsCustom() {
+      this.baseColors.push(this.basecolor)
+      this.basecolor = ''
+    },
     removeTag(item) {
       this.productTags.splice(this.productTags.indexOf(item), 1)
       this.productTags = [...this.productTags]
@@ -259,6 +327,8 @@ export default {
       this.material = ''
     },
     async submitProduct() {
+      const texture = this.texture.map((t) => t._id)
+      const pattern = this.pattern.map((p) => p._id)
       const res = await this.$axios.$post('/products', {
         name: this.productTitle,
         description: this.description,
@@ -269,8 +339,13 @@ export default {
         customizable: this.customizable,
         tags: this.productTags,
         price: this.price,
+        customForm: {
+          texture,
+          pattern,
+          basecolor: this.baseColors,
+        },
       })
-      this.$router.push( {path: `/marketplace/${this.$auth.user.marketplace}`} )
+      this.$router.push({ path: `/marketplace/${this.$auth.user.marketplace}` })
       return res
     },
   },

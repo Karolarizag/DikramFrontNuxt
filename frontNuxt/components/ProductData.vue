@@ -108,19 +108,52 @@
               </v-btn>
             </div>
           </v-col>
-
-          <v-col class="d-flex justify-end">
+          <v-col cols="12" class="d-flex justify-center">
             <v-btn
+              v-if="!product.customizable"
+              @click="addToCart"
               elevation="1"
               color="light-blue lighten-2"
               dark
-              @click="addToCart"
             >
               Añadir al carrito
             </v-btn>
           </v-col>
         </v-row>
       </v-card-actions>
+      <v-expansion-panels v-if="product.customizable">
+        <v-expansion-panel>
+          <v-row>
+            <v-col>
+              {{product._id}}
+              <v-autocomplete
+                v-model="pattern"
+                :items="product.customForm.pattern"
+                item-text="name"
+                item-value="_id"
+                outlined
+                return-object
+                dense
+                label="Patrones de estilado"
+                multiple
+                auto-select-first
+              >
+              </v-autocomplete>
+            </v-col>
+            <v-col> </v-col>
+          </v-row>
+          ><v-col cols="12" class="d-flex justify-center">
+            <v-btn
+              v-if="product.customizable"
+              elevation="1"
+              color="light-blue lighten-2"
+              dark
+            >
+              Añadir al carrito
+            </v-btn>
+          </v-col></v-expansion-panel
+        ></v-expansion-panels
+      >
     </v-card>
     <!-- OVERLAY TO DELETE PRODUCTS -->
     <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
@@ -256,6 +289,10 @@ export default {
       )
       return response
     },
+  },
+  async deleteProductPage() {
+    const response = await this.$axios.$delete(`/products/${this.product._id}`)
+    return response
   },
   computed: {
     isTheOwner() {
