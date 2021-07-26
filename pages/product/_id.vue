@@ -1,5 +1,5 @@
 <template>
-  <container v-if="product" fluid app>
+  <v-container v-if="product" fluid app>
     <div class="productpagebody">
       <v-banner class="pa-5 pt-0">
         <v-row>
@@ -27,12 +27,12 @@
         </v-row>
       </v-banner>
 
-      <v-row class="pa-15 d-flex align-center mt-n15">
+      <v-row class="pa-15 d-flex align-start mt-n15">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
 
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="mt-3">
           <ProductData :product="product" />
         </v-col>
       </v-row>
@@ -51,7 +51,7 @@
       </v-overlay>
 
     </div>    
-  </container>
+  </v-container>
 </template>
 
 <script>

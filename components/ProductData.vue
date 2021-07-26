@@ -124,8 +124,7 @@
       <v-expansion-panels v-if="product.customizable">
         <v-expansion-panel>
           <v-row>
-            <v-col>
-              {{product._id}}
+            <v-col cols="12">
               <v-autocomplete
                 v-model="pattern"
                 :items="product.customForm.pattern"
@@ -137,17 +136,34 @@
                 label="Patrones de estilado"
                 multiple
                 auto-select-first
+                class="mx-5 my-0"
+              >
+              </v-autocomplete>
+              </v-col>
+              <v-col cols="12">
+              <v-autocomplete
+                v-model="pattern"
+                :items="product.customForm.pattern"
+                item-text="name"
+                item-value="_id"
+                outlined
+                return-object
+                dense
+                label="Patrones de estilado"
+                multiple
+                auto-select-first
+                class="mx-5 my-0"
               >
               </v-autocomplete>
             </v-col>
-            <v-col> </v-col>
           </v-row>
-          ><v-col cols="12" class="d-flex justify-center">
+          <v-col cols="12" class="d-flex justify-center">
             <v-btn
               v-if="product.customizable"
               elevation="1"
               color="light-blue lighten-2"
               dark
+              class="mb-3"
             >
               Añadir al carrito
             </v-btn>
@@ -255,10 +271,10 @@ export default {
   },
   methods: {
     addProduct() {
-      this.quantity++
+      if (this.quantity <= 8) this.quantity++
     },
     substractProduct() {
-      if (this.quantity > 0) this.quantity--
+      if (this.quantity > 1) this.quantity--
     },
     async addToCart() {
       try {
