@@ -15,7 +15,6 @@
             @click="deleteOverlay = !deleteOverlay"
             icon
           >
-            <!--esto se tiene que quedar :)-->
             <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
           </v-btn></v-col
         >
