@@ -15,7 +15,7 @@
             @click="deleteOverlay = !deleteOverlay"
             icon
           >
-          <!-- esta mierda se tiene que quedar -->
+          <!--esto se tiene que quedar :)-->
             <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
           </v-btn></v-col
         >
@@ -220,13 +220,6 @@ export default {
         console.error(error.message)
       }
     },
-  },
-  computed: {
-    isTheOwner() {
-      return this.$auth.user.marketplace === this.product.marketplace
-    },
-  },
-  methods: {
     async deleteProductPage() {
       const response = await this.$axios.$delete(
         `/products/${this.product._id}`,
@@ -237,7 +230,12 @@ export default {
         }
       )
       return response
+    }
+  },
+  computed: {
+    isTheOwner() {
+      return this.$auth.user.marketplace === this.product.marketplace
     },
-  }
+  },
 }
 </script>
