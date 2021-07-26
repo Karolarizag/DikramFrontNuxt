@@ -49,66 +49,8 @@
         >
         </v-img>
       </v-overlay>
-      <!-- OVERLAY TO DELETE PRODUCTS -->
-      <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
-        <v-card height="300" width="500" shaped class="px-8">
-          <v-card-title class="d-flex justify-center mt-15">
-            <p class="mt-10">¡Atención!</p>
-          </v-card-title>
 
-          <v-card-text>
-            <span class="d-flex justify-center"
-              >¿Estás seguro de querer borrar este producto? Se borrarán todos
-              sus datos y no podrás recuperarlos.</span
-            >
-          </v-card-text>
-
-          <v-card-actions>
-            <v-row>
-              <v-col class="d-flex justify-center"
-                ><v-btn
-                  :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
-                  dark
-                  color="light-blue lighten-2"
-                  class="mr-2"
-                  @click="deleteProductPage"
-                >
-                  Borrar producto
-                </v-btn>
-              </v-col>
-
-              <v-btn
-                absolute
-                top
-                right
-                icon
-                @click="deleteOverlay = !deleteOverlay"
-              >
-                <v-icon color="light-blue lighten-2"
-                  >mdi-arrow-left-circle</v-icon
-                >
-              </v-btn>
-            </v-row>
-          </v-card-actions>
-        </v-card>
-      </v-overlay>
-
-      <!-- OVERLAY TO MODIFY PRODUCT FORM -->
-
-      <v-overlay :dark="false" :absolute="absolute" :value="modifyOverlay">
-        <v-container fluid>
-          <div class="pa-5 overlay">
-            <ProductModifyForm
-              shaped
-              :product="product"
-              @returnClick="modifyOverlay = false"
-              @backClick.native="actualize"
-              @backClick="modifyOverlay = false"
-            />
-          </div>
-        </v-container>
-      </v-overlay>
-    </div>
+    </div>    
   </container>
 </template>
 

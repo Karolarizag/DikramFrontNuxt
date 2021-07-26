@@ -58,52 +58,13 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="d-flex justify-center mt-5">
-                
-
-      <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="500"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          id="custom-button"
-          color="light-blue lighten-2"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          @click="createToken && (dialog = false)"
-          >Pagar {{ getFullPrice }} €</v-btn
-        >
-      </template>
-
-      <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
-          Privacy Policy
-        </v-card-title>
-
-        <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="dialog = false"
-          >
-            I accept
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
-
-
-                
+                <v-btn
+                  id="custom-button"
+                  color="light-blue lighten-2"
+                  dark
+                  @click="createToken && (dialog = true)"
+                  >Pagar {{ getFullPrice }} €</v-btn
+                >
               </v-col>
             </v-row>
             <v-row>
@@ -115,6 +76,36 @@
         </v-card>
       </v-card-text>
     </v-card>
+      <!---->
+      <v-overlay :dark="false" :absolute="absolute" :value="dialog">
+      <v-card height="300" width="500" shaped class="px-8">
+        <v-card-title class="d-flex justify-center mt-15">
+          <p class="mt-10">¡Genial!</p>
+        </v-card-title>
+
+        <v-card-text>
+          <span class="d-flex justify-center"
+            >Tu pago ha sido realizado con éxito.</span
+          >
+        </v-card-text>
+
+        <v-card-actions>
+          <v-row>
+            <v-col class="d-flex justify-center"
+              ><v-btn
+                :to="{ path: '/explore' }"
+                dark
+                color="light-blue lighten-2"
+                class="mr-2"
+                @click="deleteProductPage"
+              >
+                Volver
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
   </div>
 </template>
 
