@@ -159,7 +159,6 @@
           class="mb-2"
           label="Producto customizable"
           color="light-blue lighten-2"
-          @click="getTextures"
         >
         </v-switch>
 
@@ -183,40 +182,55 @@
         <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
       </v-btn>
     </v-card>
-      <v-expansion-panels v-if="customizable">
-        <v-expansion-panel>
-          <v-autocomplete
-            v-model="texture"
-            :items="textures"
-            item-text="name"
-            item-value="_id"
-            outlined
-            return-object
-            dense
-            label="Texturas"
-            multiple
-            auto-select-first
-          >
-          </v-autocomplete>
-          <v-text-field
-            v-model="basecolor"
-            outlined
-            dense
-            label="Color base"
-            @keyup.enter="colorsCustom"
-          >
-          </v-text-field>
-          <v-btn
-            class="mt-3 mx-10"
-            color="light-blue lighten-2"
-            dark
-            @click="submitProduct"
-            v-if="customizable"
-          >
-            Enviar
-          </v-btn>
-        </v-expansion-panel>
-      </v-expansion-panels>
+    <v-expansion-panels v-if="customizable">
+      <v-expansion-panel>
+        <v-text-field
+          v-model="basecolor"
+          outlined
+          dense
+          label="Colores base disponibles"
+          @keyup.enter="colorsCustom"
+        >
+        </v-text-field>
+
+        <v-autocomplete
+          v-model="texture"
+          :items="textures"
+          item-text="name"
+          item-value="_id"
+          outlined
+          return-object
+          dense
+          label="Texturas disponibles para este producto"
+          multiple
+          auto-select-first
+        >
+        </v-autocomplete>
+
+        <v-autocomplete
+          v-model="pattern"
+          :items="patterns"
+          item-text="name"
+          item-value="_id"
+          outlined
+          return-object
+          dense
+          label="Patrones de estilado"
+          multiple
+          auto-select-first
+        >
+        </v-autocomplete>
+        <v-btn
+          class="mt-3 mx-10"
+          color="light-blue lighten-2"
+          dark
+          @click="submitProduct"
+          v-if="customizable"
+        >
+          Enviar
+        </v-btn>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
@@ -225,7 +239,8 @@ export default {
   name: 'NewProduct',
   async asyncData({ $axios }) {
     const textures = await $axios.$get('/custom/texture')
-    return {  textures }
+    const patterns = await $axios.$get('/custom/pattern')
+    return { textures, patterns }
   },
   data() {
     return {
@@ -263,8 +278,9 @@ export default {
       images: [],
       url: '',
       texture: null,
+      pattern: null,
       basecolor: '',
-      baseColors: []
+      baseColors: [],
     }
   },
   mounted() {
@@ -311,7 +327,8 @@ export default {
       this.material = ''
     },
     async submitProduct() {
-      const texture = this.texture.map(t => t._id)
+      const texture = this.texture.map((t) => t._id)
+      const pattern = this.pattern.map((p) => p._id)
       const res = await this.$axios.$post('/products', {
         name: this.productTitle,
         description: this.description,
@@ -324,7 +341,9 @@ export default {
         price: this.price,
         customForm: {
           texture,
-        }
+          pattern,
+          basecolor: this.baseColors,
+        },
       })
       this.$router.push({ path: `/marketplace/${this.$auth.user.marketplace}` })
       return res
