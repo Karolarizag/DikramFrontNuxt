@@ -3,16 +3,36 @@
     <v-card max-height="800" max-width="800">
       <v-card-text class="pa-12">
         <v-row>
-          <v-col><v-text-field v-model="name" label="Nombre" required outlined /></v-col>
-          <v-col><v-text-field v-model="surname" label="Apellidos" required outlined /></v-col>
-          <v-col><v-text-field v-model="phone" label="Teléfono" required outlined /></v-col>
+          <v-col
+            ><v-text-field v-model="name" label="Nombre" required outlined
+          /></v-col>
+          <v-col
+            ><v-text-field
+              v-model="surname"
+              label="Apellidos"
+              required
+              outlined
+          /></v-col>
+          <v-col
+            ><v-text-field v-model="phone" label="Teléfono" required outlined
+          /></v-col>
         </v-row>
         <v-row>
-          <v-col><v-text-field v-model="country" label="País" required outlined /></v-col>
-          <v-col><v-text-field v-model="city" label="Ciudad" required outlined /></v-col>
+          <v-col
+            ><v-text-field v-model="country" label="País" required outlined
+          /></v-col>
+          <v-col
+            ><v-text-field v-model="city" label="Ciudad" required outlined
+          /></v-col>
         </v-row>
         <v-row>
-          <v-col><v-text-field v-model="address" label="Dirección" required outlined /></v-col>
+          <v-col
+            ><v-text-field
+              v-model="address"
+              label="Dirección"
+              required
+              outlined
+          /></v-col>
         </v-row>
         <v-card class="ma-5 pa-4">
           <v-card-text>
@@ -38,7 +58,13 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="d-flex justify-center mt-5">
-                <v-btn id="custom-button" color="light-blue lighten-2" dark  @click="createToken">Pagar -- €</v-btn>
+                <v-btn
+                  id="custom-button"
+                  color="light-blue lighten-2"
+                  dark
+                  @click="createToken"
+                  >Pagar {{getFullPrice}} €</v-btn
+                >
               </v-col>
             </v-row>
             <v-row>
@@ -67,12 +93,20 @@ export default {
       phone: '',
       country: '',
       city: '',
-      address: ''
+      address: '',
+      cart: this.$auth.user.cart
     }
   },
   computed: {
     stripeElements() {
       return this.$stripe.elements()
+    },
+    getFullPrice() {
+      let total = 0
+      this.$auth.user.cart.forEach(v => {
+        total += v.price
+      })
+      return total
     },
   },
   mounted() {
@@ -107,22 +141,23 @@ export default {
     this.postalCode.destroy()
   },
   methods: {
-    doPayment() {
-      // eslint-disable-next-line no-console
-      console.log('a pagar')
-    },
-
     async createToken() {
       const { token, error } = await this.$stripe.createToken(this.cardNumber)
       if (error) {
-        // handle error here
         document.getElementById('card-error').innerHTML = error.message
-        return
+        return error
       }
-      // eslint-disable-next-line no-console
-      console.log(token)
-      // handle the token
-      // send it to your server
+      await this.$axios.$post('/sales', {
+        name: this.name,
+        surname: this.surname,
+        phone: this.phone,
+        country: this.country,
+        city: this.city,
+        address: this.adress,
+        cart: this.cart,
+        payment: token,
+        price: this.getFullPrice,
+      })
     },
   },
 }

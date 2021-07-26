@@ -29,7 +29,9 @@
           {{ characteristics[idx].price }} €
         </v-col>
         <v-col class="d-flex justify-end align-center">
-          <v-btn icon color="light-blue lighten-2"
+          <v-btn
+            icon
+            color="light-blue lighten-2"
             @click="deleteFromCart(characteristics[idx]._id)"
             ><v-icon>mdi-trash-can</v-icon></v-btn
           >
@@ -37,7 +39,7 @@
       </v-row>
     </v-card>
     <v-card class="d-flex justify-end pa-5 my-5">
-      <v-btn color="light-blue lighten-2" dark>Pagar</v-btn>
+        <v-btn :to="{ name: 'payment'}" color="light-blue lighten-2" dark>Pagar {{getFullPrice}} €</v-btn>
     </v-card>
   </v-container>
 </template>
@@ -48,13 +50,22 @@ export default {
   async asyncData({ $axios, $auth }) {
     try {
       const products = await $axios.$get(`/users/${$auth.user._id}/cart`)
-      const characteristics =  $auth.user.cart
+      const characteristics = $auth.user.cart
 
       return { products, characteristics }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err)
     }
+  },
+   computed: {
+    getFullPrice() {
+      let total = 0
+      this.characteristics.forEach(v => {
+        total += v.price
+      })
+      return total
+    },
   },
   methods: {
     async deleteFromCart(i) {
@@ -64,6 +75,6 @@ export default {
       location.reload()
       return res
     },
-  },
+  }
 }
 </script>
