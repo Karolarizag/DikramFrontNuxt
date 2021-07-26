@@ -2,8 +2,8 @@
   <div>
     <v-carousel class="carousel" hide-delimiters>
       <v-carousel-item
-        v-for="(item,i) in product.image"
-        :key="i"
+        v-for="(item, idx) in product.image"
+        :key="idx"
         :src="item"
       ></v-carousel-item>
     </v-carousel>
@@ -14,7 +14,10 @@
   export default {
     name: "ProductImages",
     props: {
-      product: Object
+      product: {
+        type: Object,
+        default: null
+      }
     },
   }
 </script>

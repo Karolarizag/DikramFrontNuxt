@@ -25,10 +25,10 @@
           </v-row>
           <v-row>
             <v-textarea
-              solo
-              label="Añade aquí la descripción de tu producto"
-              class="mt-3 px-3"
               v-model="productdata.description"
+              class="mt-3 px-3"
+              label="Añade aquí la descripción de tu producto"
+              solo
             >
             </v-textarea>
           </v-row>
@@ -37,25 +37,25 @@
       <v-row class="px-15">
         <v-col>
           <v-text-field
+            v-model="productdata.name"
             type="text"
             width="500"
             class="mx-2"
             label="Nombre"
             outlined
             dense
-            v-model="productdata.name"
           ></v-text-field>
         </v-col>
 
         <v-col>
           <v-text-field
+            v-model="tag"
             type="text"
             class="mx-2"
             label="Etiquetas"
-            v-model="tag"
-            @keydown.enter="sendTags()"
             outlined
             dense
+            @keydown.enter="sendTags()"
           >
           </v-text-field>
 
@@ -80,9 +80,9 @@
       <v-row class="px-15">
         <v-col>
           <v-text-field
+            v-model="productdata.price"
             type="text"
             class="mx-2"
-            v-model="productdata.price"
             label="Precio"
             outlined
             dense
@@ -93,30 +93,30 @@
           <v-autocomplete
             v-model="productdata.sizes"
             :items="size"
+            label="Tallas"
             outlined
             dense
             chips
             small-chips
-            label="Tallas"
             multiple
           >
           </v-autocomplete>
         </v-col>
         <v-col>
           <v-text-field
+            v-model="color"
             type="text"
             class="mx-2"
             label="Color"
-            v-model="color"
-            @keydown.enter="sendColors()"
             outlined
             dense
+            @keydown.enter="sendColors()"
           >
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
             <div
-              v-for="(item, idx) in this.productdata.colors"
+              v-for="(item, idx) in productdata.colors"
               :key="idx"
               class="ma-1"
             >
@@ -133,19 +133,19 @@
         </v-col>
         <v-col>
           <v-text-field
+            v-model="material"
             type="text"
             class="mx-2"
             label="Material"
-            v-model="material"
-            @keydown.enter="sendMaterials()"
             outlined
             dense
+            @keydown.enter="sendMaterials()"
           >
           </v-text-field>
 
           <div class="d-flex flex-wrap px-2">
             <div
-              v-for="(item, idx) in this.productdata.materials"
+              v-for="(item, idx) in productdata.materials"
               :key="idx"
               class="ma-1"
             >
@@ -163,10 +163,10 @@
       </v-row>
       <v-row class="d-flex justify-center">
         <v-switch
+          v-model="productdata.customizable"
           class="mb-2"
           label="Producto customizable"
           color="light-blue lighten-2"
-          v-model="productdata.customizable"
         >
         </v-switch>
 
@@ -203,6 +203,12 @@
 <script>
 export default {
   name: 'CProductImage',
+  props: {
+    product: {
+      type: Object,
+      default: null 
+    }
+  },
   data() {
     return {
       url: '',
@@ -236,13 +242,9 @@ export default {
       productdata: this.product,
     }
   },
-  props: {
-    product: Object,
-  },
   mounted() {
     this.$root.$on('cloudImage', (url) => {
       // eslint-disable-next-line no-console
-      console.log(url)
       this.url = url
       this.productdata.image.push(this.url)
     })

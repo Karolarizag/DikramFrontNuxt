@@ -15,7 +15,7 @@
             @click="deleteOverlay = !deleteOverlay"
             icon
           >
-          <!--esto se tiene que quedar :)-->
+            <!--esto se tiene que quedar :)-->
             <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
           </v-btn></v-col
         >
@@ -60,108 +60,69 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-simple-table>
-          <tbody>
-            <v-row v-for="item in characteristics" :key="item.title">
-              <v-col cols="6" md="6" sm="12 d-flex justify-center"
-                ><h4>{{ item.title }}</h4></v-col
-              >
-              <v-col cols="6" md="6" sm="12 d-flex justify-center"
-                ><p>{{ item.value }}</p></v-col
-              >
-            </v-row>
-          </tbody>
+          <v-row v-for="item in characteristics" :key="item.title">
+            <v-col cols="6" md="6" sm="12 d-flex justify-center"
+              ><h4>{{ item.title }}</h4></v-col
+            >
+            <v-col cols="6" md="6" sm="12 d-flex justify-center"
+              ><p>{{ item.value }}</p></v-col
+            >
+          </v-row>
         </v-simple-table>
       </v-card-text>
 
       <v-divider></v-divider>
 
+      <v-row class="d-flex justify-end px-3 mt-3">
+        <v-col class="d-flex" cols="6">
+          <v-select
+            v-model="size"
+            :items="product.sizes"
+            label="Talla"
+            solo
+          ></v-select>
+        </v-col>
+
+        <v-col class="d-flex" cols="6">
+          <v-select
+            v-model="color"
+            :items="product.colors"
+            label="Color"
+            solo
+          ></v-select>
+        </v-col>
+      </v-row>
       <v-card-actions>
-        <v-row class="d-flex justify-end mb-6">
-          <v-col class="d-flex" cols="6">
-            <v-select
-              :items="product.sizes"
-              filled
-              label="Talla"
-              dense
-            ></v-select>
+        <v-row>
+          <v-col class="ml-3">
+            <div style="background-color: #cff9ff; width: 90px">
+              <v-btn
+                icon
+                color="light-blue lighten-2"
+                @click="substractProduct"
+              >
+                —
+              </v-btn>
+              {{ quantity }}
+              <v-btn icon color="light-blue lighten-2" @click="addProduct">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </div>
           </v-col>
 
-          <v-col class="d-flex" cols="6">
-            <v-select
-              :items="product.colors"
-              filled
-              label="Color"
-              dense
-            ></v-select>
-          </v-col>
-
-          <v-col cols="12" class="d-flex justify-center">
-            <v-btn elevation="1" color="light-blue lighten-2" dark>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              elevation="1"
+              color="light-blue lighten-2"
+              dark
+              @click="addToCart"
+            >
               Añadir al carrito
             </v-btn>
           </v-col>
         </v-row>
       </v-card-actions>
     </v-card>
-      <!-- OVERLAY TO DELETE PRODUCTS -->
-      <v-overlay :dark="false" :absolute="absolute" :value="deleteOverlay">
-        <v-card height="300" width="500" shaped class="px-8">
-          <v-card-title class="d-flex justify-center mt-15">
-            <p class="mt-10">¡Atención!</p>
-          </v-card-title>
-
-          <v-card-text>
-            <span class="d-flex justify-center"
-              >¿Estás seguro de querer borrar este producto? Se borrarán todos
-              sus datos y no podrás recuperarlos.</span
-            >
-          </v-card-text>
-
-          <v-card-actions>
-            <v-row>
-              <v-col class="d-flex justify-center"
-                ><v-btn
-                  :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
-                  dark
-                  color="light-blue lighten-2"
-                  class="mr-2"
-                  @click="deleteProductPage"
-                >
-                  Borrar producto
-                </v-btn>
-              </v-col>
-
-              <v-btn
-                absolute
-                top
-                right
-                icon
-                @click="deleteOverlay = !deleteOverlay"
-              >
-                <v-icon color="light-blue lighten-2"
-                  >mdi-arrow-left-circle</v-icon
-                >
-              </v-btn>
-            </v-row>
-          </v-card-actions>
-        </v-card>
-      </v-overlay>
-
-      <!-- OVERLAY TO MODIFY PRODUCT FORM -->
-
-      <v-overlay :dark="false" :absolute="absolute" :value="modifyOverlay">
-        <v-container fluid>
-          <div class="pa-5 overlay">
-            <ProductModifyForm
-              shaped
-              :product="product"
-              @returnClick="modifyOverlay = false"
-              @backClick.native="actualize"
-              @backClick="modifyOverlay = false"
-            />
-          </div>
-        </v-container>
-      </v-overlay>
   </v-container>
 </template>
 
@@ -169,14 +130,16 @@
 export default {
   name: 'ProductData',
   props: {
-    product: Object,
+    product: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
-      absolute: true,
-      deleteOverlay: false,
-      modifyOverlay: false,
-      productKey: 0,
+      size: '',
+      color: '',
+      quantity: 1,
       characteristics: [
         {
           title: 'Colores',
@@ -204,17 +167,24 @@ export default {
     substractProduct() {
       if (this.quantity > 0) this.quantity--
     },
-    async addToCart({ $axios }) {
+    async addToCart() {
       try {
-        const cart = await this.$axios.$put(`/users/${this.$auth.user._id}/cart`, {
+        const saleProduct = {
           product: this.product._id,
           marketplace: this.product.marketplace,
           size: this.size,
           color: this.color,
           quantity: this.quantity,
           price: this.product.price * this.quantity,
+        }
+        await this.$axios.$put(
+          `/users/${this.$auth.user._id}/cart`,
+          saleProduct
+        )
+        this.$store.commit('getUser', {
+          axios: this.$axios,
+          user: this.$auth.user,
         })
-        return cart
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error.message)
@@ -222,15 +192,10 @@ export default {
     },
     async deleteProductPage() {
       const response = await this.$axios.$delete(
-        `/products/${this.product._id}`,
-        {
-          headers: {
-            token: localStorage.token,
-          },
-        }
+        `/products/${this.product._id}`
       )
       return response
-    }
+    },
   },
   computed: {
     isTheOwner() {

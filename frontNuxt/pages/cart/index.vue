@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="products && characteristics">
+  <v-container>
     <v-card class="px-5 my-5">
       <v-row>
         <v-col class="d-flex justify-center">Imagen</v-col>
@@ -18,18 +18,20 @@
         <v-col cols="6" class="d-flex justify-center align-center">
           {{ item.name }}
         </v-col>
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].size }}
         </v-col>
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].quantity }}
         </v-col>
 
-        <v-col class="d-flex justify-center align-center" :key="idx">
+        <v-col class="d-flex justify-center align-center">
           {{ characteristics[idx].price }} €
         </v-col>
         <v-col class="d-flex justify-end align-center">
-          <v-btn icon color="light-blue lighten-2"
+          <v-btn
+            icon
+            color="light-blue lighten-2"
             @click="deleteFromCart(characteristics[idx]._id)"
             ><v-icon>mdi-trash-can</v-icon></v-btn
           >
@@ -37,7 +39,7 @@
       </v-row>
     </v-card>
     <v-card class="d-flex justify-end pa-5 my-5">
-      <v-btn color="light-blue lighten-2" dark>Pagar</v-btn>
+        <v-btn :to="{ name: 'payment'}" color="light-blue lighten-2" dark>Pagar {{getFullPrice}} €</v-btn>
     </v-card>
   </v-container>
 </template>
@@ -45,21 +47,29 @@
 <script>
 export default {
   name: 'Cart',
+  data() {
+    return {
+      total: 0
+    }
+  },
   async asyncData({ $axios, $auth }) {
     try {
       const products = await $axios.$get(`/users/${$auth.user._id}/cart`)
-      return { products }
+      const characteristics = $auth.user.cart
+
+      return { products, characteristics }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err)
     }
   },
-  data() {
-    return {
-      characteristics: null,
-    }
-  },
-  mounted() {
-    this.characteristics = this.$auth.user.cart
+   computed: {
+    getFullPrice() {
+      this.characteristics.forEach(v => {
+        this.total += v.price
+      })
+      return this.total
+    },
   },
   methods: {
     async deleteFromCart(i) {
@@ -69,6 +79,6 @@ export default {
       location.reload()
       return res
     },
-  },
+  }
 }
 </script>
