@@ -38,7 +38,7 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-card class="d-flex justify-end pa-5 my-5">
+    <v-card v-if="products.length>0" class="d-flex justify-end pa-5 my-5">
         <v-btn :to="{ name: 'payment'}" color="light-blue lighten-2" dark>Pagar {{getFullPrice}} €</v-btn>
     </v-card>
   </v-container>
@@ -46,12 +46,6 @@
 
 <script>
 export default {
-  name: 'Cart',
-  data() {
-    return {
-      total: 0
-    }
-  },
   async asyncData({ $axios, $auth }) {
     try {
       const products = await $axios.$get(`/users/${$auth.user._id}/cart`)
@@ -61,6 +55,11 @@ export default {
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err)
+    }
+  },
+  data() {
+    return {
+      total: 0
     }
   },
    computed: {

@@ -62,7 +62,7 @@
                   id="custom-button"
                   color="light-blue lighten-2"
                   dark
-                  @click="createToken && (dialog = true)"
+                  @click="createToken"
                   >Pagar {{ getFullPrice }} €</v-btn
                 >
               </v-col>
@@ -194,8 +194,10 @@ export default {
           cart: this.cart,
           payment: token,
           price: this.getFullPrice,
-        }, console.log('post to back'))
+        })
+        this.dialog = true
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.log(err)
       }
     },

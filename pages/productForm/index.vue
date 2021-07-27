@@ -184,51 +184,51 @@
     </v-card>
     <v-expansion-panels v-if="customizable">
       <v-expansion-panel>
-        <v-text-field
-          v-model="basecolor"
-          outlined
-          dense
-          label="Colores base disponibles"
-          @keyup.enter="colorsCustom"
-        >
-        </v-text-field>
-
-        <v-autocomplete
-          v-model="texture"
-          :items="textures"
-          item-text="name"
-          item-value="_id"
-          outlined
-          return-object
-          dense
-          label="Texturas disponibles para este producto"
-          multiple
-          auto-select-first
-        >
-        </v-autocomplete>
-
-        <v-autocomplete
-          v-model="pattern"
-          :items="patterns"
-          item-text="name"
-          item-value="_id"
-          outlined
-          return-object
-          dense
-          label="Patrones de estilado"
-          multiple
-          auto-select-first
-        >
-        </v-autocomplete>
-        <v-btn
-          class="mt-3 mx-10"
-          color="light-blue lighten-2"
-          dark
-          @click="submitProduct"
-          v-if="customizable"
-        >
-          Enviar
-        </v-btn>
+        <v-row class="mx-16">
+          <v-col>
+            <v-autocomplete
+              v-model="texture"
+              :items="textures"
+              item-text="name"
+              item-value="_id"
+              outlined
+              return-object
+              dense
+              label="Texturas disponibles para este producto"
+              multiple
+              auto-select-first
+            >
+            </v-autocomplete
+          ></v-col>
+          <v-col>
+            <v-autocomplete
+              v-model="pattern"
+              :items="patterns"
+              item-text="name"
+              item-value="_id"
+              outlined
+              return-object
+              dense
+              label="Patrones de estilado"
+              multiple
+              auto-select-first
+            >
+            </v-autocomplete
+          ></v-col>
+        </v-row>
+        <v-row>
+          <v-col class="d-flex justify-center mb-10">
+            <v-btn
+              class="mt-3 mx-10"
+              color="light-blue lighten-2"
+              dark
+              @click="submitProduct"
+              v-if="customizable"
+            >
+              Enviar
+            </v-btn></v-col
+          >
+        </v-row>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-container>
