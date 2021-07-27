@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="product" class="ma-5" width="320">
+  <v-card v-if="product" class="ma-5 rounded-b-xl" width="320" hover>
 
     <v-img height="400" :src="product.image[0]"></v-img>
 
@@ -34,7 +34,7 @@
       <v-divider class="mx-2"></v-divider>
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions class="d-flex align-end">
       <NuxtLink :to="{ path: `/product/${product._id}` }" style="text-decoration: none;">
         <v-btn color="light-blue lighten-2" text> Ver producto </v-btn>
       </NuxtLink>

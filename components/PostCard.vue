@@ -1,20 +1,12 @@
 <template>
   <div v-if="post">
-    <v-card class="ma-5" width="640">
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-
+    <v-card class="ma-5 rounded-b-xl pa-4" width="640">
       <v-img height="400" :src="post.image[0]"></v-img>
       <v-row>
         <v-col>
-          <v-card-title v-if=" marketplace">
-            @{{ marketplace.name}}
-            </v-card-title>
+          <v-card-title v-if="marketplace">
+            @{{ marketplace.name }}
+          </v-card-title>
         </v-col>
         <v-col cols="2">
           <v-list>
@@ -33,70 +25,57 @@
         <v-card-text>
           <div class="mt-3">
             {{ post.description }}
-
-            </div>
+          </div>
         </v-card-text>
       </v-row>
 
+        <v-row  v-if="data">
+          <v-col class="d-flex flex-wrap px-2">
+            <div v-for="(item, idx) in post.tags" :key="idx" class="ma-1">
+              <v-chip color="light-blue lighten-4">
+                <strong>{{ item }}</strong
+                >&nbsp;
+              </v-chip>
+            </div>
+          </v-col>
+        </v-row>
       <v-card-actions>
-        <div v-if="data">
-          <v-row justify="space-around">
-            <v-col>
-              <v-menu left offset-y>
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    absolute
-                    bottom
-                    right
-                    color="light-blue lighten-2"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-store</v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list v-if="productsName" >
-                  <v-list-item v-for="(item, i) in productsName" :key="i">
-                    <v-btn
-                      width="120"
-                      text
-                      color="light-blue lighten-2"
-                      :to="{ path: `/product/${item.id}` }"
-                    >
-                      {{ item.name }}
-                    </v-btn>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="11">
-              <div class="d-flex flex-wrap px-2">
-                <div v-for="(item, idx) in post.tags" :key="idx" class="ma-1">
-                  <v-chip color="cyan lighten-4">
-                    <strong>{{ item }}</strong
-                    >&nbsp;
-                  </v-chip>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
         <v-row>
-          <v-col>
+          <v-col cols="6" class="d-flex justify-start">
             <v-btn
               v-if="isTheOwner"
-              absolute
-              top
-              right
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
               <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
             </v-btn>
+          </v-col>
+          <v-col cols="6" class="d-flex justify-end">
+            <v-menu left offset-y>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  color="light-blue lighten-2"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-store</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list v-if="productsName">
+                <v-list-item v-for="(item, i) in productsName" :key="i">
+                  <v-btn
+                    width="120"
+                    text
+                    color="light-blue lighten-2"
+                    :to="{ path: `/product/${item.id}` }"
+                  >
+                    {{ item.name }}
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-col>
         </v-row>
       </v-card-actions>
@@ -142,7 +121,6 @@
         </v-card-actions>
       </v-card>
     </v-overlay>
-
   </div>
 </template>
 
@@ -151,7 +129,7 @@ export default {
   name: 'PostCard',
   props: {
     post: { type: Object, default: null },
-    marketplace: { type: Object, default: null }
+    marketplace: { type: Object, default: null },
   },
   data() {
     return {

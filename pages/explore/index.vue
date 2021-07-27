@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="px-0">
+  <v-container fluid class="pa-0">
     <v-toolbar class="fixed-bar" height="40">
       <v-row>
         <v-col class="d-flex justify-end">
@@ -25,51 +25,12 @@
                 Productos
               </v-btn>
             </v-col>
-
-            <v-col v-if="isTheOwner">
-              <v-menu left offset-y>
-                <template #activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    color="light-blue lighten-2"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list width="300">
-                  <v-list-item>
-                    <v-btn
-                      text
-                      color="light-blue lighten-2"
-                      :to="{ path: '/productForm' }"
-                      width="270"
-                    >
-                      Crear Producto
-                    </v-btn>
-                  </v-list-item>
-
-                  <v-list-item>
-                    <v-btn
-                      width="270"
-                      text
-                      color="light-blue lighten-2"
-                      :to="{ path: `/postForm` }"
-                    >
-                      Crear Post
-                    </v-btn>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-toolbar>
 
-    <div class="d-flex flex-wrap flex-row justify-center mt-5 mx-11">
+    <div class="d-flex flex-wrap flex-row justify-center mt-5 mx-10">
       <LastProduct :products="products" />
     </div>
     <div
@@ -95,7 +56,6 @@
         :marketplace="item.marketplace"
       />
     </div>
-
   </v-container>
 </template>
 
@@ -124,7 +84,6 @@ export default {
   // eslint-disable-next-line vue/order-in-components
   computed: {
     filterItem() {
-      
       if (this.filter === '') {
         return this.products
       } else {
@@ -161,5 +120,11 @@ export default {
 .ProductCard::after {
   content: '';
   flex: auto;
+}
+.fixed-bar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 64px;
+  z-index: 2;
 }
 </style>
