@@ -25,7 +25,7 @@
           </v-col>
         </v-row>
       </v-banner>
-      <v-row class="pa-15 d-flex align-start mt-n15">
+      <v-row class="pa-15 d-flex align-start mt-n10">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
