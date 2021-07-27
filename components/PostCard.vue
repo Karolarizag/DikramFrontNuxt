@@ -142,9 +142,7 @@
         </v-card-actions>
       </v-card>
     </v-overlay>
-    <div>
-                  {{post}}
-    </div>
+
   </div>
 </template>
 
