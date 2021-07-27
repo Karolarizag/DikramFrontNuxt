@@ -1,5 +1,9 @@
 <template>
   <v-container fluid class="px-0">
+    <div class="d-flex flex-wrap flex-row justify-center">
+      <LastProduct :products="products"/>
+      
+    </div>
     <div
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
