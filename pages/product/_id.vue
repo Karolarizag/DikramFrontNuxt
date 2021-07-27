@@ -33,7 +33,7 @@
         </v-col>
 
         <v-col cols="12" md="6" class="mt-3">
-          <ProductData :product="product" />
+          <ProductData :product="product" :customForm="customForm" />
         </v-col>
       </v-row>
 
@@ -59,7 +59,8 @@ export default {
   name: 'ProductPage',
   async asyncData({ $axios, params }) {
     const product = await $axios.$get(`/products/${params.id}`)
-    return { product }
+    const customForm = await $axios.$get(`/products/${product._id}/customForm`)
+    return { product, customForm }
   },
   data() {
     return {
