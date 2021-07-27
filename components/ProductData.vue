@@ -337,7 +337,7 @@ export default {
     },
     async addToCart() {
       try {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>\n', this.$auth.user)
+        console.log('>>>>>>>>>>>>>>>>>>\n', this.$auth.user)
         const saleProduct = {
           product: this.product._id,
           marketplace: this.product.marketplace,
