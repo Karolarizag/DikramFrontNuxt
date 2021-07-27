@@ -124,7 +124,6 @@ export default {
   // eslint-disable-next-line vue/order-in-components
   computed: {
     filterItem() {
-      
       if (this.filter === '') {
         return this.products
       } else {
