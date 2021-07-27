@@ -1,25 +1,101 @@
 <template>
   <v-container fluid class="px-0">
+    <v-toolbar class="fixed-bar" height="40">
+      <v-row>
+        <v-col class="d-flex justify-end">
+          <v-btn
+            class="mt-1"
+            text
+            color="light-blue lighten-2"
+            @click="showProducts"
+          >
+            Publicaciones
+          </v-btn>
+        </v-col>
+
+        <v-col>
+          <v-row>
+            <v-col cols="11" md="10" sm="9" xs="1">
+              <v-btn
+                class="mt-1"
+                text
+                color="light-blue lighten-2"
+                @click="showPosts"
+              >
+                Productos
+              </v-btn>
+            </v-col>
+
+            <v-col v-if="isTheOwner">
+              <v-menu left offset-y>
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    color="light-blue lighten-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list width="300">
+                  <v-list-item>
+                    <v-btn
+                      text
+                      color="light-blue lighten-2"
+                      :to="{ path: '/productForm' }"
+                      width="270"
+                    >
+                      Crear Producto
+                    </v-btn>
+                  </v-list-item>
+
+                  <v-list-item>
+                    <v-btn
+                      width="270"
+                      text
+                      color="light-blue lighten-2"
+                      :to="{ path: `/postForm` }"
+                    >
+                      Crear Post
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-toolbar>
+
     <div class="d-flex flex-wrap flex-row justify-center">
-      <LastProduct :products="products"/>
-      
+      <LastProduct :products="products" />
     </div>
     <div
+      v-if="productSection"
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
       <ProductCard
-        v-for="(item, idx) in filterItem"
+        v-for="(item, idx) in products"
         :key="idx"
         elevation="2"
         outlined
         :product="item"
       />
     </div>
-     <div
-      class="d-flex flex-wrap flex-row justify-center mx-5"
-    >
 
+    <div v-else class="d-flex flex-wrap flex-row justify-center mx-5">
+      <PostCard
+        v-for="(item, idx) in posts"
+        :key="idx"
+        elevation="2"
+        outlined
+        :post="item"
+        :marketplace="item.marketplace"
+      />
     </div>
+
   </v-container>
 </template>
 
@@ -30,12 +106,15 @@ export default {
     return {
       showSearch: true,
       filter: '',
+      productSection: true,
+      postsSection: false,
     }
   },
   // eslint-disable-next-line vue/order-in-components
   async asyncData({ $axios }) {
     const products = await $axios.$get('/products')
-    return { products }
+    const posts = await $axios.$get('/post')
+    return { products, posts }
   },
   mounted() {
     this.$nuxt.$on('searchItem', (item) => {
@@ -53,10 +132,25 @@ export default {
         )
       }
     },
+    isTheOwner() {
+      return this.$auth.user.marketplace === this.marketplace?.id
+    },
   },
   methods: {
     show() {
       this.showSearch = !this.showSearch
+    },
+    showPosts() {
+      if (!this.productSection) {
+        this.productSection = true
+        this.postsSection = false
+      }
+    },
+    showProducts() {
+      if (!this.postsSection) {
+        this.postsSection = true
+        this.productSection = false
+      }
     },
   },
 }
