@@ -75,7 +75,7 @@
 
       <v-row>
         <v-col class="d-flex justify-end">
-          <v-btn color="light-blue lighten-2" dark @click="crearPost">
+          <v-btn color="fourth" dark @click="crearPost">
             Crear
           </v-btn>
         </v-col>

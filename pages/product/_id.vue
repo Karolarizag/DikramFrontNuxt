@@ -9,7 +9,8 @@
           <v-col cols="6" sm="6" xs="12">
             <v-row>
               <v-spacer></v-spacer>
-              <v-btn
+              <!-- <v-btn
+              v-if="isTheOwner"
                 absolute
                 top
                 right
@@ -17,10 +18,10 @@
                 :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
                 class="mr-10"
               >
-                <v-icon color="light-blue lighten-2"
+                <v-icon color="fourth"
                   >mdi-arrow-left-circle</v-icon
                 >
-              </v-btn>
+              </v-btn> -->
             </v-row>
           </v-col>
         </v-row>
@@ -64,11 +65,12 @@ export default {
       absolute: true,
       overlay: false,
       patternUrl: { type: Object, default: null },
+      showBtn: false
     }
   },
   computed: {
     isTheOwner() {
-      return this.$auth.user.marketplace === this.product.marketplace
+      if (this.$auth.user && this.$auth.user.marketplace === this.product.marketplace) this.showBtn = true
     },
   },
   methods: {

@@ -4,9 +4,9 @@
       <v-row>
         <v-col class="d-flex justify-end">
           <v-btn
-            class="mt-1"
+            class="mt-1 mb-1"
             text
-            color="light-blue lighten-2"
+            color="first"
             @click="showProducts"
           >
             Publicaciones
@@ -17,9 +17,9 @@
           <v-row>
             <v-col cols="11" md="10" sm="9" xs="1">
               <v-btn
-                class="mt-1"
+                class="mt-1 mb-1"
                 text
-                color="light-blue lighten-2"
+                color="first"
                 @click="showPosts"
               >
                 Productos
@@ -30,7 +30,7 @@
       </v-row>
     </v-toolbar>
 
-    <div class="d-flex flex-wrap flex-row justify-center mt-5 mx-10">
+    <div class="d-flex flex-wrap flex-row justify-center">
       <LastProduct :products="products" />
     </div>
     <div

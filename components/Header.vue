@@ -1,48 +1,31 @@
 <template>
   <div height="50">
-    <v-app-bar flat app>
+    <v-app-bar flat app color="second">
       <v-toolbar-title>
         <NuxtLink :to="{ path: '/' }">
-          <v-img
-            src="logo.png"
+          <!-- <v-img
+            src=""
             max-height="40"
             max-width="120"
             class="ml-5"
-          ></v-img>
+          ></v-img> -->
         </NuxtLink>
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        color="light-blue lighten-2"
-        placeholder="Search"
-        prepend-inner-icon="mdi-magnify"
-        solo-inverted
-        flat
-        dense
-        dark
-        class="btn-search pt-5 mt-1 mx-1"
-        :class="{ closed: searchClosed }"
-        @focus="searchClosed = false"
-        @blur="searchClosed = true"
-        @keyup="searchItem"
-      ></v-text-field>
 
       <v-btn
         text
         :to="{ name: 'explore' }"
-        color="light-blue lighten-2"
+        color="fourth"
         nuxt
         class="mx-1"
       >
         Explorar
-        <!-- <v-icon color="light-blue lighten-2">mdi-arrow-right-thick</v-icon> -->
       </v-btn>
 
       <v-btn
         text
-        color="light-blue lighten-2"
+        color="fourth"
         class="mx-1"
         @click="login = !login"
       >
@@ -50,7 +33,7 @@
       </v-btn>
       <v-btn
         text
-        color="light-blue lighten-2"
+        color="fourth"
         class="mx-1"
         @click="signup = !signup"
       >
@@ -101,19 +84,3 @@ export default {
   },
 }
 </script>
-
-<style >
-.btn-search {
-  border-radius: 40px;
-  max-width: 300px;
-  transition: all 0.5s ease;
-}
-.closed {
-  max-width: 40px;
-}
-.v-input__prepend-inner .v-icon {
-  margin-left: -5px;
-  margin-top: 2px;
-  color: #4fc3f7 !important;
-}
-</style>

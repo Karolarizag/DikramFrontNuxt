@@ -8,7 +8,7 @@
       elevation="10"
     >
       <v-btn absolute top right icon @click="$emit('changeView')">
-        <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        <v-icon color="fourth">mdi-arrow-left-circle</v-icon>
       </v-btn>
       <v-card-text class="mt-5">
         <v-text-field
@@ -38,7 +38,7 @@
           width="300"
           block
           @click="iniciar"
-          color="light-blue lighten-2"
+          color="fourth"
           dark
           >Acceder</v-btn
         >
@@ -56,7 +56,7 @@
           </v-card-title>
           <v-card-actions>
             <v-btn absolute top right icon @click="errorLogin = !errorLogin">
-              <v-icon color="light-blue lighten-2"
+              <v-icon color="fourth"
                 >mdi-arrow-left-circle</v-icon
               >
             </v-btn>

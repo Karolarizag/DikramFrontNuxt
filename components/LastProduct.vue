@@ -1,6 +1,6 @@
 <template>
-  <v-sheet shaped elevation="2" max-width="100%" color="light-blue lighten-5" >
-    <div class="d-flex justify-center mt-3"><h2 color="light-blue lighten-2">Novedades</h2> </div>
+  <v-sheet elevation="2" max-width="100%" color="first" >
+    <div class="d-flex justify-center mt-3"><h2 style="color: white; font-size: 40px;">Novedades</h2> </div>
       
     <v-slide-group
       v-model="model"
@@ -9,7 +9,7 @@
       show-arrows
     >
     <v-slide-item v-for="(product, idx) in lastProducts" :key="idx">
-      <v-card class="ma-2 mt-0 rounded-b-xl" color="light-blue lighten-4" hover outlined>
+      <v-card class="ma-2 mt-0 rounded-b-xl pa-0" color="white" hover outlined>
         <NuxtLink
           :to="{ path: `/product/${product._id}` }"
           style="text-decoration: none"

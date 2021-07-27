@@ -95,12 +95,12 @@
             v-model="shipping"
             class="ml-3"
             label="¿Tienes servicio de envíos?"
-            color="light-blue lighten-2"
+            color="fourth"
           >
           </v-switch>
         </v-col>
         <v-col class="d-flex justify-center align-end flex-column mr-2">
-          <v-btn color="light-blue lighten-2" dark @click="submitMarketplace"
+          <v-btn color="fourth" dark @click="submitMarketplace"
             >Crear tienda</v-btn
           >
         </v-col>

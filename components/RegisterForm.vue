@@ -3,7 +3,7 @@
     <v-card shaped class="mx-auto my-12 pa-10" min-width="650" elevation="10">
 
       <v-btn absolute top right icon @click="$emit('changeView')">
-        <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        <v-icon color="fourth">mdi-arrow-left-circle</v-icon>
       </v-btn>
 
       <v-card-text class="mt-5">
@@ -54,7 +54,7 @@
 
         <v-switch
           v-model="isSeller"
-          color="light-blue lighten-2"
+          color="fourth"
           label="¿Quieres una cuenta como empresa?"
           class="mt-3"
         ></v-switch>
@@ -63,7 +63,7 @@
 
       <v-card-actions class="justify-center">
 
-        <v-btn dark color="light-blue lighten-2" block @click="signup"
+        <v-btn dark color="fourth" block @click="signup"
           >
           Registrarse
         </v-btn>

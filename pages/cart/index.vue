@@ -31,7 +31,7 @@
         <v-col class="d-flex justify-end align-center">
           <v-btn
             icon
-            color="light-blue lighten-2"
+            color="fourth"
             @click="deleteFromCart(characteristics[idx]._id)"
             ><v-icon>mdi-trash-can</v-icon></v-btn
           >
@@ -39,7 +39,7 @@
       </v-row>
     </v-card>
     <v-card v-if="products.length>0" class="d-flex justify-end pa-5 my-5">
-        <v-btn :to="{ name: 'payment'}" color="light-blue lighten-2" dark>Pagar {{getFullPrice}} €</v-btn>
+        <v-btn :to="{ name: 'payment'}" color="fourth" dark>Pagar {{getFullPrice}} €</v-btn>
     </v-card>
   </v-container>
 </template>

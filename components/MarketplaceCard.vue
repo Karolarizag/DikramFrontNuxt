@@ -20,7 +20,7 @@
 
     <v-card-actions>
       <NuxtLink :to="{ path: `/marketplace/${marketplace._id}` }" style="text-decoration: none;">
-        <v-btn color="light-blue lighten-2" text> Ver Tienda </v-btn>
+        <v-btn color="fourth" text> Ver Tienda </v-btn>
       </NuxtLink>
     </v-card-actions>
 

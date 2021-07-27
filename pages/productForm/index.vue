@@ -158,13 +158,13 @@
           v-model="customizable"
           class="mb-2"
           label="Producto customizable"
-          color="light-blue lighten-2"
+          color="fourth"
         >
         </v-switch>
 
         <v-btn
           class="mt-3 mx-10"
-          color="light-blue lighten-2"
+          color="fourth"
           dark
           @click="submitProduct"
           v-if="!customizable"
@@ -179,7 +179,7 @@
         icon
         :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
       >
-        <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+        <v-icon color="fourth">mdi-arrow-left-circle</v-icon>
       </v-btn>
     </v-card>
     <v-expansion-panels v-if="customizable">
@@ -196,7 +196,7 @@
               dense
               label="Texturas disponibles para este producto"
               multiple
-              auto-select-first
+              auto-select-fourth
             >
             </v-autocomplete
           ></v-col>
@@ -211,7 +211,7 @@
               dense
               label="Patrones de estilado"
               multiple
-              auto-select-first
+              auto-select-fourth
             >
             </v-autocomplete
           ></v-col>
@@ -220,7 +220,7 @@
           <v-col class="d-flex justify-center mb-10">
             <v-btn
               class="mt-3 mx-10"
-              color="light-blue lighten-2"
+              color="fourth"
               dark
               @click="submitProduct"
               v-if="customizable"

@@ -3,19 +3,19 @@
 
     <v-img height="400" :src="product.image[0]"></v-img>
 
-    <v-card-title>{{ product.name }}</v-card-title>
+    <v-card-title style="color: #A31D5E;">{{ product.name }}</v-card-title>
 
     <v-card-text>
       <v-row align="center" class="mx-0">
         <v-rating
           :value="product.rate"
-          color="pink lighten-3"
+          color="third"
           dense
           half-increments
           readonly
           size="18"
           class="mt-0"
-          background-color="pink lighten-3"
+          background-color="third"
           empty-icon="mdi-heart-outline"
           full-icon="mdi-heart"
           half-icon="mdi-heart-half-full"
@@ -36,7 +36,7 @@
 
     <v-card-actions class="d-flex align-end">
       <NuxtLink :to="{ path: `/product/${product._id}` }" style="text-decoration: none;">
-        <v-btn color="light-blue lighten-2" text> Ver producto </v-btn>
+        <v-btn color="fourth" text> Ver producto </v-btn>
       </NuxtLink>
     </v-card-actions>
 

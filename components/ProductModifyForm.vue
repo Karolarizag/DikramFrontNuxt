@@ -166,13 +166,13 @@
           v-model="productdata.customizable"
           class="mb-2"
           label="Producto customizable"
-          color="light-blue lighten-2"
+          color="fourth"
         >
         </v-switch>
 
         <v-btn
           class="mt-3 mx-10"
-          color="light-blue lighten-2"
+          color="fourth"
           dark
           @click="submitProduct"
         >
@@ -185,13 +185,13 @@
           icon
           @click="$emit('returnClick')"
         >
-          <v-icon color="light-blue lighten-2">mdi-arrow-left-circle</v-icon>
+          <v-icon color="fourth">mdi-arrow-left-circle</v-icon>
         </v-btn>
         <!-- <v-btn
           @click="$emit('returnClick')"
           dark
           class="mt-3 mx-10"
-          color="light-blue lighten-2"
+          color="fourth"
         >
           Volver
         </v-btn> -->

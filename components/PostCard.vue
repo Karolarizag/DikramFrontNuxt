@@ -43,11 +43,11 @@
         <v-row>
           <v-col cols="6" class="d-flex justify-start">
             <v-btn
-              v-if="isTheOwner"
+              v-if="showBtn"
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
-              <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
+              <v-icon color="fourth">mdi-delete-forever</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="6" class="d-flex justify-end">
@@ -55,7 +55,7 @@
               <template #activator="{ on, attrs }">
                 <v-btn
                   icon
-                  color="light-blue lighten-2"
+                  color="fourth"
                   v-bind="attrs"
                   v-on="on"
                 >
@@ -68,7 +68,7 @@
                   <v-btn
                     width="120"
                     text
-                    color="light-blue lighten-2"
+                    color="fourth"
                     :to="{ path: `/product/${item.id}` }"
                   >
                     {{ item.name }}
@@ -99,7 +99,7 @@
             <v-col class="d-flex justify-center"
               ><v-btn
                 dark
-                color="light-blue lighten-2"
+                color="fourth"
                 class="mt-5"
                 @click="deletePost"
               >
@@ -113,7 +113,7 @@
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
-              <v-icon color="light-blue lighten-2"
+              <v-icon color="fourth"
                 >mdi-arrow-left-circle</v-icon
               >
             </v-btn>
@@ -139,6 +139,7 @@ export default {
       absolute: true,
       deleteOverlay: false,
       updateOverlay: false,
+      showBtn: false
     }
   },
   computed: {
@@ -147,13 +148,11 @@ export default {
         return { name: e.name, id: e._id }
       })
     },
-    isTheOwner() {
-      return this.$auth.user.marketplace === this.post?.marketplace
-    },
   },
   mounted() {
     if (this.post.products.length === 0) this.data = false
-    else this.data = true
+    else this.data = true;
+    if (this.$auth.user && this.$auth.user.marketplace === this.post.marketplace) this.showBtn = true
   },
   methods: {
     async deletePost() {
