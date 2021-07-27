@@ -122,7 +122,7 @@
             </div>
           </v-col>
         </v-row> -->
-        <!-- <v-row class="mx-1">
+        <v-row class="mx-1">
           <v-col>
             <v-autocomplete
               v-model="textureP"
@@ -137,7 +137,7 @@
             >
             </v-autocomplete>
           </v-col>
-        </v-row> -->
+        </v-row>
         <!-- <v-row v-if="product.customizable">
           <v-col>
             <div
@@ -313,7 +313,7 @@ export default {
   },
   computed: {
     isTheOwner() {
-      return this.$auth.user.marketplace === this.product?.marketplace
+      return this.$auth.user.marketplace === this.product?.marketplace 
     },
     productColors() {
       return this.product?.colors?.join(', ')
@@ -337,6 +337,7 @@ export default {
     },
     async addToCart() {
       try {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>\n', this.$auth.user)
         const saleProduct = {
           product: this.product._id,
           marketplace: this.product.marketplace,
@@ -344,11 +345,12 @@ export default {
           color: this.color,
           quantity: this.quantity,
           price: this.product.price * this.quantity,
-          customForm: {
-            texture: this.textureP,
-            pattern: this.patternP,
+          custom: {
+            texture: this.textureP._id,
+            pattern: this.patternP._id,
           },
         }
+          console.log('-------------------------\n', saleProduct)
         await this.$axios.$put(
           `/users/${this.$auth.user._id}/cart`,
           saleProduct
