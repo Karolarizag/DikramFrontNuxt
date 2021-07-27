@@ -121,7 +121,8 @@
           </v-col>
         </v-row>
       </v-card-actions>
-      <v-expansion-panels v-if="product.customizable">
+      <!-- para quitar el error, q se monte solo si el producto tiene custom -->
+      <v-expansion-panels v-if="product.customForm">
         <v-expansion-panel>
           <v-row>
             <v-col>
