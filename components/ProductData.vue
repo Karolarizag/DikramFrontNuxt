@@ -95,45 +95,63 @@
             ></v-select>
           </v-col>
         </v-row>
-
-        <v-row v-if="product.customizable">
-          <v-col cols="12">
+        <v-row class="mx-1" v-if="product.customizable">
+          <v-col>
             <v-autocomplete
               v-model="patternP"
-              :items="customForm.pattern"
+              :items="customForm.customForm.pattern"
               item-text="name"
               item-value="_id"
               outlined
               return-object
               dense
-              label="Patrones de estilado"
-              multiple
+              label="Patrones disponibles"
               auto-select-first
-              class="mx-5 my-0"
-            >
-            </v-autocomplete>
-          </v-col>
-          <v-col cols="12">
-            <v-autocomplete
-              v-model="textureP"
-              :items="customForm.texture"
-              item-text="name"
-              item-value="_id"
-              outlined
-              return-object
-              dense
-              label="Patrones de estilado"
-              multiple
-              auto-select-first
-              class="mx-5 my-0"
+              @change="getPattern"
             >
             </v-autocomplete>
           </v-col>
         </v-row>
+        <!-- <v-row v-if="product.customizable">
+          <v-col>
+            <div
+              v-for="(item, idx) in customForm.customForm.pattern"
+              :key="idx"
+            >
+              <v-img :src="item.image" />
+            </div>
+          </v-col>
+        </v-row> -->
+        <!-- <v-row class="mx-1">
+          <v-col>
+            <v-autocomplete
+              v-model="textureP"
+              :items="customForm.customForm.texture"
+              item-text="name"
+              item-value="_id"
+              outlined
+              return-object
+              dense
+              label="Texturas disponibles"
+              auto-select-first
+            >
+            </v-autocomplete>
+          </v-col>
+        </v-row> -->
+        <!-- <v-row v-if="product.customizable">
+          <v-col>
+            <div
+              v-for="(item, idx) in customForm.customForm.texture"
+              :key="idx"
+            >
+              <v-img :src="item.image" heigth="150" width="150" />
+            </div>
+          </v-col>
+        </v-row> -->
       </v-card-text>
 
       <v-card-actions>
-        <v-row>
+        <v-row class="mx-10 mb-5">
           <v-col class="ml-3">
             <div style="background-color: #cff9ff; width: 90px">
               <v-btn
@@ -287,8 +305,8 @@ export default {
       deleteOverlay: false,
       modifyOverlay: false,
       absolute: true,
-      patternP: '',
-      textureP: '',
+      patternP: { type: Object, default: null },
+      textureP: { type: Object, default: null },
       snackbar: false,
       text: `El producto se ha añadido al carrito.`,
     }
@@ -305,9 +323,12 @@ export default {
     },
     productCustomizable() {
       return this.product?.customizable ? 'Si' : 'No'
-    }
+    },
   },
   methods: {
+    getPattern() {
+      this.$nuxt.$emit('pattern', this.patternP)
+    },
     addProduct() {
       if (this.quantity <= 8) this.quantity++
     },
@@ -323,6 +344,10 @@ export default {
           color: this.color,
           quantity: this.quantity,
           price: this.product.price * this.quantity,
+          customForm: {
+            texture: this.textureP,
+            pattern: this.patternP,
+          },
         }
         await this.$axios.$put(
           `/users/${this.$auth.user._id}/cart`,

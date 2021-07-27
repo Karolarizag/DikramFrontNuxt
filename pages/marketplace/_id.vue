@@ -86,7 +86,7 @@
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
       <ProductCard
-        v-for="(item, idx) in products"
+        v-for="(item, idx) in filterItem"
         :key="idx"
         elevation="2"
         outlined
@@ -122,12 +122,27 @@ export default {
     return {
       productSection: true,
       postsSection: false,
+      filter: '',
     }
   },
   computed: {
     isTheOwner() {
       return this.$auth.user.marketplace === this.marketplace._id
     },
+      filterItem() {
+      if (this.filter === '') {
+        return this.products
+      } else {
+        return this.products.filter((product) =>
+          product.name.toLowerCase().includes(this.filter.toLowerCase())
+        )
+      }
+    },
+  },
+    mounted() {
+    this.$nuxt.$on('searchItem', (item) => {
+      this.filter = item
+    })
   },
   methods: {
     showPosts() {

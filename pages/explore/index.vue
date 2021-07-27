@@ -69,7 +69,7 @@
       </v-row>
     </v-toolbar>
 
-    <div class="d-flex flex-wrap flex-row justify-center">
+    <div class="d-flex flex-wrap flex-row justify-center mt-5 mx-11">
       <LastProduct :products="products" />
     </div>
     <div
@@ -77,7 +77,7 @@
       class="d-flex flex-wrap flex-row justify-center mx-5"
     >
       <ProductCard
-        v-for="(item, idx) in products"
+        v-for="(item, idx) in filterItem"
         :key="idx"
         elevation="2"
         outlined

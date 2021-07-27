@@ -6,6 +6,7 @@
         :key="idx"
         :src="item"
       ></v-carousel-item>
+      <!-- imagen del emit  -->
     </v-carousel>
   </div>
 </template>
@@ -17,8 +18,19 @@
       product: {
         type: Object,
         default: null
+      },
+    },
+    data() {
+      return {
+        patternUrl: { type: Object, default: null}
       }
     },
+    created() {
+       this.$nuxt.$on('pattern', (item) => {
+
+        this.patternUrl = item.image
+      })
+    }
   }
 </script>
 
