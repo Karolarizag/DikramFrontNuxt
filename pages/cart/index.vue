@@ -38,7 +38,7 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-card v-if="products.length>0" class="d-flex justify-end pa-5 my-5">
+    <v-card v-if="products.length>0" class="d-flex justify-center pa-5 my-5">
         <v-btn :to="{ name: 'payment'}" color="light-blue lighten-2" dark>Pagar {{getFullPrice}} €</v-btn>
     </v-card>
   </v-container>

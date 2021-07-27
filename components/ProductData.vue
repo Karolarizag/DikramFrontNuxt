@@ -220,6 +220,28 @@
         </div>
       </v-container>
     </v-overlay>
+    <div class="text-center ma-2">
+    <v-snackbar
+      class="mt-5"
+      v-model="snackbar"
+      color="white"
+      absolute
+      shaped
+      top
+    >
+      <span style="color: black"> {{ text }} </span>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          x
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
   </v-container>
 </template>
 
@@ -267,6 +289,8 @@ export default {
       absolute: true,
       patternP: '',
       textureP: '',
+      snackbar: false,
+      text: `El producto se ha añadido al carrito.`,
     }
   },
   computed: {
@@ -308,6 +332,7 @@ export default {
           axios: this.$axios,
           user: this.$auth.user,
         })
+        this.snackbar = true
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error.message)
