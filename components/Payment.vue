@@ -97,7 +97,6 @@
                 dark
                 color="light-blue lighten-2"
                 class="mr-2"
-                @click="deleteProductPage"
               >
                 Volver
               </v-btn>
@@ -131,6 +130,7 @@ export default {
         return 'Introduce un teléfono';
       },
       dialog: false,
+      absolute: true,
     }
   },
   computed: {
@@ -184,7 +184,7 @@ export default {
           document.getElementById('card-error').innerHTML = error.message
           return error
         }
-        const dataForm = {
+        await this.$axios.$post('/sales', {
           name: this.name,
           surname: this.surname,
           phone: this.phone,
@@ -194,9 +194,7 @@ export default {
           cart: this.cart,
           payment: token,
           price: this.getFullPrice,
-        }
-
-        await this.$axios.$post('/sales', dataForm)
+        }, console.log('post to back'))
       } catch (err) {
         console.log(err)
       }

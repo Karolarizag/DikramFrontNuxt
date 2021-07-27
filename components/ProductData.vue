@@ -251,7 +251,8 @@ export default {
         },
       ],
       deleteOverlay: false,
-      modifyOverlay: false
+      modifyOverlay: false,
+      absolute: true
     }
   },
   methods: {
