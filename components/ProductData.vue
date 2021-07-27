@@ -107,7 +107,7 @@
               dense
               label="Patrones disponibles"
               auto-select-first
-              @click="getPattern"
+              @change="getPattern"
             >
             </v-autocomplete>
           </v-col>
@@ -166,7 +166,6 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </div>
-            {{patternP.image}}
           </v-col>
           <v-col class="d-flex justify-end">
             <v-btn
@@ -284,7 +283,7 @@ export default {
       deleteOverlay: false,
       modifyOverlay: false,
       absolute: true,
-      patternP: Object
+      patternP: { type: Object, default: null },
     }
   },
   computed: {
@@ -303,8 +302,7 @@ export default {
   },
   methods: {
     getPattern() {
-      console.log(this.patternP)
-      return  this.$nuxt.$emit('pattern', this.patternP)
+      this.$nuxt.$emit('pattern', this.patternP)
     },
     addProduct() {
       if (this.quantity <= 8) this.quantity++

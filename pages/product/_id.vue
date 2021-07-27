@@ -25,8 +25,6 @@
           </v-col>
         </v-row>
       </v-banner>
-
-{{patternP}}
       <v-row class="pa-15 d-flex align-start mt-n15">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
@@ -65,21 +63,12 @@ export default {
     return {
       absolute: true,
       overlay: false,
-      patternP: Object
+      patternUrl: { type: Object, default: null },
     }
   },
   computed: {
     isTheOwner() {
       return this.$auth.user.marketplace === this.product.marketplace
-    },
-    getPattern() {
-      return this.$nuxt.$on('pattern', (item) => {
-        console.log(this.patternP, '........', item)
-        this.patternP = item
-        console.log(this.patternP, '........----')
-
-      })
-
     },
   },
   methods: {
