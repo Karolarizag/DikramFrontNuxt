@@ -12,7 +12,9 @@
       <v-img height="400" :src="post.image[0]"></v-img>
       <v-row>
         <v-col>
-          <v-card-title>@{{ $auth.user.username }}</v-card-title>
+          <v-card-title v-if=" marketplace">
+            @{{ marketplace.name}}
+            </v-card-title>
         </v-col>
         <v-col cols="2">
           <v-list>
@@ -29,7 +31,10 @@
       <v-row>
         <v-divider class="mx-2"></v-divider>
         <v-card-text>
-          <div class="mt-3">{{ post.description }}</div>
+          <div class="mt-3">
+            {{ post.description }}
+
+            </div>
         </v-card-text>
       </v-row>
 
@@ -52,10 +57,10 @@
                   </v-btn>
                 </template>
 
-                <v-list v-if="productsName" width="300">
+                <v-list v-if="productsName" >
                   <v-list-item v-for="(item, i) in productsName" :key="i">
                     <v-btn
-                      width="270"
+                      width="120"
                       text
                       color="light-blue lighten-2"
                       :to="{ path: `/product/${item.id}` }"
@@ -82,18 +87,11 @@
         </div>
         <v-row>
           <v-col>
-            <v-btn v-if="isTheOwner" absolute top right icon>
-              <v-icon color="light-blue" @click="updateOverlay = !updateOverlay"
-                >mdi-update</v-icon
-              >
-            </v-btn>
-          </v-col>
-          <v-col>
             <v-btn
               v-if="isTheOwner"
               absolute
               top
-              left
+              right
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
@@ -144,17 +142,9 @@
         </v-card-actions>
       </v-card>
     </v-overlay>
-
-    <v-overlay :dark="false"  :value="updateOverlay">
-      <v-container>
-        <div class="pa-5 overlay">
-          <v-card>
-          form update post
-
-          </v-card>
-        </div>
-      </v-container>
-    </v-overlay>
+    <div>
+                  {{post}}
+    </div>
   </div>
 </template>
 
@@ -162,7 +152,8 @@
 export default {
   name: 'PostCard',
   props: {
-    post: Object,
+    post: { type: Object, default: null },
+    marketplace: { type: Object, default: null }
   },
   data() {
     return {
@@ -181,7 +172,7 @@ export default {
       })
     },
     isTheOwner() {
-      return this.$auth.user.marketplace === this.post.marketplace
+      return this.$auth.user.marketplace === this.post?.marketplace
     },
   },
   mounted() {
