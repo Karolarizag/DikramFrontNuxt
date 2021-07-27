@@ -337,7 +337,6 @@ export default {
     },
     async addToCart() {
       try {
-        console.log('>>>>>>>>>>>>>>>>>>\n', this.$auth.user)
         const saleProduct = {
           product: this.product._id,
           marketplace: this.product.marketplace,
@@ -350,7 +349,6 @@ export default {
             pattern: this.patternP._id,
           },
         }
-          console.log('-------------------------\n', saleProduct)
         await this.$axios.$put(
           `/users/${this.$auth.user._id}/cart`,
           saleProduct
