@@ -139,6 +139,9 @@ export default {
     },
     getFullPrice() {
       let total = 0
+      if (!this.$auth.user.cart) {
+        total = 0
+      } 
       this.$auth.user.cart.forEach((v) => {
         total += v.price
       })

@@ -41,10 +41,24 @@
       @blur="searchClosed = true"
       @keyup="searchItem"
     ></v-text-field>
-
-        <v-btn icon :to="{ path: '/cart'}">
-          <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+    
+    <v-menu left offset-y>
+      <template #activator="{ on, attrs }">
+        <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
+          <v-icon v-if="!alert">mdi-bell</v-icon>
+          <v-icon v-else>mdi-bell-ring</v-icon>
         </v-btn>
+      </template>
+      <v-list v-if="alert && notifications.length" width="300">
+        <v-list-item v-for="(notification, idx) in notifications" :key="idx">
+           {{notification.msg}}
+           <v-btn icon @click="deleteNot(idx)"><v-icon>mdi-alpha-x</v-icon></v-btn>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    <v-btn icon :to="{ path: '/cart' }">
+      <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+    </v-btn>
 
     <v-btn icon @click="logout">
       <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
@@ -85,7 +99,6 @@
 
 <script>
 export default {
-  name: 'Header',
   data() {
     return {
       showSearch: false,
@@ -96,6 +109,8 @@ export default {
         { name: 'Explorar', path: 'explore' },
         { name: 'Tiendas', path: 'marketplace' },
       ],
+      alert: true,
+      notifications: this.$auth.user.notifications
     }
   },
   computed: {
@@ -105,6 +120,9 @@ export default {
     ownMarketplace() {
       return this.$auth.user.marketplace === undefined
     },
+    checkReports() {
+      return this.$auth.user.marketplace
+    }
   },
   methods: {
     logout() {
@@ -116,6 +134,11 @@ export default {
     searchItem() {
       this.$nuxt.$emit('searchItem', this.search)
     },
+    async deleteNot(i) {
+      this.$auth.user.notifications.splice(i, 1)
+      const user = await this.$axios.$put('/users/account', this.$auth.user)
+      this.$auth.setUser(user)
+    }
   },
 }
 </script>
