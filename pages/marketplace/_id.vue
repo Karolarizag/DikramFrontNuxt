@@ -101,6 +101,7 @@
         elevation="2"
         outlined
         :post="item"
+        :marketplace="marketplace"
       />
     </div>
   </v-container>
