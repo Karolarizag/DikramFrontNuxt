@@ -17,7 +17,7 @@
       product: {
         type: Object,
         default: null
-      }
+      },
     },
   }
 </script>

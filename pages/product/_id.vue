@@ -6,7 +6,6 @@
           <v-col cols="6" sm="6" xs="12">
             <h2>{{ product.name.toUpperCase() }}</h2>
           </v-col>
-
           <v-col cols="6" sm="6" xs="12">
             <v-row>
               <v-spacer></v-spacer>
@@ -27,12 +26,13 @@
         </v-row>
       </v-banner>
 
+{{patternP}}
       <v-row class="pa-15 d-flex align-start mt-n15">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
 
-        <v-col cols="12" md="6" class="mt-3">
+        <v-col cols="12" md="6">
           <ProductData :product="product" :customForm="customForm" />
         </v-col>
       </v-row>
@@ -49,8 +49,7 @@
         >
         </v-img>
       </v-overlay>
-
-    </div>    
+    </div>
   </v-container>
 </template>
 
@@ -66,11 +65,21 @@ export default {
     return {
       absolute: true,
       overlay: false,
+      patternP: Object
     }
   },
   computed: {
     isTheOwner() {
       return this.$auth.user.marketplace === this.product.marketplace
+    },
+    getPattern() {
+      return this.$nuxt.$on('pattern', (item) => {
+        console.log(this.patternP, '........', item)
+        this.patternP = item
+        console.log(this.patternP, '........----')
+
+      })
+
     },
   },
   methods: {
