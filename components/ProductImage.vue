@@ -6,7 +6,7 @@
         :key="idx"
         :src="item"
       ></v-carousel-item>
-      
+      <!-- imagen del emit  -->
     </v-carousel>
   </div>
 </template>
