@@ -12,9 +12,10 @@
             :to="{ path: `/product/${product._id}` }"
             style="text-decoration: none"
           >
-            <v-img width="150"  height="300" :src="product.image[0]"> </v-img>
+            <v-img width="200"  height="300" :src="product.image[0]"> </v-img>
           </NuxtLink>
-          <v-card-title>{{ product.name }}</v-card-title>
+          
+          <v-card-text>{{ product.name }}</v-card-text>
         </v-card>
       </v-slide-item>
     </v-slide-group>
@@ -39,7 +40,7 @@ export default {
       const lastProducts = [...this.products]
       return lastProducts
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .splice(0, 10)
+        .splice(0, 15)
     },
   },
 }
