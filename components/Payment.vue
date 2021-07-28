@@ -4,7 +4,12 @@
       <v-card-text class="pa-12">
         <v-row>
           <v-col
-            ><v-text-field v-model="name" label="Nombre" required outlined
+            ><v-text-field
+              v-model="name"
+              label="Nombre"
+              color="fourth"
+              required
+              outlined
           /></v-col>
           <v-col
             ><v-text-field
@@ -12,17 +17,35 @@
               label="Apellidos"
               required
               outlined
+              color="fourth"
           /></v-col>
           <v-col
-            ><v-text-field v-model="phone" :rules="[numberRule]" label="Teléfono" required outlined
+            ><v-text-field
+              v-model="phone"
+              :rules="[numberRule]"
+              color="fourth"
+              label="Teléfono"
+              required
+              outlined
           /></v-col>
         </v-row>
         <v-row>
           <v-col
-            ><v-text-field v-model="country" label="País" required outlined
+            ><v-select
+              v-model="country"
+              :items="countries"
+              color="fourth"
+              label="País"
+              required
+              outlined
           /></v-col>
           <v-col
-            ><v-text-field v-model="city" label="Ciudad" required outlined
+            ><v-text-field
+              v-model="city"
+              color="fourth"
+              label="Ciudad"
+              required
+              outlined
           /></v-col>
         </v-row>
         <v-row>
@@ -32,6 +55,7 @@
               label="Dirección"
               required
               outlined
+              color="fourth"
           /></v-col>
         </v-row>
         <v-card class="ma-5 pa-4">
@@ -76,8 +100,8 @@
         </v-card>
       </v-card-text>
     </v-card>
-      <!---->
-      <v-overlay :dark="false" :absolute="absolute" :value="dialog">
+    <!---->
+    <v-overlay :dark="false" :absolute="absolute" :value="dialog">
       <v-card height="300" width="500" shaped class="px-8">
         <v-card-title class="d-flex justify-center mt-15">
           <p class="mt-10">¡Genial!</p>
@@ -124,10 +148,34 @@ export default {
       city: '',
       address: '',
       cart: this.$auth.user.cart,
-      numberRule: v  => {
-        if (!v.trim()) return true;
-        if (!isNaN(parseFloat(v)) && v >= 0 && v <= 99999999999) return true;
-        return 'Introduce un teléfono';
+      countries: [
+        'Argentina',
+        'Bolivia',
+        'Chile',
+        'Colombia',
+        'Costa Rica',
+        'Cuba',
+        'Ecuador',
+        'El Salvador',
+        'España',
+        'Guatemala',
+        'Honduras',
+        'México',
+        'Nicaragua',
+        'Panamá',
+        'Paraguay',
+        'Perú',
+        'Puerto Rico',
+        'República Dominicana',
+        'Uruguay',
+        'Venezuela',
+        'España',
+        'Guinea Ecuatorial',
+      ],
+      numberRule: (v) => {
+        if (!v.trim()) return true
+        if (!isNaN(parseFloat(v)) && v >= 0 && v <= 99999999999) return true
+        return 'Introduce un teléfono'
       },
       dialog: false,
       absolute: true,
@@ -141,7 +189,7 @@ export default {
       let total = 0
       if (!this.$auth.user.cart) {
         total = 0
-      } 
+      }
       this.$auth.user.cart.forEach((v) => {
         total += v.price
       })
