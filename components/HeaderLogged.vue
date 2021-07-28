@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat app color="second">
+  <v-app-bar flat app min-height="64" color="second">
     <v-toolbar-title class="mr-3">
       <NuxtLink :to="{ path: '/explore' }">
         <v-img

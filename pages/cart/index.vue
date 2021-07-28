@@ -57,7 +57,6 @@ export default {
         `/users/${$auth.user._id}/cart`
       )
       // const cart = $auth.user.cart
-      console.log(allProducts, cart)
       return { allProducts, cart }
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -71,6 +70,7 @@ export default {
   },
   computed: {
     getFullPrice() {
+      this.total = 0
       this.cart.forEach((v) => {
         this.total += v.price
       })
