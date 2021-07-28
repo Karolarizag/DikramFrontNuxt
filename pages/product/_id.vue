@@ -68,11 +68,14 @@ export default {
       showBtn: false
     }
   },
-  computed: {
-    isTheOwner() {
-      if (this.$auth.user && this.$auth.user.marketplace === this.product.marketplace) this.showBtn = true
-    },
-  },
+  // computed: {
+  //   isLogged() {
+  //     if (this.$auth.user) true
+  //   },
+  //   isTheOwner() {
+  //     if (this.$auth.user && this.$auth.user.marketplace === this.product.marketplace) this.showBtn = true
+  //   },
+  // },
   methods: {
     actualize(product) {
       this.product = product
