@@ -66,7 +66,6 @@
               <v-list v-if="productsName">
                 <v-list-item v-for="(item, i) in productsName" :key="i">
                   <v-btn
-                    width="120"
                     text
                     color="fourth"
                     :to="{ path: `/product/${item.id}` }"

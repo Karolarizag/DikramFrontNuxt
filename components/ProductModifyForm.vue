@@ -29,6 +29,7 @@
               class="mt-3 px-3"
               label="Añade aquí la descripción de tu producto"
               solo
+              color="fourth"
             >
             </v-textarea>
           </v-row>
@@ -44,6 +45,7 @@
             label="Nombre"
             outlined
             dense
+              color="fourth"
           ></v-text-field>
         </v-col>
 
@@ -55,6 +57,7 @@
             label="Etiquetas"
             outlined
             dense
+              color="fourth"
             @keydown.enter="sendTags()"
           >
           </v-text-field>
@@ -66,7 +69,7 @@
               class="ma-1"
             >
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeTag(item)"
               >
@@ -86,6 +89,7 @@
             label="Precio"
             outlined
             dense
+              color="fourth"
           >
           </v-text-field>
         </v-col>
@@ -110,6 +114,7 @@
             label="Color"
             outlined
             dense
+              color="fourth"
             @keydown.enter="sendColors()"
           >
           </v-text-field>
@@ -121,7 +126,7 @@
               class="ma-1"
             >
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeColor(item)"
               >
@@ -150,7 +155,7 @@
               class="ma-1"
             >
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeMat(item)"
               >
