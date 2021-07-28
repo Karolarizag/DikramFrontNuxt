@@ -18,6 +18,7 @@
           prepend-icon="mdi-email"
           outlined
           class="mt-9"
+          color="fourth"
         >
         </v-text-field>
         <v-text-field
@@ -29,6 +30,7 @@
           prepend-icon="mdi-lock"
           @keydown.enter="iniciar"
           class="5"
+          color="fourth"
         ></v-text-field>
       </v-card-text>
 

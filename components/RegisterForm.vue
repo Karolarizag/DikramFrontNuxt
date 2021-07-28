@@ -15,6 +15,7 @@
           required
           prepend-icon="mdi-account"
           outlined
+          color="fourth"
         ></v-text-field>
 
         <v-text-field
@@ -23,6 +24,7 @@
           required
           prepend-icon="mdi-email"
           outlined
+          color="fourth"
         ></v-text-field>
 
         <v-text-field
@@ -31,6 +33,7 @@
           label="Contraseña"
           required
           outlined
+          color="fourth"
           prepend-icon="mdi-lock"
         ></v-text-field>
 
@@ -39,6 +42,7 @@
           type="password"
           label="Confirmar contraseña"
           outlined
+          color="fourth"
           prepend-icon="mdi-lock-check"
           required
         ></v-text-field>
@@ -48,15 +52,16 @@
           type="date"
           label="Fecha de nacimiento"
           required
+          color="fourth"
           prepend-icon="mdi-calendar"
           class="mt-3"
         ></v-text-field>
 
         <v-switch
           v-model="isSeller"
-          color="fourth"
           label="¿Quieres una cuenta como empresa?"
           class="mt-3"
+          color="fourth"
         ></v-switch>
 
       </v-card-text>

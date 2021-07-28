@@ -33,6 +33,7 @@
               solo
               label="Añade aquí la descripción de tu producto"
               class="mt-3 px-3"
+              color="fourth"
             >
             </v-textarea>
           </v-row>
@@ -48,6 +49,7 @@
             label="Nombre"
             outlined
             dense
+              color="fourth"
           >
           </v-text-field>
         </v-col>
@@ -59,6 +61,7 @@
             label="Etiquetas"
             outlined
             dense
+              color="fourth"
             @keydown.enter="sendTags()"
           >
           </v-text-field>
@@ -66,7 +69,7 @@
           <div class="d-flex flex-wrap px-2">
             <div v-for="(item, idx) in productTags" :key="idx" class="ma-1">
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeTag(item)"
               >
@@ -86,6 +89,7 @@
             label="Precio"
             outlined
             dense
+              color="fourth"
           >
           </v-text-field>
         </v-col>
@@ -99,6 +103,7 @@
             label="Tallas"
             multiple
             clearable
+              color="fourth"
           >
           </v-autocomplete>
         </v-col>
@@ -110,6 +115,7 @@
             label="Color"
             outlined
             dense
+              color="fourth"
             @keydown.enter="sendColors()"
           >
           </v-text-field>
@@ -117,7 +123,7 @@
           <div class="d-flex flex-wrap px-2">
             <div v-for="(item, idx) in productColors" :key="idx" class="ma-1">
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeColor(item)"
               >
@@ -135,6 +141,7 @@
             label="Material"
             outlined
             dense
+              color="fourth"
             @keydown.enter="sendMaterials()"
           >
           </v-text-field>
@@ -142,7 +149,7 @@
           <div class="d-flex flex-wrap px-2">
             <div v-for="(item, idx) in productMaterial" :key="idx" class="ma-1">
               <v-chip
-                color="cyan lighten-4"
+                color="fifth"
                 close
                 @click:close="removeMat(item)"
               >
@@ -327,8 +334,12 @@ export default {
       this.material = ''
     },
     async submitProduct() {
-      const texture = this.texture.map((t) => t._id)
-      const pattern = this.pattern.map((p) => p._id)
+      let texture = []
+      let pattern = []
+      if (this.customizable) {
+        texture = this.texture.map((t) => t._id)
+        pattern = this.pattern.map((p) => p._id)
+      }
       const res = await this.$axios.$post('/products', {
         name: this.productTitle,
         description: this.description,

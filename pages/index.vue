@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-app-bar id="custombar" height="920" flat prominent src="https://static-cse.canva.com/blob/215565/beautiful-twitter-banners.jpg">
-    </v-app-bar>
+    <v-parallax height="600" src="https://cdn.discordapp.com/attachments/860532293738692623/869906253634211890/banner.png">
+    </v-parallax>
     <v-container fluid>
         <div class="d-flex flex-wrap flex-row justify-center mx-5" >
           <ProductCard

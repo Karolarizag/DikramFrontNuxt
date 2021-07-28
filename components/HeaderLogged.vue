@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat app>
+  <v-app-bar flat app color="second">
     <v-toolbar-title class="mr-3">
       <NuxtLink :to="{ path: '/explore' }">
         <v-img
@@ -18,7 +18,7 @@
       :key="idx"
       :to="{ name: item.path }"
       text
-      color="light-blue lighten-2"
+      color="fourth"
       class="ml-3"
       active-class="no-active"
       >{{ item.name }}
@@ -28,7 +28,7 @@
 
     <v-text-field
       v-model="search"
-      color="light-blue lighten-2"
+      color="fourth"
       placeholder="Search"
       prepend-inner-icon="mdi-magnify"
       solo-inverted
@@ -44,7 +44,7 @@
     
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
-        <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
+        <v-btn icon color="fourth" v-bind="attrs" v-on="on">
           <v-icon v-if="$auth.user.notifications.length===0">mdi-bell</v-icon>
           <v-icon v-else>mdi-bell-ring</v-icon>
         </v-btn>
@@ -52,21 +52,21 @@
       <v-list v-if="$auth.user.notifications.length" width="300">
         <v-list-item v-for="(notification, idx) in $auth.user.notifications" :key="idx"> 
           {{notification.msg}}
-           <v-btn icon @click="deleteNot(idx)"><v-icon>mdi-alpha-x</v-icon></v-btn>
+           <v-btn icon @click="deleteNot(idx)"><v-icon color="fourth">mdi-alpha-x</v-icon></v-btn>
         </v-list-item>
       </v-list>
     </v-menu>
     <v-btn icon :to="{ path: '/cart' }">
-      <v-icon color="light-blue lighten-2">mdi-cart</v-icon>
+      <v-icon color="fourth">mdi-cart</v-icon>
     </v-btn>
 
     <v-btn icon @click="logout">
-      <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
+      <v-icon color="fourth">mdi-logout</v-icon>
     </v-btn>
 
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
-        <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
+        <v-btn icon color="fourth" v-bind="attrs" v-on="on">
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </template>
@@ -76,7 +76,7 @@
           <v-btn
             width="270"
             text
-            color="light-blue lighten-2"
+            color="fourth"
             :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
           >
             Mi tienda
@@ -86,7 +86,7 @@
           <v-btn
             width="270"
             text
-            color="light-blue lighten-2"
+            color="fourth"
             :to="{ name: 'marketplaceForm' }"
           >
             Crear tienda
@@ -154,6 +154,6 @@ export default {
 .v-input__prepend-inner .v-icon {
   margin-left: -5px;
   margin-top: 2px;
-  color: #4fc3f7 !important;
+  color: #A31D5E !important;
 }
 </style>

@@ -21,6 +21,7 @@
                 solo
                 label="Añade aquí la descripción de tu producto"
                 class="mt-3 px-3"
+                color="fourth"
               >
               </v-textarea>
             </v-col>
@@ -35,6 +36,7 @@
                 label="Etiquetas"
                 outlined
                 dense
+                color="fourth"
                 @keydown.enter="sendTags()"
               >
               </v-text-field>
@@ -42,7 +44,7 @@
               <div class="d-flex flex-wrap px-2">
                 <div v-for="(item, idx) in postTags" :key="idx" class="ma-1">
                   <v-chip
-                    color="cyan lighten-4"
+                    color="fifth"
                     close
                     @click:close="removeTag(item)"
                   >

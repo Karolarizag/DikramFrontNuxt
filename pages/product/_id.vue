@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="product" fluid app>
+  <v-container v-if="product && customForm" fluid app>
     <div class="productpagebody">
       <v-banner class="pa-5 pt-0">
         <v-row>

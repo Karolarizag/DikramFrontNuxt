@@ -1,45 +1,50 @@
 <template>
   <v-container>
-    <v-card class="px-5 my-5">
-      <v-row>
-        <v-col class="d-flex justify-center">Imagen</v-col>
-        <v-col class="d-flex justify-center" cols="6">Producto</v-col>
-        <v-col class="d-flex justify-center">Talla</v-col>
-        <v-col class="d-flex justify-center">Cantidad</v-col>
-        <v-col class="d-flex justify-center">Precio</v-col>
-        <v-col></v-col>
-      </v-row>
-    </v-card>
-    <v-card v-for="(item, idx) in allProducts" :key="idx" class="px-5 my-5">
-      <v-row>
-        <v-col
-          ><v-img height="100" width="100" :src="item.image[0]"></v-img
-        ></v-col>
-        <v-col cols="6" class="d-flex justify-center align-center">
-          {{ cart[idx].name }}
-        </v-col>
-        <v-col class="d-flex justify-center align-center">
-          {{ cart[idx].size }}
-        </v-col>
-        <v-col class="d-flex justify-center align-center">
-          {{ cart[idx].quantity }}
-        </v-col>
+    <v-card class="pa-3 px-5" color="first" shaped>
+      <v-card class="px-5 my-5" color="second">
+        <v-row>
+          <v-col class="d-flex justify-center"><h3>Imagen</h3> </v-col>
+          <v-col class="d-flex justify-center" cols="6"> <h3>Producto</h3> </v-col>
+          <v-col class="d-flex justify-center"> <h3>Talla</h3></v-col>
+          <v-col class="d-flex justify-center"> <h3>Cantidad</h3> </v-col>
+          <v-col class="d-flex justify-center"> <h3>Precio</h3> </v-col>
+          <v-col></v-col>
+        </v-row>
+      </v-card>
+      <v-card v-for="(item, idx) in allProducts" :key="idx" class="px-5 my-5" color="second">
+        <v-row>
+          <v-col
+            ><v-img height="100" width="100" :src="item.image[0]"></v-img
+          ></v-col>
+          <v-col cols="6" class="d-flex justify-center align-center">
+            {{ cart[idx].name }}
+          </v-col>
+          <v-col class="d-flex justify-center align-center">
+            {{ cart[idx].size }}
+          </v-col>
+          <v-col class="d-flex justify-center align-center">
+            {{ cart[idx].quantity }}
+          </v-col>
 
-        <v-col class="d-flex justify-center align-center">
-          {{ cart[idx].price }} €
-        </v-col>
-        <v-col class="d-flex justify-end align-center">
-          <v-btn
-            icon
-            color="fourth"
-            @click="deleteFromCart(cart[idx]._id)"
-            ><v-icon>mdi-trash-can</v-icon></v-btn
-          >
-        </v-col>
-      </v-row>
-    </v-card>
-    <v-card v-if="allProducts.length>0" class="d-flex justify-end pa-5 my-5">
-        <v-btn :to="{ name: 'payment'}" color="fourth" dark>Pagar {{getFullPrice}} €</v-btn>
+          <v-col class="d-flex justify-center align-center">
+            {{ cart[idx].price }} €
+          </v-col>
+          <v-col class="d-flex justify-end align-center">
+            <v-btn icon color="fourth" @click="deleteFromCart(cart[idx]._id)"
+              ><v-icon>mdi-trash-can</v-icon></v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-card
+        v-if="allProducts.length > 0"
+        class="d-flex justify-end pa-5 mt-7 mb-2"
+        color="second"
+      >
+        <v-btn :to="{ name: 'payment' }" color="fourth" dark
+          >Pagar {{ getFullPrice }} €</v-btn
+        >
+      </v-card>
     </v-card>
   </v-container>
 </template>
@@ -48,9 +53,11 @@
 export default {
   async asyncData({ $axios, $auth }) {
     try {
-      const { allProducts, cart } = await $axios.$get(`/users/${$auth.user._id}/cart`)
+      const { allProducts, cart } = await $axios.$get(
+        `/users/${$auth.user._id}/cart`
+      )
       // const cart = $auth.user.cart
-    console.log(allProducts, cart)
+      console.log(allProducts, cart)
       return { allProducts, cart }
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -59,12 +66,12 @@ export default {
   },
   data() {
     return {
-      total: 0
+      total: 0,
     }
   },
-   computed: {
+  computed: {
     getFullPrice() {
-      this.cart.forEach(v => {
+      this.cart.forEach((v) => {
         this.total += v.price
       })
       return this.total
@@ -79,6 +86,15 @@ export default {
       this.$nuxt.refresh()
       return res
     },
-  }
+  },
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+  h3{
+  font-family: 'Poiret One', cursive;
+  font-size: 20px;
+  }
+</style>

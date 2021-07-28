@@ -6,13 +6,13 @@
           class="ma-auto mt-7 pa-5"
           width="1400"
           height="250"
-          color="rgba(236, 236, 236, 0.411)"
+          color="rgba(236, 236, 236, 0.251)"
         >
           <v-card-title class="mt-5">
             <h1>{{ marketplace.name }}</h1>
           </v-card-title>
 
-          <div class="mr-5">
+          <div class="mr-5 mt-10">
             <h2>{{ marketplace.description }}</h2>
           </div>
 
@@ -162,10 +162,16 @@ export default {
 </script>
 
 <style scoped>
-.fixed-bar {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 4em;
-  z-index: 2;
-}
+@import url('https://fonts.googleapis.com/css2?family=Amita&display=swap');
+
+  .fixed-bar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 4em;
+    z-index: 2;
+  }
+  h1{
+    font-family: 'Amita', cursive;
+    font-size: 100px;
+  }
 </style>

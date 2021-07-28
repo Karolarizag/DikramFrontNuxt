@@ -1,7 +1,7 @@
 <template>
   <div v-if="post">
     <v-card class="ma-5 rounded-b-xl pa-4" width="640">
-      <v-img height="400" :src="post.image[0]"></v-img>
+      <v-img height="600" :src="post.image[0]"></v-img>
       <v-row>
         <v-col>
           <v-card-title v-if="marketplace">
@@ -32,7 +32,7 @@
         <v-row  v-if="data">
           <v-col class="d-flex flex-wrap px-2">
             <div v-for="(item, idx) in post.tags" :key="idx" class="ma-1">
-              <v-chip color="light-blue lighten-4">
+              <v-chip color="fifth">
                 <strong>{{ item }}</strong
                 >&nbsp;
               </v-chip>

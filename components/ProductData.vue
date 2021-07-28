@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0" v-if="product">
+  <v-container class="pa-0" v-if="product && customForm">
     <v-card>
       <v-card-text>
         <v-row>
@@ -27,7 +27,7 @@
               icon
               @click="modifyOverlay = !modifyOverlay"
             >
-              <v-icon color="light-blue">mdi-update</v-icon>
+              <v-icon color="fourth">mdi-update</v-icon>
             </v-btn></v-col
           >
         </v-row>
@@ -108,6 +108,7 @@
               label="Patrones disponibles"
               auto-select-fourth
               @change="getPattern"
+              color="fourth"
             >
             </v-autocomplete>
           </v-col>
@@ -125,6 +126,7 @@
         <v-row class="mx-1">
           <v-col>
             <v-autocomplete
+            v-if="product.customizable"
               v-model="textureP"
               :items="customForm.customForm.texture"
               item-text="name"
@@ -134,6 +136,7 @@
               dense
               label="Texturas disponibles"
               auto-select-fourth
+              color="fourth"
             >
             </v-autocomplete>
           </v-col>
@@ -153,7 +156,7 @@
       <v-card-actions>
         <v-row class="mx-10 mb-5">
           <v-col class="ml-3">
-            <div style="background-color: #cff9ff; width: 90px">
+            <div style="background-color: #D6AEBC; width: 90px">
               <v-btn icon color="fourth" @click="substractProduct"> — </v-btn>
               {{ quantity }}
               <v-btn icon color="fourth" @click="addProduct">
