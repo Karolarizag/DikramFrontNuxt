@@ -18,7 +18,7 @@
       :key="idx"
       :to="{ name: item.path }"
       text
-      color="fourth"
+      color="light-blue lighten-2"
       class="ml-3"
       active-class="no-active"
       >{{ item.name }}
@@ -28,7 +28,7 @@
 
     <v-text-field
       v-model="search"
-      color="fourth"
+      color="light-blue lighten-2"
       placeholder="Search"
       prepend-inner-icon="mdi-magnify"
       solo-inverted
@@ -45,13 +45,13 @@
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
         <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
-          <v-icon v-if="!alert">mdi-bell</v-icon>
+          <v-icon v-if="$auth.user.notifications.length===0">mdi-bell</v-icon>
           <v-icon v-else>mdi-bell-ring</v-icon>
         </v-btn>
       </template>
-      <v-list v-if="alert && notifications.length" width="300">
-        <v-list-item v-for="(notification, idx) in notifications" :key="idx">
-           {{notification.msg}}
+      <v-list v-if="$auth.user.notifications.length" width="300">
+        <v-list-item v-for="(notification, idx) in $auth.user.notifications" :key="idx"> 
+          {{notification.msg}}
            <v-btn icon @click="deleteNot(idx)"><v-icon>mdi-alpha-x</v-icon></v-btn>
         </v-list-item>
       </v-list>
@@ -61,12 +61,12 @@
     </v-btn>
 
     <v-btn icon @click="logout">
-      <v-icon color="fourth">mdi-logout</v-icon>
+      <v-icon color="light-blue lighten-2">mdi-logout</v-icon>
     </v-btn>
 
     <v-menu left offset-y>
       <template #activator="{ on, attrs }">
-        <v-btn icon color="fourth" v-bind="attrs" v-on="on">
+        <v-btn icon color="light-blue lighten-2" v-bind="attrs" v-on="on">
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </template>
@@ -76,7 +76,7 @@
           <v-btn
             width="270"
             text
-            color="fourth"
+            color="light-blue lighten-2"
             :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
           >
             Mi tienda
@@ -86,7 +86,7 @@
           <v-btn
             width="270"
             text
-            color="fourth"
+            color="light-blue lighten-2"
             :to="{ name: 'marketplaceForm' }"
           >
             Crear tienda
@@ -109,8 +109,6 @@ export default {
         { name: 'Explorar', path: 'explore' },
         { name: 'Tiendas', path: 'marketplace' },
       ],
-      alert: true,
-      notifications: this.$auth.user.notifications
     }
   },
   computed: {
@@ -135,6 +133,7 @@ export default {
       this.$nuxt.$emit('searchItem', this.search)
     },
     async deleteNot(i) {
+
       this.$auth.user.notifications.splice(i, 1)
       const user = await this.$axios.$put('/users/account', this.$auth.user)
       this.$auth.setUser(user)
@@ -155,6 +154,6 @@ export default {
 .v-input__prepend-inner .v-icon {
   margin-left: -5px;
   margin-top: 2px;
-  color: #A31D5E !important;
+  color: #4fc3f7 !important;
 }
 </style>
