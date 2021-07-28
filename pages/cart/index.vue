@@ -19,20 +19,20 @@
           {{ item.name }}
         </v-col>
         <v-col class="d-flex justify-center align-center">
-          {{ characteristics[idx].size }}
+          {{ cart[idx].size }}
         </v-col>
         <v-col class="d-flex justify-center align-center">
-          {{ characteristics[idx].quantity }}
+          {{ cart[idx].quantity }}
         </v-col>
 
         <v-col class="d-flex justify-center align-center">
-          {{ characteristics[idx].price }} €
+          {{ cart[idx].price }} €
         </v-col>
         <v-col class="d-flex justify-end align-center">
           <v-btn
             icon
             color="fourth"
-            @click="deleteFromCart(characteristics[idx]._id)"
+            @click="deleteFromCart(cart[idx]._id)"
             ><v-icon>mdi-trash-can</v-icon></v-btn
           >
         </v-col>
