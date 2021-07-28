@@ -27,10 +27,10 @@
           label="Contraseña"
           required
           outlined
+          color="fourth"
           prepend-icon="mdi-lock"
           @keydown.enter="iniciar"
           class="5"
-          color="fourth"
         ></v-text-field>
       </v-card-text>
 
