@@ -3,12 +3,12 @@
     <v-app-bar flat app color="second">
       <v-toolbar-title>
         <NuxtLink :to="{ path: '/' }">
-          <!-- <v-img
-            src=""
+          <v-img
+            src="https://cdn.discordapp.com/attachments/860532293738692624/869930319598481438/dikram.png"
             max-height="40"
             max-width="120"
             class="ml-5"
-          ></v-img> -->
+          ></v-img>
         </NuxtLink>
       </v-toolbar-title>
       <v-spacer></v-spacer>

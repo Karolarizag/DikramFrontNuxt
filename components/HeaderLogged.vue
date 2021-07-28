@@ -3,7 +3,7 @@
     <v-toolbar-title class="mr-3">
       <NuxtLink :to="{ path: '/explore' }">
         <v-img
-          src="logo.png"
+          src="https://cdn.discordapp.com/attachments/860532293738692624/869930319598481438/dikram.png"
           max-height="40"
           max-width="120"
           class="ml-5"
