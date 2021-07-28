@@ -11,7 +11,7 @@
           icon 
           @click="$emit('changeView')">
 
-        <v-icon color="light-blue lighten-2">
+        <v-icon color="fourth">
           mdi-arrow-left-circle
         </v-icon>
       </v-btn>
@@ -34,7 +34,7 @@
 
           <v-btn 
             class="mt-3 mx-10" 
-            color="light-blue lighten-2" 
+            color="fourth" 
             dark>
             Añadir imágen de perfil
           </v-btn>
@@ -45,7 +45,7 @@
 
           <v-btn 
             class="mt-3 mx-10" 
-            color="light-blue lighten-2" 
+            color="fourth" 
             dark>
             Añadir imágen de banner
           </v-btn>
@@ -113,14 +113,14 @@
             v-model="shipping"
             class="ml-3" 
             label="¿Tienes servicio de envíos?" 
-            color="light-blue lighten-2"> 
+            color="fourth"> 
           </v-switch>
         </v-col>
 
         <v-col 
         class="d-flex justify-center align-end flex-column mr-2">
           <v-btn 
-            color="light-blue lighten-2" 
+            color="fourth" 
             dark 
             @click="submitMarketplace">
             Crear tienda

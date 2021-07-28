@@ -18,7 +18,7 @@
       <v-divider></v-divider>
       <v-row class="mt-2">
         <v-col cols="12" class="d-flex justify-center">
-          Hecho con <v-icon color="light-blue lighten-2">mdi-heart</v-icon> por
+          Hecho con <v-icon color="fourth">mdi-heart</v-icon> por
           Manu, Karol & Ari
         </v-col>
       </v-row>

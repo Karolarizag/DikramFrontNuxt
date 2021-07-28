@@ -112,7 +112,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: 'https://dikramback.herokuapp.com/api'
+    //baseURL: 'https://dikramback.herokuapp.com/api'
     baseURL: 'http://localhost:8080/api'
   },
 
@@ -127,16 +127,13 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
       themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+        light: {
+          'first': '#158085', // Dark blue
+          'second': '#D1EDF2', // Light blue
+          'third': '#7EF0F5', // Blue (chillón)
+          'fourth': '#A31D5E', // Magenta
+          'fifth': '#D6AEBC', // Pinky 
         }
       }
     }

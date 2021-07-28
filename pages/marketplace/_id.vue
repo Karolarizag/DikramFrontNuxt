@@ -25,7 +25,7 @@
     <v-toolbar class="fixed-bar" height="40">
       <v-row>
         <v-col class="d-flex justify-end">
-          <v-btn class="mt-1" text color="light-blue lighten-2" @click="showProducts">
+          <v-btn class="mt-1" text color="fourth" @click="showProducts">
             Publicaciones
           </v-btn>
         </v-col>
@@ -33,7 +33,7 @@
         <v-col>
           <v-row>
             <v-col cols="11" md="10" sm="9" xs="1">
-              <v-btn class="mt-1" text color="light-blue lighten-2" @click="showPosts">
+              <v-btn class="mt-1" text color="fourth" @click="showPosts">
                 Productos
               </v-btn>
             </v-col>
@@ -43,7 +43,7 @@
                 <template #activator="{ on, attrs }">
                   <v-btn
                     icon
-                    color="light-blue lighten-2"
+                    color="fourth"
                     v-bind="attrs"
                     v-on="on"
                   >
@@ -55,7 +55,7 @@
                   <v-list-item>
                     <v-btn
                       text
-                      color="light-blue lighten-2"
+                      color="fourth"
                       :to="{ path: '/productForm' }"
                       width="270"
                     >
@@ -67,7 +67,7 @@
                     <v-btn
                       width="270"
                       text
-                      color="light-blue lighten-2"
+                      color="fourth"
                       :to="{ path: `/postForm` }"
                     >
                       Crear Post

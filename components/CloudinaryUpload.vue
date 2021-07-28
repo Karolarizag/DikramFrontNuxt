@@ -3,7 +3,7 @@
     <v-btn
       @click="onInput"
       class="mt-3 mx-10 mt-10"
-      color="light-blue lighten-2"
+      color="fourth"
       dark
     >
       Añadir imagen

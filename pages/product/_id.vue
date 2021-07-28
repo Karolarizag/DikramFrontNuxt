@@ -9,7 +9,8 @@
           <v-col cols="6" sm="6" xs="12">
             <v-row>
               <v-spacer></v-spacer>
-              <v-btn
+              <!-- <v-btn
+              v-if="isTheOwner"
                 absolute
                 top
                 right
@@ -17,15 +18,15 @@
                 :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
                 class="mr-10"
               >
-                <v-icon color="light-blue lighten-2"
+                <v-icon color="fourth"
                   >mdi-arrow-left-circle</v-icon
                 >
-              </v-btn>
+              </v-btn> -->
             </v-row>
           </v-col>
         </v-row>
       </v-banner>
-      <v-row class="pa-15 d-flex align-start mt-n15">
+      <v-row class="pa-15 d-flex align-start mt-n10">
         <v-col v-if="product" cols="12" md="6">
           <ProductImage :product="product" @click.native="overlay = !overlay" />
         </v-col>
@@ -64,13 +65,17 @@ export default {
       absolute: true,
       overlay: false,
       patternUrl: { type: Object, default: null },
+      showBtn: false
     }
   },
-  computed: {
-    isTheOwner() {
-      return this.$auth.user.marketplace === this.product.marketplace
-    },
-  },
+  // computed: {
+  //   isLogged() {
+  //     if (this.$auth.user) true
+  //   },
+  //   isTheOwner() {
+  //     if (this.$auth.user && this.$auth.user.marketplace === this.product.marketplace) this.showBtn = true
+  //   },
+  // },
   methods: {
     actualize(product) {
       this.product = product

@@ -60,7 +60,7 @@
               <v-col cols="12" class="d-flex justify-center mt-5">
                 <v-btn
                   id="custom-button"
-                  color="light-blue lighten-2"
+                  color="fourth"
                   dark
                   @click="createToken"
                   >Pagar {{ getFullPrice }} €</v-btn
@@ -95,7 +95,7 @@
               ><v-btn
                 :to="{ path: '/explore' }"
                 dark
-                color="light-blue lighten-2"
+                color="fourth"
                 class="mr-2"
               >
                 Volver

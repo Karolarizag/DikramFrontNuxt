@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0" v-if="product">
     <v-card>
       <v-card-text>
         <v-row>
@@ -12,18 +12,18 @@
             <v-btn
               v-if="isTheOwner"
               dark
-              color="light-blue lighten-2"
+              color="fourth"
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
-              <v-icon color="light-blue lighten-2">mdi-delete-forever</v-icon>
+              <v-icon color="fourth">mdi-delete-forever</v-icon>
             </v-btn></v-col
           >
           <v-col cols="1" class="mt-3">
             <v-btn
               v-if="isTheOwner"
               dark
-              color="light-blue lighten-2"
+              color="fourth"
               icon
               @click="modifyOverlay = !modifyOverlay"
             >
@@ -106,7 +106,7 @@
               return-object
               dense
               label="Patrones disponibles"
-              auto-select-first
+              auto-select-fourth
               @change="getPattern"
             >
             </v-autocomplete>
@@ -133,7 +133,7 @@
               return-object
               dense
               label="Texturas disponibles"
-              auto-select-first
+              auto-select-fourth
             >
             </v-autocomplete>
           </v-col>
@@ -154,26 +154,15 @@
         <v-row class="mx-10 mb-5">
           <v-col class="ml-3">
             <div style="background-color: #cff9ff; width: 90px">
-              <v-btn
-                icon
-                color="light-blue lighten-2"
-                @click="substractProduct"
-              >
-                —
-              </v-btn>
+              <v-btn icon color="fourth" @click="substractProduct"> — </v-btn>
               {{ quantity }}
-              <v-btn icon color="light-blue lighten-2" @click="addProduct">
+              <v-btn icon color="fourth" @click="addProduct">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </div>
           </v-col>
           <v-col class="d-flex justify-end">
-            <v-btn
-              elevation="1"
-              color="light-blue lighten-2"
-              dark
-              @click="addToCart"
-            >
+            <v-btn elevation="1" color="fourth" dark @click="addToCart">
               Añadir al carrito
             </v-btn>
           </v-col>
@@ -196,11 +185,12 @@
 
         <v-card-actions>
           <v-row>
-            <v-col class="d-flex justify-center"
-              ><v-btn
+            <v-col class="d-flex justify-center">
+              <v-btn
+                v-if="isTheOwner"
                 :to="{ path: `/marketplace/${$auth.user.marketplace}` }"
                 dark
-                color="light-blue lighten-2"
+                color="fourth"
                 class="mr-2"
                 @click="deleteProductPage"
               >
@@ -215,9 +205,7 @@
               icon
               @click="deleteOverlay = !deleteOverlay"
             >
-              <v-icon color="light-blue lighten-2"
-                >mdi-arrow-left-circle</v-icon
-              >
+              <v-icon color="fourth">mdi-arrow-left-circle</v-icon>
             </v-btn>
           </v-row>
         </v-card-actions>
@@ -313,7 +301,7 @@ export default {
   },
   computed: {
     isTheOwner() {
-      return this.$auth.user.marketplace === this.product?.marketplace 
+      return this.$auth.loggedIn && this.$auth.user?.marketplace === this.product?.marketplace 
     },
     productColors() {
       return this.product?.colors?.join(', ')
